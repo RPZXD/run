@@ -243,16 +243,16 @@
                         🏆 ประเภทการแข่งขัน
                     </span>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 my-4">
                     <span class="gradient-text">เลือกระยะ</span>ที่เหมาะกับคุณ
                 </h2>
                 <div class="w-32 h-1.5 bg-gradient-to-r from-primary via-accent to-primary mx-auto rounded-full"></div>
-                <p class="mt-4 text-gray-600 text-lg">🎯 มี 5 ระยะให้เลือก เหมาะกับนักวิ่งทุกระดับ</p>
+                <p class="mt-4 text-gray-600 text-lg">🎯 มี 4 ระยะให้เลือก เหมาะกับนักวิ่งทุกระดับ</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
                 <!-- Student Run 3.5 km -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 fade-in-up transform hover:-translate-y-3 border-t-4 border-accent">
-                    <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 h-2"></div>
+                    
                     <div class="p-6 text-center relative">
                         <div class="absolute top-0 right-0 bg-accent text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
                             STUDENT
@@ -271,7 +271,7 @@
 
                 <!-- Charity Walk 3.5 km -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 fade-in-up transform hover:-translate-y-3 border-t-4 border-green-500">
-                    <div class="bg-gradient-to-br from-green-400 to-green-600 h-2"></div>
+                    
                     <div class="p-6 text-center relative">
                         <div class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
                             CHARITY
@@ -290,7 +290,7 @@
 
                 <!-- Fun Run 5 km -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 fade-in-up transform hover:-translate-y-3 border-t-4 border-blue-500">
-                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 h-2"></div>
+                    
                     <div class="p-6 text-center relative">
                         <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
                             FUN RUN
@@ -310,9 +310,8 @@
                 <!-- Mini Marathon 11.5 km -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 fade-in-up transform hover:-translate-y-3 border-4 border-primary relative scale-105">
                     <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-primary to-orange-600 text-white text-xs font-bold px-6 py-2 rounded-full shadow-lg z-10 animate-pulse">
-                        ⭐ POPULAR ⭐
+                        ⭐POPULAR
                     </div>
-                    <div class="bg-gradient-to-br from-orange-500 via-primary to-red-600 h-2"></div>
                     <div class="p-6 text-center relative bg-gradient-to-b from-orange-50 to-white">
                         <div class="w-20 h-20 bg-gradient-to-br from-orange-200 to-red-200 rounded-full flex items-center justify-center mx-auto mb-4 text-primary text-3xl medal-shine shadow-lg glow">
                             <i class="fas fa-medal"></i>
@@ -328,7 +327,6 @@
 
                 <!-- Merch Shirt 250 THB -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 fade-in-up transform hover:-translate-y-3 border-t-4 border-yellow-400">
-                    <div class="bg-gradient-to-br from-yellow-300 to-yellow-500 h-2"></div>
                     <div class="p-6 text-center relative">
                         <div class="absolute top-0 right-0 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
                             MERCH
@@ -347,13 +345,13 @@
             </div>
 
             <!-- Additional Info -->
-            <div class="mt-12 text-center fade-in-up">
+            <!-- <div class="mt-12 text-center fade-in-up">
                 <div class="inline-block bg-gradient-to-r from-primary/10 to-accent/10 px-8 py-4 rounded-2xl border-2 border-primary/20">
                     <p class="text-gray-700 text-lg">
                         💡 <span class="font-bold text-primary">ทุกระยะ</span>ได้รับ: เสื้อวิ่ง + เหรียญ + อาหาร + ประกันอุบัติเหตุ + ของที่ระลึก
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -617,7 +615,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <div class="col-span-1 md:col-span-2">
                     <h3 class="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-3">
-                        <img src="assets/images/logo-1.jpeg" class="h-10 w-10 rounded-full shadow-lg glow"> 
+                        <img src="assets/images/logo-1.png" class="h-10 w-10 rounded-full shadow-lg glow"> 
                         <span class="gradient-text">PHICHAI RUN 2026</span>
                     </h3>
                     <p class="text-gray-400 mb-6 max-w-md leading-relaxed">
