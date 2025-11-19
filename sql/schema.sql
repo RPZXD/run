@@ -10,8 +10,13 @@ CREATE TABLE IF NOT EXISTS registrations (
     birth_date DATE NOT NULL,
     email VARCHAR(100) NOT NULL,
     phone VARCHAR(20) NOT NULL,
+    club VARCHAR(255),
+    prefix VARCHAR(50),
+    emergency_contact_name VARCHAR(255) NOT NULL,
+    emergency_contact_phone VARCHAR(20) NOT NULL,
     address TEXT,
     category ENUM('Fun Run 5KM', 'Mini Marathon 10.5KM', 'Half Marathon 21KM') NOT NULL,
     shirt_size ENUM('XS', 'S', 'M', 'L', 'XL', '2XL', '3XL') NOT NULL,
+    payment_slip VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

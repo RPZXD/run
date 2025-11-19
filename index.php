@@ -27,7 +27,7 @@
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent text-white py-4">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold tracking-wider flex items-center gap-2">
-                <img src="assets/images/logo-1.jpeg" alt="Logo" class="h-12 w-12 rounded-full border-2 border-accent">
+                <img src="assets/images/logo-1.png" alt="Logo" class="h-12 w-12 rounded-full border-2 border-accent">
                 PHICHAI RUN 2026
             </a>
             <div class="hidden md:flex space-x-8 font-medium">
