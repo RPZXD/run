@@ -45,7 +45,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
     <!-- jQuery + Select2 for searchable dropdowns -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Tidy Select2 results as compact card-like rows using Tailwind-compatible classes */
+        .select2-container .select2-results__option .select2-result-item { padding: .5rem; border-radius: .375rem; }
+        .select2-container--open .select2-results__option.select2-results__option--highlighted .select2-result-item { background: rgba(227,6,19,0.06); }
+        .select2-container .select2-selection__rendered { line-height: 1.2; }
+        .select2-container .select2-selection__choice { background: #fee2e2; border-color: #fecaca; }
+        .select2-container .select2-results__option .text-sm { font-size: .85rem; color: #6b7280; }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></style>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -412,12 +420,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 placeholder: 'เลือกตำบล (พิมพ์เพื่อค้น)',
                                 width: '100%',
                                 allowClear: true,
-                                language: 'th'
+                                language: {
+                                    noResults: function() { return 'ไม่พบผลลัพธ์'; },
+                                    searching: function() { return 'กำลังค้นหา...'; }
+                                },
+                                escapeMarkup: function(markup) { return markup; }, // allow custom HTML
+                                templateResult: function(data) {
+                                    if (!data.id) return data.text; // placeholder or empty
+                                    const el = data.element;
+                                    const amphoe = el ? (el.dataset.amphoe || '') : '';
+                                    const province = el ? (el.dataset.province || '') : '';
+                                    const sub = data.text || '';
+                                    const extra = (amphoe || province) ? ('<div class="text-sm text-gray-500">' + (amphoe ? amphoe : '') + (province ? (' / ' + province) : '') + '</div>') : '';
+                                    return '<div class="select2-result-item"><div class="font-medium">' + sub + '</div>' + extra + '</div>';
+                                },
+                                templateSelection: function(data) {
+                                    if (!data.id) return data.text;
+                                    // show subdistrict only (keeps selection compact), append amphoe/province lightly
+                                    const el = data.element;
+                                    const amphoe = el ? (el.dataset.amphoe || '') : '';
+                                    const province = el ? (el.dataset.province || '') : '';
+                                    const sub = data.text || '';
+                                    if (amphoe || province) return sub + ' — ' + amphoe + (province ? (' / ' + province) : '');
+                                    return sub;
+                                }
                             });
 
                             // when selection changes via select2, update district/province
                             jQuery(sel).on('change', function() {
-                                const val = jQuery(this).val();
                                 const o = this.options[this.selectedIndex];
                                 const amphoe = o && o.dataset ? o.dataset.amphoe : '';
                                 const province = o && o.dataset ? o.dataset.province : '';
