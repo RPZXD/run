@@ -49,11 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-            navbar.classList.add('bg-white', 'shadow-lg', 'text-gray-800', 'scrolled');
-            navbar.classList.remove('bg-transparent', 'text-white');
+            navbar.classList.add('bg-white', 'shadow-lg', 'text-gray-800', 'scrolled', 'py-2');
+            navbar.classList.remove('bg-transparent', 'text-white', 'py-4');
         } else {
-            navbar.classList.remove('bg-white', 'shadow-lg', 'text-gray-800', 'scrolled');
-            navbar.classList.add('bg-transparent', 'text-white');
+            navbar.classList.remove('bg-white', 'shadow-lg', 'text-gray-800', 'scrolled', 'py-2');
+            navbar.classList.add('bg-transparent', 'text-white', 'py-4');
         }
     });
 
