@@ -22,22 +22,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ลงทะเบียน - Phichai Run 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Kanit', 'sans-serif'],
+                    },
                     colors: {
-                        primary: '#E30613',
-                        secondary: '#8B0000',
-                        accent: '#FFD700'
+                        primary: '#E63946',
+                        secondary: '#1D3557',
+                        accent: '#F4A261',
+                        light: '#F1FAEE',
+                        dark: '#111827'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'floating 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        floating: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
                     }
                 }
             }
@@ -56,49 +72,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></style>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="antialiased text-gray-800 bg-light overflow-x-hidden">
 
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 bg-secondary text-white py-4 shadow-lg">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="index.php" class="text-2xl font-bold tracking-wider flex items-center gap-2">
-                <img src="assets/images/logo-1.png" alt="Logo" class="h-10 w-10 rounded-full border-2 border-accent">
-                PHICHAI RUN 2026
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-6">
+        <div class="container mx-auto bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-white/50 px-6 py-3 flex justify-between items-center">
+            <a href="index.php" class="flex items-center gap-3 group">
+                <div class="relative">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+                    <img src="assets/images/logo-1.png" alt="Logo" class="relative h-10 w-10 rounded-full border-2 border-white object-cover">
+                </div>
+                <span class="font-bold text-xl tracking-wide text-secondary group-hover:text-primary transition">PHICHAI RUN <span class="text-primary">2026</span></span>
             </a>
-            <a href="index.php" class="text-white hover:text-accent transition">
+            
+            <a href="index.php" class="text-gray-600 hover:text-primary transition font-medium flex items-center gap-2">
                 <i class="fas fa-arrow-left"></i> กลับหน้าหลัก
             </a>
         </div>
     </nav>
 
-    <div class="pt-24 pb-12 min-h-screen flex items-center justify-center bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
-        <div class="container mx-auto px-4 max-w-3xl">
+    <div class="relative min-h-screen pt-32 pb-20 flex items-center justify-center overflow-hidden hero-gradient">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute top-1/2 -right-24 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9IiNmZmYiLz48L3N2Zz4=')]"></div>
+        </div>
+
+        <div class="container mx-auto px-4 max-w-3xl relative z-10">
             
             <?php if ($message): ?>
-                <div class="mb-8 p-4 rounded-lg <?php echo $status === 'success' ? 'bg-green-100 text-green-700 border border-green-400' : 'bg-red-100 text-red-700 border border-red-400'; ?> text-center">
+                <div class="mb-8 p-4 rounded-2xl shadow-lg backdrop-blur-md <?php echo $status === 'success' ? 'bg-green-100/90 text-green-800 border border-green-200' : 'bg-red-100/90 text-red-800 border border-red-200'; ?> text-center animate-fade-in-up visible">
                     <i class="fas <?php echo $status === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'; ?> text-xl mr-2"></i>
                     <span class="font-bold"><?php echo $message; ?></span>
                 </div>
             <?php endif; ?>
 
-            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
-                <div class="bg-primary p-6 text-center text-white">
-                    <h2 class="text-3xl font-bold">ลงทะเบียนเข้าร่วมงาน</h2>
-                    <p class="opacity-90">กรอกข้อมูลให้ครบถ้วนเพื่อสมัครวิ่ง</p>
+            <div class="glass-card rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up visible">
+                <div class="bg-gradient-to-r from-primary to-secondary p-8 text-center text-white relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2 relative z-10">ลงทะเบียนเข้าร่วมงาน</h2>
+                    <p class="opacity-90 text-lg relative z-10">กรอกข้อมูลให้ครบถ้วนเพื่อสมัครวิ่ง</p>
                 </div>
                 
-                <form id="regForm" action="register.php" method="POST" enctype="multipart/form-data" class="p-8">
+                <form id="regForm" action="register.php" method="POST" enctype="multipart/form-data" class="p-8 md:p-10">
                     <!-- Progress / Steps indicator -->
-                    <div class="mb-6">
-                        <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                            <div id="progressBar" class="h-2 bg-primary rounded-full" style="width:20%"></div>
+                    <div class="mb-10">
+                        <div class="w-full bg-gray-100 rounded-full h-3 overflow-hidden shadow-inner">
+                            <div id="progressBar" class="h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-500 ease-out" style="width:20%"></div>
                         </div>
-                        <div class="flex justify-between text-sm mt-2 text-gray-600">
-                            <div>Step 1</div>
-                            <div>Step 2</div>
-                            <div>Step 3</div>
-                            <div>Step 4</div>
-                            <div>Step 5</div>
+                        <div class="flex justify-between text-sm mt-3 text-gray-500 font-medium">
+                            <div class="text-primary">ข้อมูลส่วนตัว</div>
+                            <div>ติดต่อ</div>
+                            <div>การสมัคร</div>
+                            <div>เพิ่มเติม</div>
+                            <div>ชำระเงิน</div>
                         </div>
                     </div>
 
@@ -110,88 +138,159 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <!-- STEP 1: Personal -->
                     <div class="form-step" data-step="1">
-                        <h3 class="text-xl font-bold text-secondary border-b pb-2 mb-4">ข้อมูลส่วนตัว</h3>
+                        <h3 class="text-xl font-bold text-secondary border-b border-gray-200 pb-3 mb-6 flex items-center gap-2">
+                            <i class="fas fa-user-circle text-primary"></i> ข้อมูลส่วนตัว
+                        </h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
-                                <label class="block text-gray-700 font-bold mb-2">คำนำหน้า</label>
-                                <select name="prefix" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary">
-                                    <option value="">เลือกคำนำหน้า</option>
+                                <label class="block text-gray-700 font-bold mb-2 text-sm">คำนำหน้า</label>
+                                <select name="prefix" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
                                     <option value="นาย">นาย</option>
                                     <option value="นาง">นาง</option>
                                     <option value="นางสาว">นางสาว</option>
-                                    <option value="อื่นๆ">อื่นๆ</option>
+                                    <option value="ด.ช.">ด.ช.</option>
+                                    <option value="ด.ญ.">ด.ญ.</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-gray-700 font-bold mb-2">ชื่อ (ภาษาไทย)</label>
-                                <input type="text" name="first_name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary" placeholder="รักดี">
+                                <label class="block text-gray-700 font-bold mb-2 text-sm">ชื่อ (ภาษาไทย)</label>
+                                <input type="text" name="first_name" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="รักดี">
                             </div>
                             <div>
-                                <label class="block text-gray-700 font-bold mb-2">นามสกุล (ภาษาไทย)</label>
-                                <input type="text" name="last_name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary" placeholder="มีชัย">
+                                <label class="block text-gray-700 font-bold mb-2 text-sm">นามสกุล (ภาษาไทย)</label>
+                                <input type="text" name="last_name" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="มีชัย">
                             </div>
                         </div>
-                        <div class="mt-6 flex justify-end">
-                            <button type="button" class="next-btn bg-primary text-white font-bold py-2 px-6 rounded-lg">ถัดไป</button>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div>
+                                <label class="block text-gray-700 font-bold mb-2 text-sm">เพศ</label>
+                                <div class="flex gap-4">
+                                    <label class="flex-1 cursor-pointer">
+                                        <input type="radio" name="gender" value="Male" required class="peer sr-only">
+                                        <div class="text-center py-3 px-4 rounded-xl border border-gray-300 peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary transition hover:bg-gray-50">
+                                            <i class="fas fa-male mr-2"></i> ชาย
+                                        </div>
+                                    </label>
+                                    <label class="flex-1 cursor-pointer">
+                                        <input type="radio" name="gender" value="Female" required class="peer sr-only">
+                                        <div class="text-center py-3 px-4 rounded-xl border border-gray-300 peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary transition hover:bg-gray-50">
+                                            <i class="fas fa-female mr-2"></i> หญิง
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-bold mb-2 text-sm">วันเกิด</label>
+                                <input type="date" name="birth_date" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
+                            </div>
+                        </div>
+                        <div class="mt-8 flex justify-end">
+                            <button type="button" class="next-btn bg-gradient-to-r from-primary to-red-600 hover:from-red-600 hover:to-secondary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1">
+                                ถัดไป <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- STEP 2: Contact/Address -->
                     <div class="form-step hidden" data-step="2">
-                        <h3 class="text-xl font-bold text-secondary border-b pb-2 mb-4">ข้อมูลติดต่อ</h3>
+                        <h3 class="text-xl font-bold text-secondary border-b border-gray-200 pb-3 mb-6 flex items-center gap-2">
+                            <i class="fas fa-address-card text-primary"></i> ข้อมูลติดต่อ
+                        </h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-gray-700 font-bold mb-2">เบอร์โทรศัพท์</label>
-                                <input type="tel" name="phone" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary" placeholder="08x-xxx-xxxx">
+                                <label class="block text-gray-700 font-bold mb-2 text-sm">เบอร์โทรศัพท์</label>
+                                <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="08x-xxx-xxxx">
                             </div>
                             <div>
-                                <label class="block text-gray-700 font-bold mb-2">อีเมล</label>
-                                <input type="email" name="email" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary" placeholder="example@email.com">
+                                <label class="block text-gray-700 font-bold mb-2 text-sm">อีเมล</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="example@email.com">
                             </div>
                         </div>
 
-                        <div class="mt-4">
-                            <label class="block text-gray-700 font-bold mb-2">ที่อยู่จัดส่งเอกสาร</label>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div>
-                                    <label class="text-sm text-gray-600">รหัสไปรษณีย์</label>
-                                    <input type="text" id="postal_code" name="postal_code" maxlength="5" pattern="\d{5}" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary" placeholder="เช่น 54000">
-                                    <p id="postal_help" class="text-sm text-gray-500 mt-1">กรอกรหัสไปรษณีย์ 5 หลัก เพื่อค้น ตำบล/อำเภอ/จังหวัด อัตโนมัติ</p>
-                                </div>
-                                <div>
-                                    <label class="text-sm text-gray-600">ตำบล (Tambon)</label>
-                                    <input type="text" id="subdistrict" name="subdistrict"  placeholder="ตำบล" class="w-full px-4 py-2 border rounded-lg bg-gray-100" readonly>
-                                </div>
-                                <div>
-                                    <label class="text-sm text-gray-600">อำเภอ / จังหวัด</label>
-                                    <input type="text" id="district_province" name="district_province" readonly class="w-full px-4 py-2 border rounded-lg bg-gray-100" placeholder="อำเภอ / จังหวัด">
-                                </div>
+                        <div class="mt-6">
+                            <label class="block text-gray-700 font-bold mb-2 text-sm">ที่อยู่จัดส่งเอกสาร</label>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <input type="text" id="postal_code" name="postal_code" placeholder="รหัสไปรษณีย์" maxlength="5" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
+                                <input type="text" id="subdistrict" name="subdistrict" placeholder="ตำบล/แขวง" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
+                                <input type="text" id="district_province" name="district_province" placeholder="อำเภอ / จังหวัด" readonly class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-100 text-gray-500 cursor-not-allowed">
                             </div>
-                            <div class="mt-3">
-                                <label class="text-sm text-gray-600">ที่อยู่ (บ้านเลขที่ ถนน หมู่บ้าน)</label>
-                                <textarea id="address" name="address" rows="2" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary" placeholder="บ้านเลขที่, ถนน, หมู่บ้าน"></textarea>
-                            </div>
+                            <p id="postal_help" class="text-xs text-primary mt-1 mb-3"></p>
+                            <textarea name="address" rows="3" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="บ้านเลขที่ หมู่บ้าน ซอย ถนน..."></textarea>
                         </div>
 
-                        <div class="mt-6 flex justify-between">
-                            <button type="button" class="prev-btn bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg">ก่อนหน้า</button>
-                            <button type="button" class="next-btn bg-primary text-white font-bold py-2 px-6 rounded-lg">ถัดไป</button>
+                        <div class="mt-8 flex justify-between">
+                            <button type="button" class="prev-btn bg-gray-100 text-gray-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full transition">
+                                <i class="fas fa-arrow-left mr-2"></i> ก่อนหน้า
+                            </button>
+                            <button type="button" class="next-btn bg-gradient-to-r from-primary to-red-600 hover:from-red-600 hover:to-secondary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1">
+                                ถัดไป <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- STEP 3: Race/Signup Type -->
+
+
+                    <!-- STEP 3: Race Info -->
                     <div class="form-step hidden" data-step="3">
-                        <h3 class="text-xl font-bold text-secondary border-b pb-2 mb-4">ข้อมูลการสมัคร</h3>
-                        <div>
-                            <label class="block text-gray-700 font-bold mb-2">ประเภทการสมัคร</label>
-                            <select name="category" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary">
-                                <option value="">เลือกประเภทการสมัคร</option>
-                                <option value="Student Run 3.5KM">Student Run 3.5 km</option>
-                                <option value="Charity Walk 3.5KM">เดินการกุศล 3.5 km</option>
-                                <option value="Fun Run 5KM">Fun Run 5 km</option>
-                                <option value="Mini Marathon 11.5KM">Mini Marathon 11.5 km</option>
-                                <option value="Merch Shirt 250THB">สั่งซื้อเสื้อที่ระลึก 250 บาท</option>
-                            </select>
+                        <h3 class="text-xl font-bold text-secondary border-b border-gray-200 pb-3 mb-6 flex items-center gap-2">
+                            <i class="fas fa-running text-primary"></i> ข้อมูลการแข่งขัน
+                        </h3>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 font-bold mb-4 text-sm">ประเภทการสมัคร</label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <label class="cursor-pointer relative group">
+                                    <input type="radio" name="category" value="Student Run 3.5KM" required class="peer sr-only">
+                                    <div class="p-6 rounded-2xl border-2 border-gray-200 peer-checked:border-primary peer-checked:bg-primary/5 hover:border-primary/50 transition h-full flex flex-col items-center justify-center text-center">
+                                        <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-3 text-xl">
+                                            <i class="fas fa-user-graduate"></i>
+                                        </div>
+                                        <span class="font-bold text-lg text-gray-800">Student Run</span>
+                                        <span class="text-sm text-gray-500">3.5 km</span>
+                                    </div>
+                                    <div class="absolute top-3 right-3 text-primary opacity-0 peer-checked:opacity-100 transition">
+                                        <i class="fas fa-check-circle text-xl"></i>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer relative group">
+                                    <input type="radio" name="category" value="Charity Walk 3.5KM" required class="peer sr-only">
+                                    <div class="p-6 rounded-2xl border-2 border-gray-200 peer-checked:border-primary peer-checked:bg-primary/5 hover:border-primary/50 transition h-full flex flex-col items-center justify-center text-center">
+                                        <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center mb-3 text-xl">
+                                            <i class="fas fa-hand-holding-heart"></i>
+                                        </div>
+                                        <span class="font-bold text-lg text-gray-800">Charity Walk</span>
+                                        <span class="text-sm text-gray-500">3.5 km</span>
+                                    </div>
+                                    <div class="absolute top-3 right-3 text-primary opacity-0 peer-checked:opacity-100 transition">
+                                        <i class="fas fa-check-circle text-xl"></i>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer relative group">
+                                    <input type="radio" name="category" value="Fun Run 5KM" required class="peer sr-only">
+                                    <div class="p-6 rounded-2xl border-2 border-gray-200 peer-checked:border-primary peer-checked:bg-primary/5 hover:border-primary/50 transition h-full flex flex-col items-center justify-center text-center">
+                                        <div class="w-12 h-12 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mb-3 text-xl">
+                                            <i class="fas fa-smile"></i>
+                                        </div>
+                                        <span class="font-bold text-lg text-gray-800">Fun Run</span>
+                                        <span class="text-sm text-gray-500">5 km</span>
+                                    </div>
+                                    <div class="absolute top-3 right-3 text-primary opacity-0 peer-checked:opacity-100 transition">
+                                        <i class="fas fa-check-circle text-xl"></i>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer relative group">
+                                    <input type="radio" name="category" value="Mini Marathon 11.5KM" required class="peer sr-only">
+                                    <div class="p-6 rounded-2xl border-2 border-gray-200 peer-checked:border-primary peer-checked:bg-primary/5 hover:border-primary/50 transition h-full flex flex-col items-center justify-center text-center">
+                                        <div class="w-12 h-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mb-3 text-xl">
+                                            <i class="fas fa-fire"></i>
+                                        </div>
+                                        <span class="font-bold text-lg text-gray-800">Mini Marathon</span>
+                                        <span class="text-sm text-gray-500">11.5 km</span>
+                                    </div>
+                                    <div class="absolute top-3 right-3 text-primary opacity-0 peer-checked:opacity-100 transition">
+                                        <i class="fas fa-check-circle text-xl"></i>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
 
                         <!-- Placeholder for conditional fields depending on category -->
@@ -199,52 +298,120 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <!-- Conditions will be injected here later -->
                         </div>
 
-                        <div class="mt-6 flex justify-between">
-                            <button type="button" class="prev-btn bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg">ก่อนหน้า</button>
-                            <button type="button" class="next-btn bg-primary text-white font-bold py-2 px-6 rounded-lg">ถัดไป</button>
+                        <div class="mt-8 flex justify-between">
+                            <button type="button" class="prev-btn bg-gray-100 text-gray-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full transition">
+                                <i class="fas fa-arrow-left mr-2"></i> ก่อนหน้า
+                            </button>
+                            <button type="button" class="next-btn bg-gradient-to-r from-primary to-red-600 hover:from-red-600 hover:to-secondary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1">
+                                ถัดไป <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- STEP 4: Shirt / Extras -->
                     <div class="form-step hidden" data-step="4">
-                        <h3 class="text-xl font-bold text-secondary border-b pb-2 mb-4">ไซส์เสื้อ / รายการพิเศษ</h3>
-                        <div>
-                            <label class="block text-gray-700 font-bold mb-2">ไซส์เสื้อ</label>
-                            <select name="shirt_size" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary">
-                                <option value="">เลือกไซส์</option>
-                                <option value="XS">XS (34")</option>
-                                <option value="S">S (36")</option>
-                                <option value="M">M (38")</option>
-                                <option value="L">L (40")</option>
-                                <option value="XL">XL (42")</option>
-                                <option value="2XL">2XL (44")</option>
-                                <option value="3XL">3XL (46")</option>
-                            </select>
+                        <h3 class="text-xl font-bold text-secondary border-b border-gray-200 pb-3 mb-6 flex items-center gap-2">
+                            <i class="fas fa-tshirt text-primary"></i> ไซส์เสื้อ / รายการพิเศษ
+                        </h3>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 font-bold mb-4 text-sm">ไซส์เสื้อ</label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="shirt_size" value="XS" required class="peer sr-only">
+                                    <div class="py-3 rounded-xl border border-gray-300 text-center peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white transition hover:border-primary">
+                                        <span class="block font-bold">XS</span>
+                                        <span class="text-xs opacity-75">34"</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="shirt_size" value="S" required class="peer sr-only">
+                                    <div class="py-3 rounded-xl border border-gray-300 text-center peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white transition hover:border-primary">
+                                        <span class="block font-bold">S</span>
+                                        <span class="text-xs opacity-75">36"</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="shirt_size" value="M" required class="peer sr-only">
+                                    <div class="py-3 rounded-xl border border-gray-300 text-center peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white transition hover:border-primary">
+                                        <span class="block font-bold">M</span>
+                                        <span class="text-xs opacity-75">38"</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="shirt_size" value="L" required class="peer sr-only">
+                                    <div class="py-3 rounded-xl border border-gray-300 text-center peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white transition hover:border-primary">
+                                        <span class="block font-bold">L</span>
+                                        <span class="text-xs opacity-75">40"</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="shirt_size" value="XL" required class="peer sr-only">
+                                    <div class="py-3 rounded-xl border border-gray-300 text-center peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white transition hover:border-primary">
+                                        <span class="block font-bold">XL</span>
+                                        <span class="text-xs opacity-75">42"</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="shirt_size" value="2XL" required class="peer sr-only">
+                                    <div class="py-3 rounded-xl border border-gray-300 text-center peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white transition hover:border-primary">
+                                        <span class="block font-bold">2XL</span>
+                                        <span class="text-xs opacity-75">44"</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="shirt_size" value="3XL" required class="peer sr-only">
+                                    <div class="py-3 rounded-xl border border-gray-300 text-center peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white transition hover:border-primary">
+                                        <span class="block font-bold">3XL</span>
+                                        <span class="text-xs opacity-75">46"</span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
 
-                        <div class="mt-6 flex justify-between">
-                            <button type="button" class="prev-btn bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg">ก่อนหน้า</button>
-                            <button type="button" class="next-btn bg-primary text-white font-bold py-2 px-6 rounded-lg">ถัดไป</button>
+                        <div class="mt-8 flex justify-between">
+                            <button type="button" class="prev-btn bg-gray-100 text-gray-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full transition">
+                                <i class="fas fa-arrow-left mr-2"></i> ก่อนหน้า
+                            </button>
+                            <button type="button" class="next-btn bg-gradient-to-r from-primary to-red-600 hover:from-red-600 hover:to-secondary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1">
+                                ถัดไป <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- STEP 5: Payment -->
                     <div class="form-step hidden" data-step="5">
-                        <h3 class="text-xl font-bold text-secondary border-b pb-2 mb-4">หลักฐานการชำระเงิน</h3>
-                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                            <p class="font-bold text-gray-700">โอนเงินเข้าบัญชี: ธนาคารกสิกรไทย</p>
-                            <p class="text-gray-600">ชื่อบัญชี: Phichai Run 2026</p>
-                            <p class="text-gray-600">เลขที่บัญชี: 123-4-56789-0</p>
+                        <h3 class="text-xl font-bold text-secondary border-b border-gray-200 pb-3 mb-6 flex items-center gap-2">
+                            <i class="fas fa-money-bill-wave text-primary"></i> หลักฐานการชำระเงิน
+                        </h3>
+                        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 mb-6 flex flex-col md:flex-row items-center gap-6">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-2xl flex-shrink-0">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-800 text-lg">โอนเงินเข้าบัญชี: ธนาคารกสิกรไทย</p>
+                                <p class="text-gray-600">ชื่อบัญชี: <span class="font-semibold text-primary">Phichai Run 2026</span></p>
+                                <p class="text-gray-600">เลขที่บัญชี: <span class="font-mono bg-white px-2 py-1 rounded border border-gray-200 ml-1">123-4-56789-0</span></p>
+                            </div>
                         </div>
                         <div>
-                            <label class="block text-gray-700 font-bold mb-2">แนบสลิปโอนเงิน</label>
-                            <input type="file" name="payment_slip" accept="image/*" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary bg-white">
-                            <p class="text-sm text-gray-500 mt-1">รองรับไฟล์ภาพ .jpg, .jpeg, .png</p>
+                            <label class="block text-gray-700 font-bold mb-2 text-sm">แนบสลิปโอนเงิน</label>
+                            <div class="relative border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:bg-gray-50 transition group">
+                                <input type="file" name="payment_slip" accept="image/*" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                                <div class="text-gray-400 group-hover:text-primary transition">
+                                    <i class="fas fa-cloud-upload-alt text-4xl mb-3"></i>
+                                    <p class="font-medium">คลิกเพื่ออัพโหลดสลิป</p>
+                                    <p class="text-xs mt-1">รองรับไฟล์ .jpg, .jpeg, .png</p>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="mt-6 flex justify-between">
-                            <button type="button" class="prev-btn bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg">ก่อนหน้า</button>
-                            <button type="submit" class="bg-primary text-white font-bold py-2 px-6 rounded-lg">ยืนยันการสมัคร</button>
+                        <div class="mt-8 flex justify-between">
+                            <button type="button" class="prev-btn bg-gray-100 text-gray-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full transition">
+                                <i class="fas fa-arrow-left mr-2"></i> ก่อนหน้า
+                            </button>
+                            <button type="submit" class="bg-gradient-to-r from-primary to-red-600 hover:from-red-600 hover:to-secondary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1">
+                                <i class="fas fa-check-circle mr-2"></i> ยืนยันการสมัคร
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -252,8 +419,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <footer class="bg-gray-900 text-white py-6 text-center">
-        <p>&copy; 2025 Phichai Run. All rights reserved.</p>
+    <!-- Footer -->
+    <footer id="contact" class="bg-dark text-white pt-20 pb-10 relative overflow-hidden mt-20">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="assets/images/logo-1.png" class="h-16 w-16 rounded-full border-2 border-white/20">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">PHICHAI RUN 2026</h3>
+                            <p class="text-gray-400 text-sm">วิ่งพิชัยดาบหัก</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-8 max-w-md leading-relaxed">
+                        งานวิ่งการกุศลเพื่อสุขภาพและสังคม จัดโดยชมรมวิ่งอำเภอพิชัย ร่วมกับเทศบาลตำบลพิชัย มาร่วมเป็นส่วนหนึ่งของประวัติศาสตร์หน้าใหม่
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/phichairun2026/" target="_blank" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center hover:bg-blue-500 transition transform hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center hover:bg-green-400 transition transform hover:scale-110">
+                            <i class="fab fa-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-pink-600 flex items-center justify-center hover:bg-pink-500 transition transform hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-6">ลิงก์ด่วน</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="index.php#home" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> หน้าแรก</a></li>
+                        <li><a href="index.php#about" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> รายละเอียด</a></li>
+                        <li><a href="index.php#categories" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> ประเภทการแข่งขัน</a></li>
+                        <li><a href="index.php#schedule" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> กำหนดการ</a></li>
+                        <li><a href="register.php" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> สมัครวิ่ง</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-6">ติดต่อเรา</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1.5 text-primary"></i>
+                            <span>โรงเรียนพิชัย<br>9/9 หมู่ 3 ต.ในเมือง อ.พิชัย<br>จ.อุตรดิตถ์ 53120</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-primary"></i>
+                            <a href="tel:055-421-402" class="hover:text-white transition">055-421-402</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-primary"></i>
+                            <a href="mailto:phichaischool@gmail.com" class="hover:text-white transition">phichaischool@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sponsors -->
+            <div class="border-t border-white/10 pt-8 pb-8">
+                <p class="text-center text-gray-500 text-sm mb-6">ผู้สนับสนุนหลัก</p>
+                <div class="flex flex-wrap justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition duration-500">
+                    <img src="assets/images/logo-2.jpeg" class="h-12 object-contain">
+                    <img src="assets/images/logo-3.jpeg" class="h-12 object-contain">
+                    <img src="assets/images/logo-4.jpeg" class="h-12 object-contain">
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-white/10 pt-8 text-center">
+                <p class="text-gray-600 text-sm">
+                    &copy; 2025 <span class="text-white">Phichai Run</span>. All rights reserved.
+                </p>
+            </div>
+        </div>
     </footer>
 
     <script>
