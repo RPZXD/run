@@ -45,7 +45,7 @@
             <a href="#" class="flex items-center gap-3 group">
                 <div class="relative">
                     <div class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
-                    <img src="assets/images/logo-1.png" alt="Logo" class="relative h-10 w-10 rounded-full border-2 border-white object-cover">
+                    <img src="assets/images/logo01.JPG" alt="Logo" class="relative h-10 w-10 rounded-full border-2 border-white object-cover">
                 </div>
                 <span class="font-bold text-xl tracking-wide text-secondary group-hover:text-primary transition">PHICHAI RUN <span class="text-primary">2026</span></span>
             </a>
@@ -63,6 +63,14 @@
                     ระยะทาง
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
                 </a>
+                <a href="#route" class="hover:text-primary transition relative group py-2">
+                    เส้นทาง
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="#awards" class="hover:text-primary transition relative group py-2">
+                    ของรางวัล
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+                </a>
                 <a href="#schedule" class="hover:text-primary transition relative group py-2">
                     กำหนดการ
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
@@ -71,6 +79,9 @@
                     ติดต่อเรา
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
                 </a>
+                <a href="check_status.php" class="hover:text-primary transition relative group py-2">
+                    ตรวจสอบสถานะ
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
             </div>
 
             <div class="hidden md:flex items-center gap-4">
@@ -97,11 +108,20 @@
                 <a href="#categories" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-red-50 text-gray-700 font-medium transition">
                     <i class="fas fa-route text-primary w-6"></i> ระยะทาง
                 </a>
+                <a href="#route" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-red-50 text-gray-700 font-medium transition">
+                    <i class="fas fa-map-marked-alt text-primary w-6"></i> เส้นทาง
+                </a>
+                <a href="#awards" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-red-50 text-gray-700 font-medium transition">
+                    <i class="fas fa-trophy text-primary w-6"></i> ของรางวัล
+                </a>
                 <a href="#schedule" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-red-50 text-gray-700 font-medium transition">
                     <i class="fas fa-calendar-alt text-primary w-6"></i> กำหนดการ
                 </a>
                 <a href="#contact" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-red-50 text-gray-700 font-medium transition">
                     <i class="fas fa-envelope text-primary w-6"></i> ติดต่อเรา
+                </a>
+                <a href="check_status.php" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-red-50 text-gray-700 font-medium transition">
+                    <i class="fas fa-envelope text-primary w-6"></i> ตรวจสอบสถานะ
                 </a>
                 <hr class="border-gray-100 my-2">
                 <a href="register.php" class="bg-gradient-to-r from-primary to-red-600 text-white py-3 rounded-xl text-center font-bold shadow-lg hover:shadow-red-500/30 transition">
@@ -128,7 +148,7 @@
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
                 </span>
-                <span class="font-medium tracking-wide text-sm md:text-base">14 กุมภาพันธ์ 2569</span>
+                <span class="font-medium tracking-wide text-sm md:text-base">วันเสาร์ที่ 14 กุมภาพันธ์ 2569</span>
             </div>
 
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight tracking-tight drop-shadow-2xl">
@@ -137,7 +157,7 @@
             </h1>
 
             <p class="text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
-                เพื่อส่งเสริมและสนับสนุนให้นักเรียนปัจจุบัน ศิษย์เก่า ของโรงเรียนพิชัย และประชาชนทั่วไป ได้ออกกำลังกายเพื่อสุขภาพ <br class="hidden md:block">
+                เพื่อสมทบทุนจัดซื้อจอ LED, รถตัดหญ้า และพัฒนาการศึกษาโรงเรียนพิชัย <br class="hidden md:block">
                 <span class="text-accent font-medium">"กล้าหาญ เสียสละ รักสามัคคี"</span>
             </p>
 
@@ -208,7 +228,7 @@
                 <div class="lg:w-1/2 relative group">
                     <div class="absolute -inset-4 bg-gradient-to-tr from-primary to-accent rounded-[2rem] blur-lg opacity-30 group-hover:opacity-50 transition duration-500"></div>
                     <div class="relative rounded-[2rem] overflow-hidden shadow-2xl transform group-hover:scale-[1.02] transition duration-500">
-                        <img src="assets/images/shirt.jpeg" alt="Running Shirt" class="w-full h-auto object-cover">
+                        <img src="assets/images/shirt01.JPG" alt="Running Shirt" class="w-full h-auto object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8">
                             <span class="bg-accent text-white text-xs font-bold px-3 py-1 rounded-full mb-2 inline-block">LIMITED EDITION</span>
                             <p class="text-white font-medium">เสื้อวิ่งดีไซน์พิเศษสำหรับปี 2026</p>
@@ -252,7 +272,7 @@
                             </div>
                             <div>
                                 <h4 class="text-xl font-bold text-gray-800 mb-1">รายได้เพื่อการกุศล</h4>
-                                <p class="text-gray-500">เพื่อ.........................</p>
+                                <p class="text-gray-500">เพื่อสมทบทุนจัดซื้อจอ LED, รถตัดหญ้า และพัฒนาการศึกษาโรงเรียนพิชัย</p>
                             </div>
                         </div>
                         
@@ -292,61 +312,131 @@
                 <div class="w-24 h-1.5 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Student Run -->
-                <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 bg-accent text-white text-xs font-bold px-3 py-1 rounded-bl-xl">STUDENT</div>
-                    <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center text-yellow-600 text-2xl mb-6 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-user-graduate"></i>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Walk & Run 3.5 km -->
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                    <div class="bg-orange-500 p-6 text-white text-center">
+                        <h3 class="text-2xl font-bold mb-1">Walk & Run เดินการกุศล</h3>
+                        <p class="text-3xl font-bold opacity-90">3.5 km</p>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Student Run</h3>
-                    <p class="text-4xl font-bold text-primary mb-4">3.5 <span class="text-lg text-gray-500 font-normal">km</span></p>
-                    <p class="text-gray-500 mb-6 text-sm">เหมาะสำหรับนักเรียน/นักศึกษา วิ่งระยะสั้นเพื่อสุขภาพ</p>
-                    <a href="register.php" class="block w-full py-3 rounded-xl border-2 border-yellow-500 text-yellow-600 font-bold text-center hover:bg-yellow-500 hover:text-white transition">
-                        สมัครเลย
-                    </a>
+                    <div class="p-6">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-200 text-gray-500 text-sm">
+                                    <th class="py-3 font-medium">รุ่น (ช/ญ)</th>
+                                    <th class="py-3 font-medium text-center">ค่าสมัคร</th>
+                                    <th class="py-3 font-medium text-center">เสื้อ</th>
+                                    <th class="py-3 font-medium text-center">เหรียญ</th>
+                                    <th class="py-3 font-medium text-center">โล่รางวัล</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700">
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">ประถมศึกษา</td>
+                                    <td class="py-3 text-center">30</td>
+                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">-</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">ม.ต้น</td>
+                                    <td class="py-3 text-center">30</td>
+                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">-</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">ม.ปลาย/ปวช.</td>
+                                    <td class="py-3 text-center">30</td>
+                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium text-primary">VIP</td>
+                                    <td class="py-3 text-center font-bold text-primary">1,200</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-6">
+                            <a href="register.php" class="block w-full py-3 rounded-xl bg-orange-500 text-white font-bold text-center hover:bg-orange-600 transition shadow-lg shadow-orange-500/30">
+                                สมัครระยะ 3.5 km
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Charity Walk -->
-                <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">CHARITY</div>
-                    <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center text-green-600 text-2xl mb-6 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-hand-holding-heart"></i>
+                <!-- Fun Run 5.5 km -->
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                    <div class="bg-blue-600 p-6 text-white text-center">
+                        <h3 class="text-2xl font-bold mb-1">Fun Run</h3>
+                        <p class="text-3xl font-bold opacity-90">5.5 km</p>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">เดินการกุศล</h3>
-                    <p class="text-4xl font-bold text-primary mb-4">3.5 <span class="text-lg text-gray-500 font-normal">km</span></p>
-                    <p class="text-gray-500 mb-6 text-sm">ร่วมสมทบทุนบูรณะและสนับสนุนกิจกรรมสาธารณกุศล</p>
-                    <a href="register.php" class="block w-full py-3 rounded-xl border-2 border-green-500 text-green-600 font-bold text-center hover:bg-green-500 hover:text-white transition">
-                        ร่วมบุญ
-                    </a>
-                </div>
-
-                <!-- Fun Run -->
-                <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">FUN RUN</div>
-                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 text-2xl mb-6 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-running"></i>
+                    <div class="p-6">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-200 text-gray-500 text-sm">
+                                    <th class="py-3 font-medium">รุ่น (ช/ญ)</th>
+                                    <th class="py-3 font-medium text-center">ค่าสมัคร</th>
+                                    <th class="py-3 font-medium text-center">เสื้อ</th>
+                                    <th class="py-3 font-medium text-center">เหรียญ</th>
+                                    <th class="py-3 font-medium text-center">โล่รางวัล</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700">
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">ประถมศึกษา</td>
+                                    <td class="py-3 text-center">300</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center">1-5</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">ม.ต้น</td>
+                                    <td class="py-3 text-center">300</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center">1-5</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">ม.ปลาย/ปวช.</td>
+                                    <td class="py-3 text-center">300</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center">1-5</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">บุคคลทั่วไป</td>
+                                    <td class="py-3 text-center">450</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center">1-5</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">อายุมากกว่า 50</td>
+                                    <td class="py-3 text-center">450</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center">1-5</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium text-primary">VIP</td>
+                                    <td class="py-3 text-center font-bold text-primary">1,200</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-6">
+                            <a href="register.php" class="block w-full py-3 rounded-xl bg-blue-600 text-white font-bold text-center hover:bg-blue-700 transition shadow-lg shadow-blue-600/30">
+                                สมัครระยะ 5.5 km
+                            </a>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Fun Run</h3>
-                    <p class="text-4xl font-bold text-primary mb-4">5 <span class="text-lg text-gray-500 font-normal">km</span></p>
-                    <p class="text-gray-500 mb-6 text-sm">เดิน-วิ่งเพื่อสุขภาพ ระยะกำลังดี สนุกสนานได้ทุกคน</p>
-                    <a href="register.php" class="block w-full py-3 rounded-xl border-2 border-blue-500 text-blue-600 font-bold text-center hover:bg-blue-500 hover:text-white transition">
-                        วิ่งกัน!
-                    </a>
-                </div>
-
-                <!-- Mini Marathon -->
-                <div class="bg-gradient-to-br from-primary to-red-700 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative overflow-hidden group text-white scale-105 z-10">
-                    <div class="absolute top-0 right-0 bg-accent text-gray-900 text-xs font-bold px-3 py-1 rounded-bl-xl">POPULAR</div>
-                    <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-medal"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Mini Marathon</h3>
-                    <p class="text-4xl font-bold mb-4">11.5 <span class="text-lg opacity-80 font-normal">km</span></p>
-                    <p class="opacity-90 mb-6 text-sm">ท้าทายขีดจำกัดกับการวิ่งมินิมาราธอน เส้นทางสวยงาม</p>
-                    <a href="register.php" class="block w-full py-3 rounded-xl bg-white text-primary font-bold text-center hover:bg-gray-100 transition shadow-lg">
-                        สมัครเลย
-                    </a>
                 </div>
             </div>
 
@@ -367,6 +457,67 @@
         </div>
     </section>
 
+    <!-- Route Section -->
+    <section id="route" class="py-20 bg-white relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Race Route</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-4">
+                    เส้นทางวิ่ง
+                </h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto relative group">
+                <div class="absolute -inset-4 bg-gradient-to-r from-primary to-accent rounded-[2.5rem] blur-lg opacity-20 group-hover:opacity-30 transition duration-500"></div>
+                <div class="relative bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-gray-100">
+                    <img src="assets/images/map.png" alt="แผนที่เส้นทางวิ่ง" class="w-full h-auto object-cover transform group-hover:scale-[1.01] transition duration-700">
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <a href="assets/images/map.png" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full font-medium transition">
+                    <i class="fas fa-expand-arrows-alt"></i> ดูแผนที่ขนาดใหญ่
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section id="awards" class="py-20 bg-gray-50 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Race Awards</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-4">
+                    ของรางวัล
+                </h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <!-- Medal -->
+                <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 text-center group hover:-translate-y-2 transition duration-300">
+                    <div class="relative mb-6 inline-block">
+                        <div class="absolute -inset-4 bg-yellow-100 rounded-full blur-xl opacity-50 group-hover:opacity-80 transition"></div>
+                        <img src="assets/images/coin.JPG" alt="เหรียญรางวัล" class="relative h-64 w-auto object-contain mx-auto transform group-hover:scale-110 transition duration-500">
+                    </div>
+                    <h3 class="text-2xl font-bold text-secondary mb-2">เหรียญรางวัลผู้พิชิต</h3>
+                    <p class="text-gray-500">สำหรับนักวิ่งทุกท่านที่เข้าเส้นชัย (ทุกระยะทาง)</p>
+                </div>
+
+                <!-- Trophy -->
+                <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 text-center group hover:-translate-y-2 transition duration-300">
+                    <div class="relative mb-6 inline-block">
+                        <div class="absolute -inset-4 bg-yellow-100 rounded-full blur-xl opacity-50 group-hover:opacity-80 transition"></div>
+                        <img src="assets/images/โล่.png" alt="โล่รางวัล" class="relative h-64 w-auto object-contain mx-auto transform group-hover:scale-110 transition duration-500">
+                    </div>
+                    <h3 class="text-2xl font-bold text-secondary mb-2">โล่รางวัลเกียรติยศ</h3>
+                    <p class="text-gray-500">สำหรับผู้ชนะอันดับ 1-5 ในแต่ละรุ่นอายุ </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Schedule Section -->
     <section id="schedule" class="py-20 bg-secondary text-white relative overflow-hidden">
         <!-- Background Pattern -->
@@ -376,7 +527,7 @@
             <div class="text-center mb-16">
                 <span class="text-accent font-bold tracking-wider uppercase text-sm mb-2 block">Event Schedule</span>
                 <h2 class="text-4xl md:text-5xl font-bold mb-4">กำหนดการวันแข่งขัน</h2>
-                <p class="text-xl text-gray-300">📅 14 กุมภาพันธ์ 2569 — สถานที่จัด: โรงเรียนพิชัย</p>
+                <p class="text-xl text-gray-300">📅 วันเสาร์ที่ 14 กุมภาพันธ์ 2569 — จุดปล่อยตัวและเส้นชัย: โรงเรียนพิชัย</p>
             </div>
 
             <div class="max-w-4xl mx-auto relative">
@@ -388,9 +539,9 @@
                     <!-- Item 1 -->
                     <div class="relative flex flex-col md:flex-row items-center justify-between group">
                         <div class="md:w-1/2 md:pr-12 md:text-right pl-12 md:pl-0">
-                            <h4 class="text-2xl font-bold text-accent mb-1">04:00</h4>
-                            <h5 class="text-xl font-bold mb-2">เปิดจุดรับฝากของ</h5>
-                            <p class="text-gray-400 text-sm">ณ บริเวณสนามฟุตบอลโรงเรียนพิชัย</p>
+                            <h4 class="text-2xl font-bold text-accent mb-1">05:30</h4>
+                            <h5 class="text-xl font-bold mb-2">พิธีเปิด</h5>
+                            <p class="text-gray-400 text-sm">ณ โรงเรียนพิชัย</p>
                         </div>
                         <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-secondary z-10 group-hover:scale-150 transition duration-300"></div>
                         <div class="md:w-1/2 md:pl-12 hidden md:block"></div>
@@ -401,18 +552,18 @@
                         <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
                         <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full border-4 border-secondary z-10 group-hover:scale-150 transition duration-300"></div>
                         <div class="md:w-1/2 md:pl-12 pl-12 md:text-left">
-                            <h4 class="text-2xl font-bold text-accent mb-1">04:45</h4>
-                            <h5 class="text-xl font-bold mb-2">วอร์มอัพร่างกาย</h5>
-                            <p class="text-gray-400 text-sm">นำวอร์มโดยเทรนเนอร์มืออาชีพ เตรียมความพร้อมก่อนวิ่ง</p>
+                            <h4 class="text-2xl font-bold text-accent mb-1">06:00</h4>
+                            <h5 class="text-xl font-bold mb-2">ปล่อยตัว ประเภท FUN RUN 5.5km</h5>
+                            <p class="text-gray-400 text-sm">เดิน-วิ่ง เพื่อสุขภาพ สนุกสนาน</p>
                         </div>
                     </div>
 
                     <!-- Item 3 -->
                     <div class="relative flex flex-col md:flex-row items-center justify-between group">
                         <div class="md:w-1/2 md:pr-12 md:text-right pl-12 md:pl-0">
-                            <h4 class="text-2xl font-bold text-primary mb-1">05:00</h4>
-                            <h5 class="text-xl font-bold mb-2">ปล่อยตัว Half Marathon 21 KM</h5>
-                            <span class="inline-block bg-primary/20 text-primary text-xs font-bold px-2 py-1 rounded border border-primary/50">ระยะไกล</span>
+                            <h4 class="text-2xl font-bold text-primary mb-1">06:15</h4>
+                            <h5 class="text-xl font-bold mb-2">ปล่อยตัว ประเภท Walk&Run 3.5km</h5>
+                            <span class="inline-block bg-primary/20 text-primary text-xs font-bold px-2 py-1 rounded border border-primary/50">ระยะสั้น</span>
                         </div>
                         <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-6 h-6 bg-primary rounded-full border-4 border-secondary z-10 animate-pulse"></div>
                         <div class="md:w-1/2 md:pl-12 hidden md:block"></div>
@@ -423,32 +574,78 @@
                         <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
                         <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-white rounded-full border-4 border-secondary z-10 group-hover:scale-150 transition duration-300"></div>
                         <div class="md:w-1/2 md:pl-12 pl-12 md:text-left">
-                            <h4 class="text-2xl font-bold text-accent mb-1">05:30</h4>
-                            <h5 class="text-xl font-bold mb-2">ปล่อยตัว Mini Marathon 10.5 KM</h5>
-                            <p class="text-gray-400 text-sm">ระยะยอดนิยมสำหรับนักวิ่ง</p>
+                            <h4 class="text-2xl font-bold text-accent mb-1">07:00</h4>
+                            <h5 class="text-xl font-bold mb-2">มอบรางวัล</h5>
+                            <p class="text-gray-400 text-sm">เป็นต้นไป</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    <!-- Item 5 -->
-                    <div class="relative flex flex-col md:flex-row items-center justify-between group">
-                        <div class="md:w-1/2 md:pr-12 md:text-right pl-12 md:pl-0">
-                            <h4 class="text-2xl font-bold text-accent mb-1">06:00</h4>
-                            <h5 class="text-xl font-bold mb-2">ปล่อยตัว Fun Run 5 KM</h5>
-                            <p class="text-gray-400 text-sm">เดิน-วิ่ง เพื่อสุขภาพ สนุกสนาน</p>
+    <!-- Rules & Services Section -->
+    <section id="rules" class="py-20 bg-gray-50 relative">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Rules -->
+                <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-primary text-2xl">
+                            <i class="fas fa-gavel"></i>
                         </div>
-                        <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-white rounded-full border-4 border-secondary z-10 group-hover:scale-150 transition duration-300"></div>
-                        <div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+                        <h3 class="text-2xl font-bold text-secondary">กติกาการแข่งขัน</h3>
                     </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <i class="fas fa-check-circle text-primary mt-1"></i>
+                            <span>การตัดสินของกรรมการถือเป็นเด็ดขาด</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <i class="fas fa-check-circle text-primary mt-1"></i>
+                            <span>ผู้สมัครต้องมีอายุตรงตามกลุ่มอายุที่สมัคร พร้อมแสดงหลักฐานบัตรประชาชนตัวจริง</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <i class="fas fa-check-circle text-primary mt-1"></i>
+                            <span>นักวิ่งต้องผ่านจุด check point ครบถ้วน พร้อมแสดงสัญลักษณ์ เพื่อรับเหรียญรางวัล</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <i class="fas fa-check-circle text-primary mt-1"></i>
+                            <span>นักวิ่งต้องติดหมายเลขประจําตัววิ่ง ที่หน้าอกเสื้อ มองเห็นชัดเจน</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <i class="fas fa-check-circle text-primary mt-1"></i>
+                            <span>สงวนสิทธิ์ในการให้รางวัลในกรณีที่แข่งขัน ผิดประเภท หรือกลุ่มอายุ</span>
+                        </li>
+                    </ul>
+                </div>
 
-                    <!-- Item 6 -->
-                    <div class="relative flex flex-col md:flex-row items-center justify-between group">
-                        <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
-                        <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rounded-full border-4 border-secondary z-10 group-hover:scale-150 transition duration-300"></div>
-                        <div class="md:w-1/2 md:pl-12 pl-12 md:text-left">
-                            <h4 class="text-2xl font-bold text-accent mb-1">07:30</h4>
-                            <h5 class="text-xl font-bold mb-2">พิธีมอบรางวัล</h5>
-                            <p class="text-gray-400 text-sm">และรับประทานอาหารเช้า</p>
+                <!-- Services -->
+                <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 text-2xl">
+                            <i class="fas fa-hand-holding-heart"></i>
                         </div>
+                        <h3 class="text-2xl font-bold text-secondary">จุดบริการ</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <i class="fas fa-tint text-blue-500 mt-1"></i>
+                            <span>บริการน้ำดื่มตามมาตรฐานการจัดแข่งขัน</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <i class="fas fa-user-md text-blue-500 mt-1"></i>
+                            <span>บริการตรวจสุขภาพหน่วยพยาบาล พร้อม รถพยาบาลคอยดูแลตลอดการแข่งขัน</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-600">
+                            <i class="fas fa-users text-blue-500 mt-1"></i>
+                            <span>มีเจ้าหน้าที่อาสาสมัครดูแลตลอดเส้นทาง</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-8 p-4 bg-yellow-50 rounded-xl border border-yellow-100 flex items-start gap-3">
+                        <i class="fas fa-medal text-yellow-600 mt-1"></i>
+                        <p class="text-sm text-yellow-800 font-medium">*รับเหรียญเมื่อเข้าเส้นชัยเท่านั้น</p>
                     </div>
                 </div>
             </div>
@@ -480,7 +677,7 @@
             </h2>
             
             <p class="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto font-light">
-                อย่ารอช้า! จำนวนจำกัด สมัครวันนี้เพื่อรับราคา <span class="font-bold text-accent">Early Bird</span> และของที่ระลึกสุดพิเศษ
+                อย่ารอช้า! จำนวนจำกัด
             </p>
 
             <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-16">
@@ -499,11 +696,11 @@
                     <div class="text-white/70 text-sm uppercase tracking-wider">Runners</div>
                 </div>
                 <div>
-                    <div class="text-4xl md:text-5xl font-bold text-white mb-2">4</div>
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2">2</div>
                     <div class="text-white/70 text-sm uppercase tracking-wider">Distances</div>
                 </div>
                 <div>
-                    <div class="text-4xl md:text-5xl font-bold text-white mb-2">21</div>
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2">5.5</div>
                     <div class="text-white/70 text-sm uppercase tracking-wider">Max KM</div>
                 </div>
                 <div>
@@ -521,14 +718,14 @@
                 <!-- Brand -->
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center gap-4 mb-6">
-                        <img src="assets/images/logo-1.png" class="h-16 w-16 rounded-full border-2 border-white/20">
+                        <img src="assets/images/logo01.JPG" class="h-16 w-16 rounded-full border-2 border-white/20">
                         <div>
                             <h3 class="text-2xl font-bold text-white">PHICHAI RUN 2026</h3>
-                            <p class="text-gray-400 text-sm">วิ่งพิชัยดาบหัก</p>
+                            <p class="text-gray-400 text-sm">พิชัยรัน2026</p>
                         </div>
                     </div>
                     <p class="text-gray-400 mb-8 max-w-md leading-relaxed">
-                        งานวิ่งการกุศลเพื่อสุขภาพและสังคม จัดโดยชมรมวิ่งอำเภอพิชัย ร่วมกับเทศบาลตำบลพิชัย มาร่วมเป็นส่วนหนึ่งของประวัติศาสตร์หน้าใหม่
+                        จัดขึ้นเพื่อเพื่อสมทบทุนจัดซื้อจอ LED, รถตัดหญ้า และพัฒนาการศึกษาโรงเรียนพิชัย
                     </p>
                     <div class="flex gap-4">
                         <a href="https://www.facebook.com/phichairun2026/" target="_blank" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center hover:bg-blue-500 transition transform hover:scale-110">

@@ -3,7 +3,7 @@ class Database {
     private $host = 'localhost';
     private $db_name = 'phichai_run_2026';
     private $username = 'root';
-    private $password = ''; // ใส่รหัสผ่าน Database ของคุณที่นี่
+    private $password = 'storage'; // ใส่รหัสผ่าน Database ของคุณที่นี่
     private $conn;
 
     public function connect() {
