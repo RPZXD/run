@@ -223,10 +223,15 @@ class Registration {
     }
 
     public function checkStatus($phone) {
-        $query = "SELECT * FROM " . $this->table . " WHERE phone = :phone ORDER BY created_at DESC";
+        // Normalize phone: compare only digits.
+        // Use REPLACE chain to remove common separators from stored phone values so they can be matched
+        // against a digits-only input.
+        $query = "SELECT * FROM " . $this->table . " WHERE REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(phone,'-',''),' ',''),'(',''),')',''),'+',''),'.','') = :phone ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($query);
-        $phone = htmlspecialchars(strip_tags($phone));
-        $stmt->bindParam(':phone', $phone);
+        // sanitize and keep digits only for the input
+        $phone_digits = preg_replace('/\D/', '', $phone);
+        $phone_digits = htmlspecialchars(strip_tags($phone_digits));
+        $stmt->bindParam(':phone', $phone_digits);
         $stmt->execute();
         return $stmt;
     }
@@ -236,6 +241,22 @@ class Registration {
         $stmt = $this->conn->prepare($query);
         $id = htmlspecialchars(strip_tags($id));
         $stmt->bindParam(':id', $id);
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function updateShippingStatus($id, $is_printed) {
+        $query = "UPDATE " . $this->table . " SET is_printed = :is_printed WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        
+        $is_printed = (int)$is_printed;
+        $id = htmlspecialchars(strip_tags($id));
+
+        $stmt->bindParam(':is_printed', $is_printed);
+        $stmt->bindParam(':id', $id);
+
         if($stmt->execute()) {
             return true;
         }

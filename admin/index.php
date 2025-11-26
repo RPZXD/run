@@ -75,38 +75,22 @@ foreach ($registrations as $reg) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Phichai Run 2026</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo01.JPG"> 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Kanit', sans-serif; }</style>
+    <!-- Use Sarabun for better Thai readability -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Sarabun', 'Kanit', sans-serif; }</style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-600">
     <!-- Navbar -->
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="relative">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-red-500 to-orange-500 rounded-full blur opacity-75"></div>
-                    <img src="../assets/images/logo-1.png" class="relative h-10 w-10 rounded-full border-2 border-white">
-                </div>
-                <span class="font-bold text-xl tracking-tight text-slate-800">Admin <span class="text-red-500">Dashboard</span></span>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="hidden md:flex items-center gap-2 text-sm text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
-                    <i class="fas fa-user-circle"></i> Admin
-                </div>
-                <a href="logout.php" class="text-slate-500 hover:text-red-600 transition-colors duration-200">
-                    <i class="fas fa-sign-out-alt text-lg"></i>
-                </a>
-            </div>
-        </div>
-    </nav>
+    <?php include 'navbar.php'; ?>
 
     <div class="container mx-auto px-4 py-8 max-w-7xl">
         
         <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 hidden">
             <!-- Total -->
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                 <div class="flex justify-between items-start">

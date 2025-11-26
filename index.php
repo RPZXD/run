@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phichai Run 2026 - วิ่งพิชัยดาบหัก</title>
+    <title>Phichai Run 2026 - สมาคมศิษย์เก่าโรงเรียนพิชัย</title>
+    <link rel="icon" type="image/png" href="assets/images/logo01.JPG">   
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -361,7 +362,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="mt-6">
+                        <div class="mt-6 relative z-10">
                             <a href="register.php" class="block w-full py-3 rounded-xl bg-orange-500 text-white font-bold text-center hover:bg-orange-600 transition shadow-lg shadow-orange-500/30">
                                 สมัครระยะ 3.5 km
                             </a>
@@ -431,7 +432,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="mt-6">
+                        <div class="mt-6 relative z-10">
                             <a href="register.php" class="block w-full py-3 rounded-xl bg-blue-600 text-white font-bold text-center hover:bg-blue-700 transition shadow-lg shadow-blue-600/30">
                                 สมัครระยะ 5.5 km
                             </a>
@@ -441,8 +442,8 @@
             </div>
 
             <!-- Merch Item -->
-            <div class="mt-12 max-w-md mx-auto bg-white rounded-3xl p-6 shadow-lg border border-yellow-200 flex items-center gap-6 hover:shadow-xl transition">
-                <div class="w-20 h-20 bg-yellow-100 rounded-2xl flex items-center justify-center text-yellow-600 text-3xl flex-shrink-0">
+            <a href="register.php" class="mt-12 max-w-md mx-auto bg-white rounded-3xl p-6 shadow-lg border border-yellow-200 flex items-center gap-6 hover:shadow-xl transition group block relative z-10">
+                <div class="w-20 h-20 bg-yellow-100 rounded-2xl flex items-center justify-center text-yellow-600 text-3xl flex-shrink-0 group-hover:scale-110 transition">
                     <i class="fas fa-tshirt"></i>
                 </div>
                 <div class="flex-1">
@@ -451,9 +452,9 @@
                 </div>
                 <div class="text-right">
                     <p class="text-2xl font-bold text-primary">250฿</p>
-                    <a href="register.php" class="text-sm font-bold text-yellow-600 hover:underline">สั่งซื้อ ></a>
+                    <span class="text-sm font-bold text-yellow-600 group-hover:underline">สั่งซื้อ ></span>
                 </div>
-            </div>
+            </a>
         </div>
     </section>
 

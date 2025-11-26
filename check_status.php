@@ -6,7 +6,9 @@ $result = null;
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $phone = $_POST['phone'];
+    // Normalize input: remove any non-digit characters so formats like 08x-xxx-xxxx or +66 8x-xxx-xxxx match stored values
+    $phone_raw = isset($_POST['phone']) ? $_POST['phone'] : '';
+    $phone = preg_replace('/\D/', '', $phone_raw);
     $database = new Database();
     $db = $database->connect();
     $registration = new Registration($db);
@@ -24,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phichai Run 2026 - วิ่งพิชัยดาบหัก</title>
+    <title>Phichai Run 2026 - สมาคมศิษย์เก่าโรงเรียนพิชัย</title>
+    <link rel="icon" type="image/png" href="assets/images/logo01.JPG"> 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -168,10 +171,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <i class="far fa-calendar-alt"></i> สมัครเมื่อ: <?php echo date('d/m/Y H:i', strtotime($row['created_at'])); ?>
                                         </p>
                                     </div>
-                                    <div class="text-right hidden md:block">
+                                    <!-- <div class="text-right hidden md:block">
                                         <div class="text-3xl font-bold text-primary">BIB: -</div>
                                         <div class="text-xs text-gray-400">หมายเลขวิ่ง</div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 rounded-xl p-5 border border-gray-100">

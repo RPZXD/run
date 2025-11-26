@@ -44,7 +44,15 @@ class RegisterController {
             $this->registration->citizen_id = isset($_POST['citizen_id']) ? $_POST['citizen_id'] : null;
             $this->registration->emergency_contact_name = isset($_POST['emergency_contact_name']) ? $_POST['emergency_contact_name'] : null;
             $this->registration->emergency_contact_phone = isset($_POST['emergency_contact_phone']) ? $_POST['emergency_contact_phone'] : null;
-            $this->registration->address = $_POST['address'];
+            
+            // Combine address parts
+            $address_parts = [];
+            if (!empty($_POST['address'])) $address_parts[] = $_POST['address'];
+            if (!empty($_POST['subdistrict'])) $address_parts[] = "ต." . $_POST['subdistrict'];
+            if (!empty($_POST['district_province'])) $address_parts[] = $_POST['district_province'];
+            if (!empty($_POST['postal_code'])) $address_parts[] = $_POST['postal_code'];
+            $this->registration->address = implode(" ", $address_parts);
+
             $this->registration->category = $_POST['category'];
             $this->registration->shirt_size = $_POST['shirt_size'];
             $this->registration->shipping_method = isset($_POST['shipping_method']) ? $_POST['shipping_method'] : 'SELF';
