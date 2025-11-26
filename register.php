@@ -149,12 +149,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div>
                                 <label class="block text-gray-700 font-bold mb-2 text-sm">คำนำหน้า</label>
                                 <select name="prefix" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
-                                    <option value="นาย">นาย</option>
-                                    <option value="นาง">นาง</option>
-                                    <option value="นางสาว">นางสาว</option>
-                                    <option value="ด.ช.">ด.ช.</option>
-                                    <option value="ด.ญ.">ด.ญ.</option>
+                                    <option value="" selected disabled>-- กรุณาเลือก --</option>
+                                    
+                                    <optgroup label="บุคคลทั่วไป">
+                                        <option value="นาย">นาย</option>
+                                        <option value="นาง">นาง</option>
+                                        <option value="นางสาว">นางสาว</option>
+                                        <option value="ด.ช.">ด.ช.</option>
+                                        <option value="ด.ญ.">ด.ญ.</option>
+                                    </optgroup>
+
+                                    <optgroup label="วุฒิการศึกษา">
+                                        <option value="ดร.">ดร.</option>
+                                        <option value="ผศ.">ผศ.</option>
+                                        <option value="รศ.">รศ.</option>
+                                        <option value="ศ.">ศ.</option>
+                                        <option value="ผศ.ดร.">ผศ.ดร.</option>
+                                        <option value="รศ.ดร.">รศ.ดร.</option>
+                                        <option value="ศ.ดร.">ศ.ดร.</option>
+                                    </optgroup>
+
+                                    <optgroup label="วิชาชีพแพทย์">
+                                        <option value="นพ.">นพ.</option>
+                                        <option value="พญ.">พญ.</option>
+                                        <option value="ทพ.">ทพ.</option>
+                                        <option value="ทพญ.">ทพญ.</option>
+                                        <option value="สพ.ญ.">สพ.ญ.</option>
+                                        <option value="น.สพ.">น.สพ.</option>
+                                    </optgroup>
+
+                                    <optgroup label="ยศตำรวจ/ทหาร">
+                                        <option value="ว่าที่ร้อยตรี">ว่าที่ร้อยตรี</option>
+                                        <option value="ร.ต.ต.">ร.ต.ต.</option>
+                                        <option value="ร.ต.ท.">ร.ต.ท.</option>
+                                        <option value="ร.ต.อ.">ร.ต.อ.</option>
+                                        <option value="พ.ต.ต.">พ.ต.ต.</option>
+                                        <option value="พ.ต.ท.">พ.ต.ท.</option>
+                                        <option value="พ.ต.อ.">พ.ต.อ.</option>
+                                        <option value="พล.ต.ต.">พล.ต.ต.</option>
+                                        <option value="พล.ต.ท.">พล.ต.ท.</option>
+                                        <option value="พล.ต.อ.">พล.ต.อ.</option>
+                                        <option value="ร.ต.">ร.ต.</option>
+                                        <option value="ร.ท.">ร.ท.</option>
+                                        <option value="ร.อ.">ร.อ.</option>
+                                        <option value="พ.ต.">พ.ต.</option>
+                                        <option value="พ.ท.">พ.ท.</option>
+                                        <option value="พ.อ.">พ.อ.</option>
+                                        <option value="พล.ต.">พล.ต.</option>
+                                        <option value="พล.ท.">พล.ท.</option>
+                                        <option value="พล.อ.">พล.อ.</option>
+                                    </optgroup>
+
+                                    <option value="other">ระบุอื่นๆ...</option>
                                 </select>
+                                
+                                <input type="text" name="prefix_other" placeholder="โปรดระบุคำนำหน้า" class="hidden mt-2 w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
                             </div>
                             <div>
                                 <label class="block text-gray-700 font-bold mb-2 text-sm">ชื่อ (ภาษาไทย)</label>
@@ -1112,15 +1161,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // compose hidden full_name before submit to keep backend compatibility
             const form = document.getElementById('regForm');
+            // Prefix "Other" handling: show/hide input and ensure correct value is posted
+            const prefixSelect = document.querySelector('select[name="prefix"]');
+            const prefixOtherInput = document.querySelector('input[name="prefix_other"]');
+
+            if (prefixSelect && prefixOtherInput) {
+                prefixSelect.addEventListener('change', (e) => {
+                    if (e.target.value === 'other') {
+                        prefixOtherInput.classList.remove('hidden');
+                        prefixOtherInput.focus();
+                        prefixOtherInput.required = true;
+                    } else {
+                        prefixOtherInput.classList.add('hidden');
+                        prefixOtherInput.required = false;
+                        prefixOtherInput.value = '';
+                    }
+                });
+            }
+
             if (form) {
                 form.addEventListener('submit', (ev) => {
-                    const prefix = (document.querySelector('select[name="prefix"]') || {}).value || '';
+                    // If user selected "other", ensure they provided a value and submit that as the prefix
+                    if (prefixSelect && prefixSelect.value === 'other') {
+                        if (!prefixOtherInput || !prefixOtherInput.value.trim()) {
+                            ev.preventDefault();
+                            if (prefixOtherInput) {
+                                prefixOtherInput.classList.remove('hidden');
+                                prefixOtherInput.focus();
+                                prefixOtherInput.reportValidity();
+                            }
+                            alert('กรุณาระบุคำนำหน้า');
+                            return;
+                        }
+
+                        // disable the select so it doesn't submit its literal "other" value
+                        prefixSelect.disabled = true;
+
+                        // create or update a hidden input named "prefix" with the custom value so backend receives it
+                        let hiddenPrefix = document.querySelector('input[name="prefix"][type="hidden"]');
+                        if (!hiddenPrefix) {
+                            hiddenPrefix = document.createElement('input');
+                            hiddenPrefix.type = 'hidden';
+                            hiddenPrefix.name = 'prefix';
+                            form.appendChild(hiddenPrefix);
+                        }
+                        hiddenPrefix.value = prefixOtherInput.value.trim();
+                    }
+
+                    // determine final prefix (use custom other value if provided)
+                    const selectNode = document.querySelector('select[name="prefix"]');
                     const first = (document.querySelector('input[name="first_name"]') || {}).value || '';
                     const last = (document.querySelector('input[name="last_name"]') || {}).value || '';
+                    let finalPrefix = '';
+                    if (selectNode) {
+                        if (selectNode.value === 'other') {
+                            const hiddenPrefixNode = document.querySelector('input[name="prefix"][type="hidden"]');
+                            if (hiddenPrefixNode && hiddenPrefixNode.value) finalPrefix = hiddenPrefixNode.value;
+                            else if (prefixOtherInput && prefixOtherInput.value) finalPrefix = prefixOtherInput.value.trim();
+                            else finalPrefix = selectNode.value;
+                        } else {
+                            finalPrefix = selectNode.value;
+                        }
+                    }
                     const hiddenFull = document.getElementById('hidden_full_name');
-                    if (hiddenFull) hiddenFull.value = [prefix, first, last].filter(Boolean).join(' ').trim();
+                    if (hiddenFull) hiddenFull.value = [finalPrefix, first, last].filter(Boolean).join(' ').trim();
                 });
-
+            
                 // Stepper logic
                 const steps = Array.from(document.querySelectorAll('.form-step'));
                 let currentStep = 0; // 0-based index
