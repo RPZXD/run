@@ -1,0 +1,16 @@
+# Ignore uploads directory (user uploaded files)
+uploads/
+
+# Common PHP / project ignores
+.env
+.env.local
+/.idea/
+.vscode/
+vendor/
+composer.lock
+*.log
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
