@@ -76,6 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></style>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- QR Code Generator -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 </head>
@@ -109,10 +111,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container mx-auto px-4 max-w-3xl relative z-10">
             
             <?php if ($message): ?>
-                <div class="mb-8 p-4 rounded-2xl shadow-lg backdrop-blur-md <?php echo $status === 'success' ? 'bg-green-100/90 text-green-800 border border-green-200' : 'bg-red-100/90 text-red-800 border border-red-200'; ?> text-center animate-fade-in-up visible">
-                    <i class="fas <?php echo $status === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'; ?> text-xl mr-2"></i>
-                    <span class="font-bold"><?php echo $message; ?></span>
-                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: '<?php echo $status === "success" ? "success" : "error"; ?>',
+                            title: '<?php echo $status === "success" ? "สำเร็จ!" : "ข้อผิดพลาด"; ?>',
+                            text: '<?php echo $message; ?>',
+                            confirmButtonText: 'ตกลง',
+                            customClass: {
+                                popup: 'rounded-3xl shadow-xl border border-gray-100',
+                                confirmButton: 'bg-gradient-to-r from-primary to-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1',
+                                title: 'text-2xl font-bold text-secondary font-sans',
+                                htmlContainer: 'text-gray-600 font-sans'
+                            },
+                            buttonsStyling: false
+                        }).then((result) => {
+                            <?php if ($status === 'success'): ?>
+                                window.location.href = 'index.php';
+                            <?php endif; ?>
+                        });
+                    });
+                </script>
             <?php endif; ?>
 
             <div class="glass-card rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up visible">
@@ -1209,9 +1228,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             if (prefixOtherInput) {
                                 prefixOtherInput.classList.remove('hidden');
                                 prefixOtherInput.focus();
-                                prefixOtherInput.reportValidity();
                             }
-                            alert('กรุณาระบุคำนำหน้า');
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'ข้อมูลไม่ครบถ้วน',
+                                text: 'กรุณาระบุคำนำหน้า',
+                                confirmButtonText: 'ตกลง',
+                                customClass: {
+                                    popup: 'rounded-3xl shadow-xl border border-gray-100',
+                                    confirmButton: 'bg-gradient-to-r from-primary to-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1',
+                                    title: 'text-2xl font-bold text-secondary font-sans',
+                                    htmlContainer: 'text-gray-600 font-sans'
+                                },
+                                buttonsStyling: false
+                            });
                             return;
                         }
 
@@ -1265,6 +1295,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (progressBar) progressBar.style.width = progress + '%';
                 };
 
+                // Helper for SweetAlert
+                const showError = (msg) => {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'ข้อมูลไม่ครบถ้วน',
+                        text: msg,
+                        confirmButtonText: 'ตกลง',
+                        customClass: {
+                            popup: 'rounded-3xl shadow-xl border border-gray-100',
+                            confirmButton: 'bg-gradient-to-r from-primary to-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1',
+                            title: 'text-2xl font-bold text-secondary font-sans',
+                            htmlContainer: 'text-gray-600 font-sans'
+                        },
+                        buttonsStyling: false
+                    });
+                };
+
                 // attach next/prev handlers
                 document.addEventListener('click', (e) => {
                     if (e.target.matches('.next-btn')) {
@@ -1280,14 +1327,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     if (r.checked) checked = true;
                                 }
                                 if (!checked) {
-                                    alert('กรุณาเลือก ' + (f.name === 'gender' ? 'เพศ' : 'ตัวเลือก'));
+                                    showError('กรุณาเลือก ' + (f.name === 'gender' ? 'เพศ' : 'ตัวเลือก'));
                                     isValid = false;
                                     break;
                                 }
                             } else {
                                 if (!f.value) {
+                                    // Find label text if possible
+                                    let labelText = 'ข้อมูล';
+                                    const label = f.closest('div')?.querySelector('label');
+                                    if (label) labelText = label.innerText.replace('*', '').trim();
+                                    
+                                    showError('กรุณากรอก ' + labelText);
                                     f.focus();
-                                    f.reportValidity();
                                     isValid = false;
                                     break;
                                 }
@@ -1421,7 +1473,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             if(!validateCID(val)) {
                                 cidError.classList.remove('hidden');
                                 cidInput.classList.add('border-red-500');
-                                cidInput.setCustomValidity('เลขบัตรประชาชนไม่ถูกต้อง');
+                                // cidInput.setCustomValidity('เลขบัตรประชาชนไม่ถูกต้อง');
                             } else {
                                                                cidError.classList.add('hidden');
                                 cidInput.classList.remove('border-red-500');

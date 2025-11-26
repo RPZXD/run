@@ -547,12 +547,12 @@ foreach ($category_counts as $row) {
             <div class="max-w-4xl mx-auto relative group">
                 <div class="absolute -inset-4 bg-gradient-to-r from-primary to-accent rounded-[2.5rem] blur-lg opacity-20 group-hover:opacity-30 transition duration-500"></div>
                 <div class="relative bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-gray-100">
-                    <img src="assets/images/map.png" alt="แผนที่เส้นทางวิ่ง" class="w-full h-auto object-cover transform group-hover:scale-[1.01] transition duration-700">
+                    <img src="assets/images/map2.jpeg" alt="แผนที่เส้นทางวิ่ง" class="w-full h-auto object-cover transform group-hover:scale-[1.01] transition duration-700">
                 </div>
             </div>
             
             <div class="text-center mt-10">
-                <a href="assets/images/map.png" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full font-medium transition">
+                <a href="assets/images/map2.jpeg" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full font-medium transition">
                     <i class="fas fa-expand-arrows-alt"></i> ดูแผนที่ขนาดใหญ่
                 </a>
             </div>
