@@ -1141,8 +1141,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 const calcAge = (dob) => {
                     const today = new Date();
                     const birth = new Date(dob);
-                    if (isNaN(birth)) return '';
-                    let age = today.getFullYear() - birth.getFullYear();
+                    if (isNaN(birth.getTime())) return '';
+                    
+                    let birthYear = birth.getFullYear();
+                    // Adjust for Buddhist Era (BE) if year > 2400
+                    if (birthYear > 2400) {
+                        birthYear -= 543;
+                        birth.setFullYear(birthYear);
+                    }
+
+                    let age = today.getFullYear() - birthYear;
                     const m = today.getMonth() - birth.getMonth();
                     if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
                         age--;
@@ -1181,6 +1189,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (form) {
                 form.addEventListener('submit', (ev) => {
+                    // Normalize birth_date from BE to CE if needed (e.g. 2568 -> 2025)
+                    const birthInput = document.querySelector('input[name="birth_date"]');
+                    if (birthInput && birthInput.value) {
+                        const parts = birthInput.value.split('-');
+                        if (parts.length === 3) {
+                            let y = parseInt(parts[0]);
+                            if (y > 2400) {
+                                y -= 543;
+                                birthInput.value = `${y}-${parts[1]}-${parts[2]}`;
+                            }
+                        }
+                    }
+
                     // If user selected "other", ensure they provided a value and submit that as the prefix
                     if (prefixSelect && prefixSelect.value === 'other') {
                         if (!prefixOtherInput || !prefixOtherInput.value.trim()) {
@@ -1346,7 +1367,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             else total += 300; // Students
                         }
                         // Merchandise
-                        else if (val === 'Souvenir Shirt Only') {
+                        else if (val === 'Shirt Only') {
                             total += 250;
                         }
                     }
