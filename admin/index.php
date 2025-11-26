@@ -81,9 +81,21 @@ foreach ($registrations as $reg) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Use Sarabun for better Thai readability -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Sarabun', 'Kanit', sans-serif; }</style>
+    <style>
+        body { font-family: 'Sarabun', 'Kanit', sans-serif; }
+        @keyframes fade-in-up {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+    </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-600">
+<body class="bg-slate-50 font-sans text-slate-600 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMCwgMCwgMCwgMC4wNSkiLz48L3N2Zz4=')]">
     <!-- Navbar -->
     <?php include 'navbar.php'; ?>
 
@@ -145,25 +157,28 @@ foreach ($registrations as $reg) {
         </div>
 
         <!-- Main Table Card -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-            <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden animate-fade-in-up">
+            <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-white">
                 <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                    <i class="fas fa-list-alt text-slate-400"></i> รายการผู้สมัคร
+                    <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    รายการผู้สมัคร
                 </h2>
                 <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                    <div class="relative">
-                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="ค้นหาชื่อ, เบอร์โทร..." class="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 w-full sm:w-64 transition-all">
+                    <div class="relative group">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
+                        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="ค้นหาชื่อ, เบอร์โทร..." class="pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 w-full sm:w-64 transition-all bg-slate-50 focus:bg-white">
                     </div>
                     <div class="flex gap-2">
-                        <select id="statusFilter" onchange="filterTable()" class="px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white text-slate-600 cursor-pointer">
+                        <select id="statusFilter" onchange="filterTable()" class="px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-slate-50 focus:bg-white text-slate-600 cursor-pointer transition-all">
                             <option value="all">สถานะทั้งหมด</option>
                             <option value="pending">รอตรวจสอบ</option>
                             <option value="approved">อนุมัติแล้ว</option>
                             <option value="rejected">ปฏิเสธ</option>
                         </select>
-                        <button onclick="exportTableToCSV('registrations.csv')" class="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition shadow-lg shadow-red-200 flex items-center gap-2 whitespace-nowrap">
-                            <i class="fas fa-download"></i> <span class="hidden sm:inline">Export</span>
+                        <button onclick="exportTableToCSV('registrations.csv')" class="px-4 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl text-sm font-bold hover:shadow-lg hover:shadow-green-500/30 transition-all transform hover:-translate-y-0.5 flex items-center gap-2 whitespace-nowrap">
+                            <i class="fas fa-file-excel"></i> <span class="hidden sm:inline">Export</span>
                         </button>
                     </div>
                 </div>
@@ -172,63 +187,68 @@ foreach ($registrations as $reg) {
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse" id="registrationsTable">
                     <thead>
-                        <tr class="bg-slate-50/50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
-                            <th class="px-6 py-4 font-semibold">ID</th>
-                            <th class="px-6 py-4 font-semibold">ผู้สมัคร</th>
-                            <th class="px-6 py-4 font-semibold">ประเภท/ไซส์</th>
-                            <th class="px-6 py-4 font-semibold">การชำระเงิน</th>
-                            <th class="px-6 py-4 font-semibold text-center">สถานะ</th>
-                            <th class="px-6 py-4 font-semibold text-center">หลักฐาน</th>
-                            <th class="px-6 py-4 font-semibold text-right">จัดการ</th>
+                        <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
+                            <th class="px-6 py-4 font-bold">ID</th>
+                            <th class="px-6 py-4 font-bold">ผู้สมัคร</th>
+                            <th class="px-6 py-4 font-bold">ประเภท/ไซส์</th>
+                            <th class="px-6 py-4 font-bold">การชำระเงิน</th>
+                            <th class="px-6 py-4 font-bold text-center">สถานะ</th>
+                            <th class="px-6 py-4 font-bold text-center">หลักฐาน</th>
+                            <th class="px-6 py-4 font-bold text-right">จัดการ</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
                         <?php if (empty($registrations)): ?>
                             <tr>
                                 <td colspan="7" class="px-6 py-12 text-center text-slate-400">
-                                    <i class="fas fa-inbox text-4xl mb-3 block opacity-50"></i>
-                                    ยังไม่มีข้อมูลผู้สมัคร
+                                    <div class="flex flex-col items-center justify-center">
+                                        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                                            <i class="fas fa-inbox text-3xl text-slate-300"></i>
+                                        </div>
+                                        <p>ยังไม่มีข้อมูลผู้สมัคร</p>
+                                    </div>
                                 </td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($registrations as $row): ?>
-                                <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <tr class="hover:bg-blue-50/30 transition-colors group">
                                     <td class="px-6 py-4 text-slate-400 font-mono text-xs">#<?php echo str_pad($row['id'], 4, '0', STR_PAD_LEFT); ?></td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-3">
-                                            <div class="h-10 w-10 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-500 font-bold text-sm">
+                                            <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-blue-600 font-bold text-sm shadow-sm border border-white">
                                                 <?php echo mb_substr($row['first_name'] ?? $row['full_name'], 0, 1); ?>
                                             </div>
                                             <div>
                                                 <div class="font-bold text-slate-800"><?php echo $row['full_name']; ?></div>
                                                 <div class="text-xs text-slate-500 flex items-center gap-2">
-                                                    <span><i class="fas fa-phone-alt text-[10px]"></i> <?php echo $row['phone']; ?></span>
+                                                    <span class="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]"><i class="fas fa-phone-alt text-[9px] mr-1"></i> <?php echo $row['phone']; ?></span>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="text-sm font-medium text-slate-700"><?php echo $row['category']; ?></div>
-                                        <div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-wide">
+                                        <div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 text-[10px] font-bold uppercase tracking-wide border border-indigo-100">
                                             <i class="fas fa-tshirt"></i> <?php echo $row['shirt_size']; ?>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <?php if (!empty($row['payment_date'])): ?>
                                             <div class="text-sm font-bold text-slate-700">฿<?php echo number_format($row['payment_amount']); ?></div>
-                                            <div class="text-xs text-slate-400">
+                                            <div class="text-xs text-slate-400 flex items-center gap-1">
+                                                <i class="far fa-clock"></i>
                                                 <?php echo date('d/m/y', strtotime($row['payment_date'])); ?> • <?php echo date('H:i', strtotime($row['payment_time'])); ?>
                                             </div>
                                         <?php else: ?>
-                                            <span class="text-slate-300 text-xs italic">ยังไม่แจ้งโอน</span>
+                                            <span class="text-slate-300 text-xs italic bg-slate-50 px-2 py-1 rounded">ยังไม่แจ้งโอน</span>
                                         <?php endif; ?>
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         <?php 
                                             $statusStyles = [
-                                                'pending' => 'bg-yellow-50 text-yellow-700 border-yellow-200',
-                                                'approved' => 'bg-green-50 text-green-700 border-green-200',
-                                                'rejected' => 'bg-red-50 text-red-700 border-red-200'
+                                                'pending' => 'bg-yellow-50 text-yellow-700 border-yellow-200 ring-yellow-500/20',
+                                                'approved' => 'bg-green-50 text-green-700 border-green-200 ring-green-500/20',
+                                                'rejected' => 'bg-red-50 text-red-700 border-red-200 ring-red-500/20'
                                             ];
                                             $statusLabels = [
                                                 'pending' => 'รอตรวจสอบ',
@@ -237,8 +257,8 @@ foreach ($registrations as $reg) {
                                             ];
                                             $s = $row['status'] ?? 'pending';
                                         ?>
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border <?php echo $statusStyles[$s]; ?>">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-current mr-1.5"></span>
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border ring-2 ring-offset-1 <?php echo $statusStyles[$s]; ?>">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-current mr-1.5 animate-pulse"></span>
                                             <?php echo $statusLabels[$s]; ?>
                                         </span>
                                     </td>
@@ -246,35 +266,36 @@ foreach ($registrations as $reg) {
                                         <?php if ($row['payment_slip']): ?>
                                             <div class="relative group/slip inline-block">
                                                 <img src="view_slip.php?file=<?php echo $row['payment_slip']; ?>" 
-                                                     class="h-10 w-10 object-cover rounded-lg border border-slate-200 shadow-sm cursor-zoom-in hover:scale-110 transition-transform"
+                                                     class="h-10 w-10 object-cover rounded-lg border-2 border-white shadow-md cursor-zoom-in hover:scale-110 transition-transform duration-200"
                                                      onclick="openImageModal('view_slip.php?file=<?php echo $row['payment_slip']; ?>')"
                                                      alt="Slip">
+                                                <div class="absolute inset-0 bg-black/20 rounded-lg opacity-0 group-hover/slip:opacity-100 transition-opacity pointer-events-none"></div>
                                             </div>
                                         <?php else: ?>
                                             <span class="text-slate-300">-</span>
                                         <?php endif; ?>
                                     </td>
                                     <td class="px-6 py-4 text-right">
-                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200 transform translate-x-2 group-hover:translate-x-0">
                                             <?php if ($row['status'] === 'pending'): ?>
                                                 <form method="POST" onsubmit="return confirmAction(event, 'ยืนยันการอนุมัติ?', 'อนุมัติ');">
                                                     <input type="hidden" name="action" value="update_status">
                                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                                     <input type="hidden" name="status" value="approved">
-                                                    <button type="submit" class="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-500 hover:text-white flex items-center justify-center transition-all" title="อนุมัติ">
+                                                    <button type="submit" class="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-500 hover:text-white flex items-center justify-center transition-all shadow-sm hover:shadow-md" title="อนุมัติ">
                                                         <i class="fas fa-check"></i>
                                                     </button>
                                                 </form>
                                             <?php endif; ?>
                                             
-                                            <button onclick='openModal(<?php echo json_encode($row); ?>)' class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white flex items-center justify-center transition-all" title="แก้ไข">
+                                            <button onclick='openModal(<?php echo json_encode($row); ?>)' class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white flex items-center justify-center transition-all shadow-sm hover:shadow-md" title="แก้ไข">
                                                 <i class="fas fa-pen"></i>
                                             </button>
                                             
                                             <form method="POST" onsubmit="return confirmAction(event, 'ยืนยันการลบข้อมูลนี้?', 'ลบข้อมูล');">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                <button type="submit" class="w-8 h-8 rounded-full bg-red-50 text-red-600 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all" title="ลบ">
+                                                <button type="submit" class="w-8 h-8 rounded-full bg-red-50 text-red-600 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all shadow-sm hover:shadow-md" title="ลบ">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>

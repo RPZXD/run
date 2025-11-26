@@ -11,15 +11,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <span class="font-bold text-xl tracking-tight text-slate-800">Admin <span class="text-red-500">Panel</span></span>
         </div>
         
-        <div class="flex items-center gap-1 bg-slate-100/50 p-1 rounded-xl overflow-x-auto max-w-full">
-            <a href="dashboard.php" class="px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap <?php echo $current_page == 'dashboard.php' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'; ?>">
-                <i class="fas fa-chart-pie mr-1"></i> ภาพรวม
+        <div class="flex items-center gap-1 bg-slate-100/50 p-1 rounded-xl overflow-x-auto max-w-full border border-slate-200/50">
+            <a href="dashboard.php" class="px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap flex items-center gap-2 <?php echo $current_page == 'dashboard.php' ? 'bg-white text-blue-600 shadow-sm ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'; ?>">
+                <i class="fas fa-chart-pie <?php echo $current_page == 'dashboard.php' ? 'text-blue-500' : 'text-slate-400'; ?>"></i> ภาพรวม
             </a>
-            <a href="index.php" class="px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap <?php echo $current_page == 'index.php' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'; ?>">
-                <i class="fas fa-list-check mr-1"></i> ตรวจสอบสลิป
+            <a href="index.php" class="px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap flex items-center gap-2 <?php echo $current_page == 'index.php' ? 'bg-white text-blue-600 shadow-sm ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'; ?>">
+                <i class="fas fa-list-check <?php echo $current_page == 'index.php' ? 'text-blue-500' : 'text-slate-400'; ?>"></i> ตรวจสอบสลิป
             </a>
-            <a href="shipping.php" class="px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap <?php echo $current_page == 'shipping.php' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'; ?>">
-                <i class="fas fa-shipping-fast mr-1"></i> จัดส่ง
+            <a href="shipping.php" class="px-4 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap flex items-center gap-2 <?php echo $current_page == 'shipping.php' ? 'bg-white text-blue-600 shadow-sm ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'; ?>">
+                <i class="fas fa-shipping-fast <?php echo $current_page == 'shipping.php' ? 'text-blue-500' : 'text-slate-400'; ?>"></i> จัดส่ง
             </a>
         </div>
 

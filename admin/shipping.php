@@ -63,6 +63,14 @@ foreach ($shipping_list as $item) {
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Sarabun', sans-serif; }
+        @keyframes fade-in-up {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+            opacity: 0;
+        }
         
         /* Print Styles */
         @media print {
@@ -86,20 +94,25 @@ foreach ($shipping_list as $item) {
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-600">
+<body class="bg-slate-50 text-slate-600 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMCwgMCwgMCwgMC4wNSkiLz48L3N2Zz4=')]">
     <div class="no-print">
         <?php include 'navbar.php'; ?>
     </div>
 
-    <div class="container mx-auto px-4 py-8 max-w-7xl">
+    <div class="container mx-auto px-4 py-8 max-w-7xl animate-fade-in-up">
         <!-- Header & Actions -->
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 no-print">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 no-print">
             <div>
-                <h1 class="text-2xl font-bold text-slate-800">จัดการการจัดส่ง (Shipping)</h1>
-                <p class="text-slate-500 text-sm">รายการที่ต้องจัดส่งทางไปรษณีย์</p>
+                <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <div class="p-2 bg-blue-100 text-blue-600 rounded-lg">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    จัดการการจัดส่ง (Shipping)
+                </h1>
+                <p class="text-slate-500 text-sm mt-1 ml-12">รายการที่ต้องจัดส่งทางไปรษณีย์</p>
             </div>
             <div class="flex gap-2">
-                <button onclick="printSelected()" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition font-bold flex items-center gap-2">
+                <button onclick="printSelected()" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2.5 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all font-bold flex items-center gap-2">
                     <i class="fas fa-print"></i> พิมพ์รายการที่เลือก
                 </button>
             </div>
@@ -107,27 +120,32 @@ foreach ($shipping_list as $item) {
 
         <!-- Tabs -->
         <div class="flex gap-4 mb-6 border-b border-slate-200 no-print">
-            <button onclick="switchTab('pending')" id="tab-pending" class="px-4 py-2 font-bold text-blue-600 border-b-2 border-blue-600 transition-colors">
-                รอพิมพ์ (<?php echo count($pending_print); ?>)
+            <button onclick="switchTab('pending')" id="tab-pending" class="px-6 py-3 font-bold text-blue-600 border-b-2 border-blue-600 transition-all hover:bg-blue-50/50 rounded-t-lg flex items-center gap-2">
+                <span class="bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded-full"><?php echo count($pending_print); ?></span>
+                รอพิมพ์
             </button>
-            <button onclick="switchTab('printed')" id="tab-printed" class="px-4 py-2 font-bold text-slate-500 hover:text-slate-700 transition-colors">
-                พิมพ์แล้ว (<?php echo count($printed); ?>)
+            <button onclick="switchTab('printed')" id="tab-printed" class="px-6 py-3 font-bold text-slate-500 hover:text-slate-700 transition-all hover:bg-slate-50 rounded-t-lg flex items-center gap-2">
+                <span class="bg-slate-200 text-slate-600 text-xs px-2 py-0.5 rounded-full"><?php echo count($printed); ?></span>
+                พิมพ์แล้ว
             </button>
         </div>
 
         <!-- Content Area -->
         <div id="content-pending" class="tab-content">
             <?php if (empty($pending_print)): ?>
-                <div class="text-center py-12 bg-white rounded-2xl shadow-sm border border-slate-100">
-                    <i class="fas fa-check-circle text-4xl text-green-300 mb-3"></i>
-                    <p class="text-slate-500">ไม่มีรายการค้างพิมพ์</p>
+                <div class="text-center py-16 bg-white rounded-2xl shadow-sm border border-slate-100">
+                    <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check-circle text-4xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800">ยอดเยี่ยม!</h3>
+                    <p class="text-slate-500 mt-2">ไม่มีรายการค้างพิมพ์ในขณะนี้</p>
                 </div>
             <?php else: ?>
-                <div class="flex items-center gap-2 mb-4 no-print bg-blue-50 p-3 rounded-lg border border-blue-100">
-                    <input type="checkbox" id="selectAllPending" onchange="toggleAll('pending')" class="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
-                    <label for="selectAllPending" class="font-bold text-slate-700 cursor-pointer">เลือกทั้งหมด</label>
+                <div class="flex items-center gap-2 mb-4 no-print bg-blue-50 p-4 rounded-xl border border-blue-100 shadow-sm">
+                    <input type="checkbox" id="selectAllPending" onchange="toggleAll('pending')" class="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
+                    <label for="selectAllPending" class="font-bold text-slate-700 cursor-pointer select-none">เลือกทั้งหมด</label>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 print-container">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 print-container">
                     <?php foreach ($pending_print as $row): ?>
                         <?php include 'shipping_card.php'; ?>
                     <?php endforeach; ?>
@@ -137,19 +155,21 @@ foreach ($shipping_list as $item) {
 
         <div id="content-printed" class="tab-content hidden">
             <?php if (empty($printed)): ?>
-                <div class="text-center py-12 bg-white rounded-2xl shadow-sm border border-slate-100">
-                    <i class="fas fa-print text-4xl text-slate-300 mb-3"></i>
+                <div class="text-center py-16 bg-white rounded-2xl shadow-sm border border-slate-100">
+                    <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-print text-4xl text-slate-300"></i>
+                    </div>
                     <p class="text-slate-500">ยังไม่มีรายการที่พิมพ์แล้ว</p>
                 </div>
             <?php else: ?>
-                <div class="flex items-center gap-2 mb-4 no-print bg-slate-100 p-3 rounded-lg border border-slate-200">
-                    <input type="checkbox" id="selectAllPrinted" onchange="toggleAll('printed')" class="w-5 h-5 rounded border-slate-300 text-slate-600 focus:ring-slate-500">
-                    <label for="selectAllPrinted" class="font-bold text-slate-700 cursor-pointer">เลือกทั้งหมด</label>
-                    <button onclick="markAsUnprinted()" class="ml-auto text-sm text-red-600 hover:underline">
+                <div class="flex items-center gap-2 mb-4 no-print bg-slate-100 p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <input type="checkbox" id="selectAllPrinted" onchange="toggleAll('printed')" class="w-5 h-5 rounded border-slate-300 text-slate-600 focus:ring-slate-500 cursor-pointer">
+                    <label for="selectAllPrinted" class="font-bold text-slate-700 cursor-pointer select-none">เลือกทั้งหมด</label>
+                    <button onclick="markAsUnprinted()" class="ml-auto text-sm text-red-600 hover:text-red-700 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors font-bold flex items-center gap-1">
                         <i class="fas fa-undo"></i> ย้ายกลับไป "รอพิมพ์"
                     </button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 print-container">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 print-container">
                     <?php foreach ($printed as $row): ?>
                         <?php include 'shipping_card.php'; ?>
                     <?php endforeach; ?>
@@ -165,10 +185,17 @@ foreach ($shipping_list as $item) {
             document.getElementById('content-' + tab).classList.remove('hidden');
             
             // Update buttons
-            document.getElementById('tab-pending').className = 'px-4 py-2 font-bold text-slate-500 hover:text-slate-700 transition-colors';
-            document.getElementById('tab-printed').className = 'px-4 py-2 font-bold text-slate-500 hover:text-slate-700 transition-colors';
+            const btnPending = document.getElementById('tab-pending');
+            const btnPrinted = document.getElementById('tab-printed');
             
-            document.getElementById('tab-' + tab).className = 'px-4 py-2 font-bold text-blue-600 border-b-2 border-blue-600 transition-colors';
+            // Reset classes
+            const inactiveClass = 'px-6 py-3 font-bold text-slate-500 hover:text-slate-700 transition-all hover:bg-slate-50 rounded-t-lg flex items-center gap-2';
+            const activeClass = 'px-6 py-3 font-bold text-blue-600 border-b-2 border-blue-600 transition-all hover:bg-blue-50/50 rounded-t-lg flex items-center gap-2';
+            
+            btnPending.className = inactiveClass;
+            btnPrinted.className = inactiveClass;
+            
+            document.getElementById('tab-' + tab).className = activeClass;
         }
 
         function toggleAll(type) {
