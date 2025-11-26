@@ -262,5 +262,12 @@ class Registration {
         }
         return false;
     }
+
+    public function getCategoryCounts() {
+        $query = "SELECT category, COUNT(*) as count FROM " . $this->table . " GROUP BY category";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

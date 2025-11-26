@@ -1,3 +1,35 @@
+<?php
+require_once 'app/config/database.php';
+require_once 'app/models/Registration.php';
+
+$database = new Database();
+$db = $database->connect();
+$registration = new Registration($db);
+$category_counts = $registration->getCategoryCounts();
+
+$stats = [
+    '3.5km' => 0,
+    '5.5km' => 0,
+    'vip' => 0,
+    'total' => 0
+];
+
+foreach ($category_counts as $row) {
+    $cat = $row['category'];
+    $count = $row['count'];
+    $stats['total'] += $count;
+    
+    if (strpos($cat, '3.5km') !== false) {
+        $stats['3.5km'] += $count;
+    }
+    if (strpos($cat, '5.5km') !== false) {
+        $stats['5.5km'] += $count;
+    }
+    if (strpos($cat, 'VIP') !== false) {
+        $stats['vip'] += $count;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="th" class="scroll-smooth">
 <head>
@@ -221,6 +253,41 @@
         </div>
     </section>
 
+    <!-- Live Stats Section -->
+    <section class="py-12 bg-white border-b border-gray-100 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-secondary"></div>
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-8">
+                <span class="bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded-full animate-pulse">
+                    <i class="fas fa-circle text-[8px] mr-1"></i> LIVE UPDATE
+                </span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
+                <div class="group cursor-default">
+                    <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 group-hover:text-primary transition">ผู้สมัครทั้งหมด</p>
+                    <h3 class="text-4xl md:text-6xl font-bold text-secondary group-hover:scale-110 transition duration-300"><?php echo number_format($stats['total']); ?></h3>
+                    <p class="text-xs text-gray-400 mt-2">คน</p>
+                </div>
+                
+                <div class="w-px bg-gray-100 hidden md:block h-24"></div>
+                
+                <div class="group cursor-default">
+                    <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 group-hover:text-orange-500 transition">Walk & Run 3.5km</p>
+                    <h3 class="text-4xl md:text-6xl font-bold text-orange-500 group-hover:scale-110 transition duration-300"><?php echo number_format($stats['3.5km']); ?></h3>
+                    <p class="text-xs text-gray-400 mt-2">คน</p>
+                </div>
+                
+                <div class="w-px bg-gray-100 hidden md:block h-24"></div>
+                
+                <div class="group cursor-default">
+                    <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 group-hover:text-blue-600 transition">Fun Run 5.5km</p>
+                    <h3 class="text-4xl md:text-6xl font-bold text-blue-600 group-hover:scale-110 transition duration-300"><?php echo number_format($stats['5.5km']); ?></h3>
+                    <p class="text-xs text-gray-400 mt-2">คน</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="py-20 relative overflow-hidden">
         <div class="container mx-auto px-6">
@@ -315,10 +382,14 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Walk & Run 3.5 km -->
-                <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                    <div class="bg-orange-500 p-6 text-white text-center">
-                        <h3 class="text-2xl font-bold mb-1">Walk & Run เดินการกุศล</h3>
-                        <p class="text-3xl font-bold opacity-90">3.5 km</p>
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 relative group hover:-translate-y-1 transition duration-300">
+                    <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm z-10">
+                        <i class="fas fa-users mr-1"></i> <?php echo number_format($stats['3.5km']); ?> คน
+                    </div>
+                    <div class="bg-orange-500 p-6 text-white text-center relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                        <h3 class="text-2xl font-bold mb-1 relative z-10">Walk & Run เดินการกุศล</h3>
+                        <p class="text-3xl font-bold opacity-90 relative z-10">3.5 km</p>
                     </div>
                     <div class="p-6">
                         <table class="w-full text-left border-collapse">
@@ -371,10 +442,14 @@
                 </div>
 
                 <!-- Fun Run 5.5 km -->
-                <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                    <div class="bg-blue-600 p-6 text-white text-center">
-                        <h3 class="text-2xl font-bold mb-1">Fun Run</h3>
-                        <p class="text-3xl font-bold opacity-90">5.5 km</p>
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 relative group hover:-translate-y-1 transition duration-300">
+                    <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm z-10">
+                        <i class="fas fa-users mr-1"></i> <?php echo number_format($stats['5.5km']); ?> คน
+                    </div>
+                    <div class="bg-blue-600 p-6 text-white text-center relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                        <h3 class="text-2xl font-bold mb-1 relative z-10">Fun Run วิ่งเพื่อสุขภาพ</h3>
+                        <p class="text-3xl font-bold opacity-90 relative z-10">5.5 km</p>
                     </div>
                     <div class="p-6">
                         <table class="w-full text-left border-collapse">
