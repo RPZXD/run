@@ -3,8 +3,8 @@ require_once 'app/config/database.php';
 require_once 'app/models/Registration.php';
 require_once 'app/controllers/RegisterController.php';
 
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 $message = '';
 $status = '';
@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <option value="พ.ต.ท.">พ.ต.ท.</option>
                                         <option value="พ.ต.อ.">พ.ต.อ.</option>
                                         <option value="พล.ต.ต.">พล.ต.ต.</option>
-                                        <option value="พล.ต.ท.">พล.ต.ท.</option>
+                                        <option value="พล.ต.ท.">พล.ท.</option>
                                         <option value="พล.ต.อ.">พล.ต.อ.</option>
                                         <option value="ร.ต.">ร.ต.</option>
                                         <option value="ร.ท.">ร.ท.</option>
@@ -286,12 +286,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="08x-xxx-xxxx">
                             </div>
                             <div>
-                                <label class="block text-gray-700 font-bold mb-2 text-sm">อีเมล</label>
-                                <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="example@email.com">
+                                <label class="block text-gray-700 font-bold mb-2 text-sm">อีเมล (ไม่บังคับ)</label>
+                                <input type="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="example@email.com">
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                       
+
+                        <div class="mt-6">
+                            <label class="block text-gray-700 font-bold mb-2 text-sm">ที่อยู่ (ของผู้สมัคร)</label>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <input type="text" id="postal_code" name="postal_code" placeholder="รหัสไปรษณีย์" maxlength="5" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
+                                <input type="text" id="subdistrict" name="subdistrict" placeholder="ตำบล/แขวง" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
+                                <input type="text" id="district_province" name="district_province" placeholder="อำเภอ / จังหวัด" readonly class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-100 text-gray-500 cursor-not-allowed">
+                            </div>
+                            <p id="postal_help" class="text-xs text-primary mt-1 mb-3"></p>
+                            <textarea name="address" rows="3" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="บ้านเลขที่ หมู่บ้าน ซอย ถนน..."></textarea>
+                        </div>
+
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                             <div>
                                 <label class="block text-gray-700 font-bold mb-2 text-sm">ชื่อผู้ติดต่อฉุกเฉิน</label>
                                 <input type="text" name="emergency_contact_name" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="ชื่อ-นามสกุล">
@@ -300,17 +313,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label class="block text-gray-700 font-bold mb-2 text-sm">เบอร์โทรผู้ติดต่อฉุกเฉิน</label>
                                 <input type="tel" name="emergency_contact_phone" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="08x-xxx-xxxx">
                             </div>
-                        </div>
-
-                        <div class="mt-6">
-                            <label class="block text-gray-700 font-bold mb-2 text-sm">ที่อยู่</label>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                <input type="text" id="postal_code" name="postal_code" placeholder="รหัสไปรษณีย์" maxlength="5" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
-                                <input type="text" id="subdistrict" name="subdistrict" placeholder="ตำบล/แขวง" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
-                                <input type="text" id="district_province" name="district_province" placeholder="อำเภอ / จังหวัด" readonly class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-100 text-gray-500 cursor-not-allowed">
-                            </div>
-                            <p id="postal_help" class="text-xs text-primary mt-1 mb-3"></p>
-                            <textarea name="address" rows="3" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="บ้านเลขที่ หมู่บ้าน ซอย ถนน..."></textarea>
                         </div>
 
                         <div class="mt-8 flex justify-between">
@@ -377,14 +379,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             </div>
 
-                            <!-- Fun Run 5.5 km -->
+                            <!-- Fun Run 5.5 km นักเรียน -->
                             <div class="bg-blue-50 rounded-2xl p-6 border border-blue-200">
                                 <div class="flex items-center gap-4 mb-4">
                                     <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center text-xl shadow-lg">
                                         <i class="fas fa-running"></i>
                                     </div>
                                     <div>
-                                        <h4 class="text-xl font-bold text-gray-800">Fun Run</h4>
+                                        <h4 class="text-xl font-bold text-gray-800">Fun Run นักเรียน</h4>
                                         <p class="text-blue-600 font-bold">ระยะทาง 5.5 km</p>
                                     </div>
                                 </div>
@@ -392,43 +394,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <!-- Options -->
                                     <label class="cursor-pointer relative group">
-                                        <input type="radio" name="category" value="Fun Run 5.5km - ประถมศึกษา" required class="peer sr-only">
+                                        <input type="radio" name="category" value="Fun Run 5.5km นักเรียน - ประถมศึกษา" required class="peer sr-only">
                                         <div class="p-3 rounded-xl bg-white border border-blue-200 peer-checked:border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-800 transition flex justify-between items-center">
                                             <span>ประถมศึกษา</span>
                                             <span class="font-bold">300 บาท</span>
                                         </div>
                                     </label>
                                     <label class="cursor-pointer relative group">
-                                        <input type="radio" name="category" value="Fun Run 5.5km - ม.ต้น" required class="peer sr-only">
+                                        <input type="radio" name="category" value="Fun Run 5.5km นักเรียน - ม.ต้น" required class="peer sr-only">
                                         <div class="p-3 rounded-xl bg-white border border-blue-200 peer-checked:border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-800 transition flex justify-between items-center">
                                             <span>ม.ต้น</span>
                                             <span class="font-bold">300 บาท</span>
                                         </div>
                                     </label>
                                     <label class="cursor-pointer relative group">
-                                        <input type="radio" name="category" value="Fun Run 5.5km - ม.ปลาย/ปวช." required class="peer sr-only">
+                                        <input type="radio" name="category" value="Fun Run 5.5km นักเรียน - ม.ปลาย/ปวช." required class="peer sr-only">
                                         <div class="p-3 rounded-xl bg-white border border-blue-200 peer-checked:border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-800 transition flex justify-between items-center">
                                             <span>ม.ปลาย/ปวช.</span>
                                             <span class="font-bold">300 บาท</span>
                                         </div>
                                     </label>
+                                </div>
+                            </div>
+
+                            <!-- Fun Run 5.5 km บุคคลทั่วไป -->
+                            <div class="bg-green-50 rounded-2xl p-6 border border-green-200">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center text-xl shadow-lg">
+                                        <i class="fas fa-running"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800">Fun Run บุคคลทั่วไป</h4>
+                                        <p class="text-green-600 font-bold">ระยะทาง 5.5 km</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <!-- Age Group Options -->
                                     <label class="cursor-pointer relative group">
-                                        <input type="radio" name="category" value="Fun Run 5.5km - บุคคลทั่วไป" required class="peer sr-only">
-                                        <div class="p-3 rounded-xl bg-white border border-blue-200 peer-checked:border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-800 transition flex justify-between items-center">
-                                            <span>บุคคลทั่วไป</span>
+                                        <input type="radio" name="category" value="Fun Run 5.5km บุคคลทั่วไป - 19-29 ปี" required class="peer sr-only">
+                                        <div class="p-3 rounded-xl bg-white border border-green-200 peer-checked:border-green-500 peer-checked:bg-green-100 peer-checked:text-green-800 transition flex justify-between items-center">
+                                            <span>19-29 ปี</span>
                                             <span class="font-bold">450 บาท</span>
                                         </div>
                                     </label>
                                     <label class="cursor-pointer relative group">
-                                        <input type="radio" name="category" value="Fun Run 5.5km - อายุมากกว่า 50" required class="peer sr-only">
-                                        <div class="p-3 rounded-xl bg-white border border-blue-200 peer-checked:border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-800 transition flex justify-between items-center">
-                                            <span>อายุมากกว่า 50</span>
+                                        <input type="radio" name="category" value="Fun Run 5.5km บุคคลทั่วไป - 30-39 ปี" required class="peer sr-only">
+                                        <div class="p-3 rounded-xl bg-white border border-green-200 peer-checked:border-green-500 peer-checked:bg-green-100 peer-checked:text-green-800 transition flex justify-between items-center">
+                                            <span>30-39 ปี</span>
                                             <span class="font-bold">450 บาท</span>
                                         </div>
                                     </label>
                                     <label class="cursor-pointer relative group">
-                                        <input type="radio" name="category" value="Fun Run 5.5km - VIP" required class="peer sr-only">
-                                        <div class="p-3 rounded-xl bg-white border border-blue-200 peer-checked:border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-800 transition flex justify-between items-center">
+                                        <input type="radio" name="category" value="Fun Run 5.5km บุคคลทั่วไป - 40-49 ปี" required class="peer sr-only">
+                                        <div class="p-3 rounded-xl bg-white border border-green-200 peer-checked:border-green-500 peer-checked:bg-green-100 peer-checked:text-green-800 transition flex justify-between items-center">
+                                            <span>40-49 ปี</span>
+                                            <span class="font-bold">450 บาท</span>
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer relative group">
+                                        <input type="radio" name="category" value="Fun Run 5.5km บุคคลทั่วไป - 50-59 ปี" required class="peer sr-only">
+                                        <div class="p-3 rounded-xl bg-white border border-green-200 peer-checked:border-green-500 peer-checked:bg-green-100 peer-checked:text-green-800 transition flex justify-between items-center">
+                                            <span>50-59 ปี</span>
+                                            <span class="font-bold">450 บาท</span>
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer relative group">
+                                        <input type="radio" name="category" value="Fun Run 5.5km บุคคลทั่วไป - 60 ปีขึ้นไป" required class="peer sr-only">
+                                        <div class="p-3 rounded-xl bg-white border border-green-200 peer-checked:border-green-500 peer-checked:bg-green-100 peer-checked:text-green-800 transition flex justify-between items-center">
+                                            <span>60 ปีขึ้นไป</span>
+                                            <span class="font-bold">450 บาท</span>
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer relative group">
+                                        <input type="radio" name="category" value="Fun Run 5.5km บุคคลทั่วไป - VIP" required class="peer sr-only">
+                                        <div class="p-3 rounded-xl bg-white border border-green-200 peer-checked:border-green-500 peer-checked:bg-green-100 peer-checked:text-green-800 transition flex justify-between items-center">
                                             <span>VIP</span>
                                             <span class="font-bold">1,200 บาท</span>
                                         </div>
@@ -440,29 +480,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <!-- Placeholder for conditional fields depending on category -->
                         <div id="category-conditional" class="mt-4">
                             <!-- Conditions will be injected here later -->
-                        </div>
-
-                        <!-- Merchandise -->
-                        <div class="mt-6 bg-yellow-50 rounded-2xl p-6 border border-yellow-200">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 rounded-full bg-yellow-500 text-white flex items-center justify-center text-xl shadow-lg">
-                                    <i class="fas fa-tshirt"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-xl font-bold text-gray-800">Merchandise</h4>
-                                    <p class="text-yellow-600 font-bold">ของที่ระลึก</p>
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <label class="cursor-pointer relative group">
-                                    <input type="radio" name="category" value="Shirt Only" required class="peer sr-only">
-                                    <div class="p-3 rounded-xl bg-white border border-yellow-200 peer-checked:border-yellow-500 peer-checked:bg-yellow-100 peer-checked:text-yellow-800 transition flex justify-between items-center">
-                                        <span>สั่งซื้อเสื้อที่ระลึก (ไม่วิ่ง)</span>
-                                        <span class="font-bold">250 บาท</span>
-                                    </div>
-                                </label>
-                            </div>
                         </div>
 
                         <div class="mt-8 flex justify-between">
@@ -490,6 +507,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label class="block text-gray-700 font-bold mb-4 text-sm">เลือกไซส์เสื้อ</label>
                             <input type="radio" name="shirt_size" value="No Shirt" class="hidden" id="no_shirt_option">
                             
+                        <div id="single-shirt-selection">
                             <!-- Standard Sizes -->
                             <h4 class="text-sm font-bold text-gray-500 mb-3 uppercase tracking-wider">Standard Sizes</h4>
                             <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
@@ -611,6 +629,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                 </label>
                             </div>
+                        </div>
 
                             <div class="mt-8 border-t border-gray-200 pt-6">
                                 <h4 class="text-lg font-bold text-gray-800 mb-4">การรับเสื้อ</h4>
@@ -694,13 +713,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <!-- Payment Summary & Upload -->
                             <div class="flex flex-col justify-between">
+                                <!-- Payment Breakdown -->
                                 <div class="bg-gray-50 rounded-2xl p-5 border border-gray-200 mb-4">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-gray-600">ยอดที่ต้องชำระ</span>
-                                        <span class="text-primary font-bold text-2xl"><span id="payment-amount">0</span> <span class="text-sm text-gray-500 font-normal">THB</span></span>
+                                    <h4 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                        <i class="fas fa-receipt text-primary"></i> รายละเอียดการชำระเงิน
+                                    </h4>
+                                    
+                                    <!-- Category Selected -->
+                                    <div class="space-y-2 text-sm mb-3">
+                                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                                            <span class="text-gray-600">ประเภทการสมัคร</span>
+                                            <span class="font-medium text-gray-800" id="summary-category">-</span>
+                                        </div>
+                                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                                            <span class="text-gray-600">ค่าสมัคร</span>
+                                            <span class="font-medium text-gray-800"><span id="summary-race-fee">0</span> บาท</span>
+                                        </div>
+                                        <div class="flex justify-between items-center py-2 border-b border-gray-200" id="summary-shirt-row">
+                                            <span class="text-gray-600">ไซส์เสื้อ</span>
+                                            <span class="font-medium text-gray-800" id="summary-shirt">-</span>
+                                        </div>
+                                        <div class="flex justify-between items-center py-2 border-b border-gray-200" id="summary-shipping-row">
+                                            <span class="text-gray-600">การจัดส่ง</span>
+                                            <span class="font-medium text-gray-800" id="summary-shipping">รับด้วยตนเอง</span>
+                                        </div>
+                                        <div class="flex justify-between items-center py-2 border-b border-gray-200" id="summary-shipping-fee-row" style="display: none;">
+                                            <span class="text-gray-600">ค่าจัดส่ง</span>
+                                            <span class="font-medium text-orange-600">+50 บาท</span>
+                                        </div>
                                     </div>
-                                    <div class="h-px bg-gray-200 my-3"></div>
-                                    <p class="text-xs text-gray-500"><i class="fas fa-info-circle mr-1"></i> กรุณาตรวจสอบยอดเงินให้ถูกต้องก่อนโอน</p>
+                                    
+                                    <!-- Total -->
+                                    <div class="bg-primary/10 rounded-xl p-3 mt-3">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-bold text-gray-700">ยอดรวมที่ต้องชำระ</span>
+                                            <span class="text-primary font-bold text-2xl"><span id="payment-amount">0</span> <span class="text-sm text-gray-500 font-normal">บาท</span></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-xs text-gray-500 mt-3"><i class="fas fa-info-circle mr-1"></i> กรุณาตรวจสอบยอดเงินให้ถูกต้องก่อนโอน</p>
                                 </div>
 
                                 <div>
@@ -719,6 +770,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <input type="time" name="payment_time" id="verified_time" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-white">
                                         </div>
                                     </div>
+                                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-lightbulb text-yellow-500 mr-1"></i> ระบบตั้งค่าวันเวลาปัจจุบันให้อัตโนมัติ สามารถแก้ไขได้ตามสลิป</p>
                                 </div>
                             </div>
                         </div>
@@ -1276,6 +1328,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     const hiddenFull = document.getElementById('hidden_full_name');
                     if (hiddenFull) hiddenFull.value = [finalPrefix, first, last].filter(Boolean).join(' ').trim();
+                    
+                    // Handle Multi-Shirt Data Aggregation for "Shirt Only" category
+                    const category = document.querySelector('input[name="category"]:checked');
+                    if (category && category.value === 'Shirt Only') {
+                        let sizeString = '';
+                        let totalQty = 0;
+                        document.querySelectorAll('.shirt-qty-input').forEach(input => {
+                            const qty = parseInt(input.value) || 0;
+                            if (qty > 0) {
+                                const size = input.getAttribute('data-size');
+                                sizeString += `${size}: ${qty}, `;
+                                totalQty += qty;
+                            }
+                        });
+                        
+                        if (sizeString.length > 0) {
+                            sizeString = sizeString.slice(0, -2); // Remove trailing ", "
+                        }
+                        
+                        // Create hidden input for shirt_size
+                        let hiddenSize = document.getElementById('hidden_shirt_size');
+                        if (!hiddenSize) {
+                            hiddenSize = document.createElement('input');
+                            hiddenSize.type = 'hidden';
+                            hiddenSize.name = 'shirt_size';
+                            hiddenSize.id = 'hidden_shirt_size';
+                            form.appendChild(hiddenSize);
+                        }
+                        hiddenSize.value = sizeString;
+                        
+                        // Create hidden input for shirt_quantity
+                        let hiddenQty = document.getElementById('hidden_shirt_quantity');
+                        if (!hiddenQty) {
+                            hiddenQty = document.createElement('input');
+                            hiddenQty.type = 'hidden';
+                            hiddenQty.name = 'shirt_quantity';
+                            hiddenQty.id = 'hidden_shirt_quantity';
+                            form.appendChild(hiddenQty);
+                        }
+                        hiddenQty.value = totalQty;
+                        
+                        // Disable radio buttons so they don't conflict
+                        document.querySelectorAll('input[name="shirt_size"][type="radio"]').forEach(r => {
+                            r.disabled = true;
+                        });
+                    }
                 });
             
                 // Stepper logic
@@ -1319,7 +1417,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         const currentFields = steps[currentStep].querySelectorAll('[required]');
                         let isValid = true;
                         
+                        // Check if current step is Step 4 (Shirt) and we're in multi-shirt mode
+                        const isShirtStep = currentStep === 3;
+                        const category = document.querySelector('input[name="category"]:checked');
+                        const isShirtOnlyMode = category && category.value === 'Shirt Only';
+                        
                         for (const f of currentFields) {
+                            // Skip shirt_size validation if in multi-shirt mode
+                            if (isShirtStep && isShirtOnlyMode && f.name === 'shirt_size') {
+                                continue;
+                            }
+                            
                             if (f.type === 'radio' || f.type === 'checkbox') {
                                 const group = document.getElementsByName(f.name);
                                 let checked = false;
@@ -1347,14 +1455,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                         
                         if (!isValid) return;
+                        
+                        // Custom validation for Step 4 (Shirt) in multi-shirt mode
+                        if (isShirtStep && isShirtOnlyMode) {
+                            let totalQty = 0;
+                            document.querySelectorAll('.shirt-qty-input').forEach(input => {
+                                totalQty += parseInt(input.value) || 0;
+                            });
+                            
+                            if (totalQty === 0) {
+                                showError('กรุณาเลือกจำนวนเสื้ออย่างน้อย 1 ตัว');
+                                return;
+                            }
+                        }
 
                         // Special logic for Step 3 (Race Info) -> Step 4 (Shirt)
                         if (currentStep === 2) {
-                            const category = document.querySelector('input[name="category"]:checked');
                             const noShirtCategories = [
                                 'Walk & Run 3.5km - ประถมศึกษา',
                                 'Walk & Run 3.5km - ม.ต้น',
-                                'Walk & Run 3.5km - ม.ปลาย/ปวช.'
+                                'Walk & Run 3.5km - ม.ปลาย/ปวช.',
+                                'Fun Run 5.5km นักเรียน - ประถมศึกษา',
+                                'Fun Run 5.5km นักเรียน - ม.ต้น',
+                                'Fun Run 5.5km นักเรียน - ม.ปลาย/ปวช.'
                             ];
 
                             if (category && noShirtCategories.includes(category.value)) {
@@ -1402,31 +1525,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Calculate Total Amount
                 const calculateTotal = () => {
                     let total = 0;
+                    let raceFee = 0;
                     const category = document.querySelector('input[name="category"]:checked');
                     const shipping = document.querySelector('input[name="shipping_method"]:checked');
+                    const shirtSize = document.querySelector('input[name="shirt_size"]:checked');
+                    
+                    // Update Summary Elements
+                    const summaryCategory = document.getElementById('summary-category');
+                    const summaryRaceFee = document.getElementById('summary-race-fee');
+                    const summaryShirt = document.getElementById('summary-shirt');
+                    const summaryShipping = document.getElementById('summary-shipping');
+                    const summaryShirtRow = document.getElementById('summary-shirt-row');
+                    const summaryShippingFeeRow = document.getElementById('summary-shipping-fee-row');
                     
                     if (category) {
                         const val = category.value;
+                        
+                        // Extract display name from category value
+                        let displayName = val;
+                        if (val.includes(' - ')) {
+                            const parts = val.split(' - ');
+                            displayName = parts[0] + '<br><span class="text-xs text-gray-500">' + parts[1] + '</span>';
+                        }
+                        if (summaryCategory) summaryCategory.innerHTML = displayName;
+                        
                         // Walk & Run 3.5km
                         if (val.includes('Walk & Run 3.5km')) {
-                            if (val.includes('VIP')) total += 1200;
-                            else total += 30;
+                            if (val.includes('VIP')) raceFee = 1200;
+                            else raceFee = 30;
                         }
-                        // Fun Run 5.5km
-                        else if (val.includes('Fun Run 5.5km')) {
-                            if (val.includes('VIP')) total += 1200;
-                            else if (val.includes('บุคคลทั่วไป') || val.includes('อายุมากกว่า 50')) total += 450;
-                            else total += 300; // Students
+                        // Fun Run 5.5km นักเรียน
+                        else if (val.includes('Fun Run 5.5km นักเรียน')) {
+                            raceFee = 300;
+                        }
+                        // Fun Run 5.5km บุคคลทั่วไป
+                        else if (val.includes('Fun Run 5.5km บุคคลทั่วไป')) {
+                            if (val.includes('VIP')) raceFee = 1200;
+                            else raceFee = 450;
                         }
                         // Merchandise
                         else if (val === 'Shirt Only') {
-                            total += 250;
+                            // Sum up quantities
+                            let shirtCount = 0;
+                            document.querySelectorAll('.shirt-qty-input').forEach(input => {
+                                shirtCount += parseInt(input.value) || 0;
+                            });
+                            raceFee = shirtCount * 250;
+                        }
+                        
+                        total = raceFee;
+                    }
+                    
+                    // Update race fee display
+                    if (summaryRaceFee) summaryRaceFee.textContent = raceFee.toLocaleString();
+                    
+                    // Update shirt size display
+                    if (shirtSize && summaryShirt) {
+                        if (shirtSize.value === 'No Shirt') {
+                            summaryShirt.textContent = 'ไม่รับเสื้อ';
+                            if (summaryShirtRow) summaryShirtRow.style.display = 'none';
+                        } else {
+                            summaryShirt.textContent = shirtSize.value;
+                            if (summaryShirtRow) summaryShirtRow.style.display = 'flex';
                         }
                     }
-
-                    // Add shipping cost
-                    if (shipping && shipping.value === 'POST') {
-                        total += 50;
+                    
+                    // Update shipping display
+                    if (shipping && summaryShipping) {
+                        if (shipping.value === 'POST') {
+                            summaryShipping.textContent = 'จัดส่งไปรษณีย์';
+                            if (summaryShippingFeeRow) summaryShippingFeeRow.style.display = 'flex';
+                            total += 50;
+                        } else {
+                            summaryShipping.textContent = 'รับด้วยตนเอง';
+                            if (summaryShippingFeeRow) summaryShippingFeeRow.style.display = 'none';
+                        }
                     }
 
                     const amountDisplay = document.getElementById('payment-amount');
@@ -1441,13 +1614,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         updateQRCode(total);
                     }
                 };
+                
+                // Set default date/time to current
+                const setDefaultDateTime = () => {
+                    const now = new Date();
+                    const dateInput = document.getElementById('verified_date');
+                    const timeInput = document.getElementById('verified_time');
+                    
+                    if (dateInput && !dateInput.value) {
+                        // Format: YYYY-MM-DD
+                        const year = now.getFullYear();
+                        const month = String(now.getMonth() + 1).padStart(2, '0');
+                        const day = String(now.getDate()).padStart(2, '0');
+                        dateInput.value = `${year}-${month}-${day}`;
+                    }
+                    
+                    if (timeInput && !timeInput.value) {
+                        // Format: HH:MM
+                        const hours = String(now.getHours()).padStart(2, '0');
+                        const minutes = String(now.getMinutes()).padStart(2, '0');
+                        timeInput.value = `${hours}:${minutes}`;
+                    }
+                };
+                
+                // Call on page load
+                setDefaultDateTime();
+
+                // Listen for quantity changes
+                document.querySelectorAll('.shirt-qty-input').forEach(input => {
+                    input.addEventListener('change', calculateTotal);
+                });
 
                 // Add event listener for shipping method change
                 document.querySelectorAll('input[name="shipping_method"]').forEach(radio => {
                     radio.addEventListener('change', calculateTotal);
                 });
+                
+                // Add event listener for shirt size change
+                document.querySelectorAll('input[name="shirt_size"]').forEach(radio => {
+                    radio.addEventListener('change', calculateTotal);
+                });
+                
+                // Add event listener for category change
+                document.querySelectorAll('input[name="category"]').forEach(radio => {
+                    radio.addEventListener('change', calculateTotal);
+                });
 
-                // Citizen ID Validation
+                // Citizen ID Validation & Duplicate Check
                 const cidInput = document.querySelector('input[name="citizen_id"]');
                 const cidError = document.getElementById('cid_error');
                 
@@ -1466,23 +1679,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     return true;
                 };
 
+                let cidCheckTimeout = null;
+                let lastCheckedCid = '';
+
+                const checkDuplicateCid = (cid) => {
+                    if (cid === lastCheckedCid) return; // ไม่ต้องเช็คซ้ำถ้าเป็นเลขเดิม
+                    lastCheckedCid = cid;
+
+                    // แสดงสถานะกำลังตรวจสอบ
+                    cidError.textContent = 'กำลังตรวจสอบ...';
+                    cidError.classList.remove('hidden', 'text-red-500');
+                    cidError.classList.add('text-blue-500');
+
+                    fetch('api/check_duplicate.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ citizen_id: cid })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            cidError.textContent = 'เลขบัตรประชาชนนี้ได้ทำการสมัครไปแล้ว';
+                            cidError.classList.remove('hidden', 'text-blue-500', 'text-green-500');
+                            cidError.classList.add('text-red-500');
+                            cidInput.classList.add('border-red-500');
+                            cidInput.classList.remove('border-green-500');
+                            
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'สมัครซ้ำ',
+                                text: 'เลขบัตรประชาชนนี้ได้ทำการสมัครไปแล้ว กรุณาใช้เลขบัตรอื่น',
+                                confirmButtonText: 'ตกลง',
+                                customClass: {
+                                    popup: 'rounded-3xl shadow-xl border border-gray-100',
+                                    confirmButton: 'bg-gradient-to-r from-primary to-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1',
+                                    title: 'text-2xl font-bold text-secondary font-sans',
+                                    htmlContainer: 'text-gray-600 font-sans'
+                                },
+                                buttonsStyling: false
+                            });
+                        } else {
+                            cidError.textContent = '✓ ยืนยันเลขบัตรถูกต้อง';
+                            cidError.classList.remove('hidden', 'text-red-500', 'text-blue-500');
+                            cidError.classList.add('text-green-500');
+                            cidInput.classList.remove('border-red-500');
+                            cidInput.classList.add('border-green-500');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        cidError.classList.add('hidden');
+                    });
+                };
+
                 if(cidInput) {
                     cidInput.addEventListener('input', (e) => {
                         const val = e.target.value;
+                        
+                        // รีเซ็ต timeout ก่อน
+                        clearTimeout(cidCheckTimeout);
+                        
                         if(val.length === 13) {
                             if(!validateCID(val)) {
-                                cidError.classList.remove('hidden');
+                                cidError.textContent = 'เลขบัตรประชาชนไม่ถูกต้อง';
+                                cidError.classList.remove('hidden', 'text-blue-500', 'text-green-500');
+                                cidError.classList.add('text-red-500');
                                 cidInput.classList.add('border-red-500');
-                                // cidInput.setCustomValidity('เลขบัตรประชาชนไม่ถูกต้อง');
+                                cidInput.classList.remove('border-green-500');
                             } else {
-                                                               cidError.classList.add('hidden');
-                                cidInput.classList.remove('border-red-500');
-                                cidInput.setCustomValidity('');
+                                // เลขถูกต้อง - เช็คซ้ำในฐานข้อมูลทันที (debounce 300ms)
+                                cidCheckTimeout = setTimeout(() => {
+                                    checkDuplicateCid(val);
+                                }, 300);
                             }
                         } else {
                             cidError.classList.add('hidden');
-                            cidInput.classList.remove('border-red-500');
-                                                       cidInput.setCustomValidity('');
+                            cidInput.classList.remove('border-red-500', 'border-green-500');
+                            lastCheckedCid = ''; // รีเซ็ตเพื่อให้เช็คใหม่ได้
                         }
                     });
                 }
@@ -1724,6 +1999,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // initialize
                 updateSteps();
+
+                // Toggle Shirt Selection Mode
+                const toggleShirtSelection = () => {
+                    const category = document.querySelector('input[name="category"]:checked');
+                    const singleSelection = document.getElementById('single-shirt-selection');
+                    const multiSelection = document.getElementById('multi-shirt-selection');
+                    
+                    if (category && category.value === 'Shirt Only') {
+                        singleSelection.classList.add('hidden');
+                        multiSelection.classList.remove('hidden');
+                        
+                        // Clear single selection
+                        document.querySelectorAll('input[name="shirt_size"]').forEach(r => {
+                            if(r.value !== 'No Shirt') r.checked = false;
+                        });
+                        const noShirt = document.getElementById('no_shirt_option');
+                        if(noShirt) noShirt.checked = true; 
+                    } else {
+                        singleSelection.classList.remove('hidden');
+                        multiSelection.classList.add('hidden');
+                        
+                        // Clear multi selection
+                        document.querySelectorAll('.shirt-qty-input').forEach(i => i.value = 0);
+                    }
+                    calculateTotal();
+                };
+
+                document.querySelectorAll('input[name="category"]').forEach(radio => {
+                    radio.addEventListener('change', toggleShirtSelection);
+                });
             }
 
             window.copyToClipboard = (text, btn) => {
@@ -1753,6 +2058,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     document.body.removeChild(textArea);
                 });
+            };
+
+            window.adjustQty = (size, delta) => {
+                const input = document.querySelector(`input[data-size="${size}"]`);
+                if (input) {
+                    let val = parseInt(input.value) || 0;
+                    val += delta;
+                    if (val < 0) val = 0;
+                    input.value = val;
+                    // Trigger change event for total calculation
+                    input.dispatchEvent(new Event('change'));
+                }
             };
         })();
     </script>

@@ -7,13 +7,18 @@ if (!isset($_SESSION['admin_logged_in'])) {
 
 require_once '../app/config/database.php';
 require_once '../app/models/Registration.php';
+require_once '../app/models/ShirtOrder.php';
 
 $database = new Database();
 $db = $database->connect();
 $registration = new Registration($db);
+$shirtOrderModel = new ShirtOrder($db);
 
 $stmt = $registration->readAll();
 $registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Shirt Order Stats
+$shirtOrderStats = $shirtOrderModel->getStats();
 
 // Stats Calculation
 $total_income = 0;
@@ -163,6 +168,24 @@ ksort($by_category);
                 <div class="mt-4 flex items-center text-xs text-slate-400">
                     <span class="text-blue-500 font-bold"><?php echo number_format(($by_status['approved'] ?? 0) / max(1, count($registrations)) * 100, 1); ?>%</span>
                     <span class="ml-1">completion rate</span>
+                </div>
+            </div>
+
+            <!-- Shirt Orders -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-fade-in-up delay-300 group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div class="text-slate-400 text-xs font-bold uppercase tracking-wider">ออเดอร์เสื้อ (ไม่วิ่ง)</div>
+                        <div class="text-3xl font-bold text-yellow-500 mt-2"><?php echo number_format($shirtOrderStats['total'] ?? 0); ?></div>
+                    </div>
+                    <div class="p-3 bg-yellow-50 rounded-xl text-yellow-500 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-tshirt text-xl"></i>
+                    </div>
+                </div>
+                <div class="mt-4 text-xs text-slate-400">
+                    <span class="text-yellow-600 font-bold"><?php echo number_format($shirtOrderStats['total_shirts'] ?? 0); ?> ตัว</span> | 
+                    <span class="text-green-600 font-bold">฿<?php echo number_format($shirtOrderStats['total_revenue'] ?? 0); ?></span>
+                    <a href="shirt_orders.php" class="ml-2 text-yellow-600 hover:underline">ดูทั้งหมด <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>

@@ -16,6 +16,7 @@ class Registration {
     public $address;
     public $category;
     public $shirt_size;
+    public $shirt_quantity;
     public $shipping_method;
     public $payment_slip;
     public $payment_amount;
@@ -45,6 +46,7 @@ class Registration {
                       address = :address, 
                       category = :category, 
                       shirt_size = :shirt_size,
+                      shirt_quantity = :shirt_quantity,
                       shipping_method = :shipping_method,
                       payment_slip = :payment_slip,
                       payment_amount = :payment_amount,
@@ -69,6 +71,7 @@ class Registration {
         $this->address = htmlspecialchars(strip_tags($this->address));
         $this->category = htmlspecialchars(strip_tags($this->category));
         $this->shirt_size = htmlspecialchars(strip_tags($this->shirt_size));
+        $this->shirt_quantity = $this->shirt_quantity ? (int)$this->shirt_quantity : 1;
         $this->shipping_method = htmlspecialchars(strip_tags($this->shipping_method));
         $this->payment_slip = htmlspecialchars(strip_tags($this->payment_slip));
         $this->payment_amount = $this->payment_amount ? htmlspecialchars(strip_tags($this->payment_amount)) : null;
@@ -91,6 +94,7 @@ class Registration {
         $stmt->bindParam(':address', $this->address);
         $stmt->bindParam(':category', $this->category);
         $stmt->bindParam(':shirt_size', $this->shirt_size);
+        $stmt->bindParam(':shirt_quantity', $this->shirt_quantity);
         $stmt->bindParam(':shipping_method', $this->shipping_method);
         $stmt->bindParam(':payment_slip', $this->payment_slip);
         $stmt->bindParam(':payment_amount', $this->payment_amount);
@@ -261,6 +265,15 @@ class Registration {
             return true;
         }
         return false;
+    }
+
+    public function checkCitizenId($cid) {
+        $query = "SELECT id FROM " . $this->table . " WHERE citizen_id = :cid LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $cid = htmlspecialchars(strip_tags($cid));
+        $stmt->bindParam(':cid', $cid);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
     }
 
     public function getCategoryCounts() {

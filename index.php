@@ -17,6 +17,11 @@ $stats = [
 foreach ($category_counts as $row) {
     $cat = $row['category'];
     $count = $row['count'];
+    
+    if ($cat === 'Shirt Only') {
+        continue;
+    }
+
     $stats['total'] += $count;
     
     if (strpos($cat, '3.5km') !== false) {
@@ -112,12 +117,15 @@ foreach ($category_counts as $row) {
                     ติดต่อเรา
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
                 </a>
-                <a href="check_status.php" class="hover:text-primary transition relative group py-2">
-                    ตรวจสอบสถานะ
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
             </div>
 
-            <div class="hidden md:flex items-center gap-4">
+            <div class="hidden md:flex items-center gap-3">
+                <a href="check_status.php" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2.5 rounded-full font-medium transition transform hover:scale-105 flex items-center gap-2">
+                    <i class="fas fa-search text-primary"></i> เช็คสถานะ
+                </a>
+                <a href="order_shirt.php" class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2.5 rounded-full font-bold transition transform hover:scale-105 shadow-lg hover:shadow-yellow-500/30 flex items-center gap-2">
+                    <i class="fas fa-tshirt"></i> สั่งเสื้อ
+                </a>
                 <a href="register.php" class="bg-primary hover:bg-red-600 text-white px-6 py-2.5 rounded-full font-bold transition transform hover:scale-105 shadow-lg hover:shadow-red-500/30 flex items-center gap-2">
                     <i class="fas fa-running"></i> สมัครวิ่ง
                 </a>
@@ -154,7 +162,10 @@ foreach ($category_counts as $row) {
                     <i class="fas fa-envelope text-primary w-6"></i> ติดต่อเรา
                 </a>
                 <a href="check_status.php" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-red-50 text-gray-700 font-medium transition">
-                    <i class="fas fa-envelope text-primary w-6"></i> ตรวจสอบสถานะ
+                    <i class="fas fa-search text-primary w-6"></i> ตรวจสอบสถานะ
+                </a>
+                <a href="order_shirt.php" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-yellow-50 text-gray-700 font-medium transition">
+                    <i class="fas fa-tshirt text-yellow-500 w-6"></i> สั่งเสื้อ (ไม่วิ่ง)
                 </a>
                 <hr class="border-gray-100 my-2">
                 <a href="register.php" class="bg-gradient-to-r from-primary to-red-600 text-white py-3 rounded-xl text-center font-bold shadow-lg hover:shadow-red-500/30 transition">
@@ -191,15 +202,18 @@ foreach ($category_counts as $row) {
 
             <p class="text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
                 เพื่อสมทบทุนจัดซื้อจอ LED, รถตัดหญ้า และพัฒนาการศึกษาโรงเรียนพิชัย <br class="hidden md:block">
-                <span class="text-accent font-medium">"กล้าหาญ เสียสละ รักสามัคคี"</span>
+                <span class="text-accent font-medium">"ลูกพิชัย พอเพียง กล้าหาญ เสียสละ กตัญญู"</span>
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a href="register.php" class="group relative px-8 py-4 bg-primary text-white rounded-full font-bold text-lg shadow-xl hover:shadow-red-600/40 transition-all hover:-translate-y-1 overflow-hidden">
                     <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                     <span class="relative flex items-center gap-2">
-                        สมัครเข้าร่วม <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        <i class="fas fa-running"></i> สมัครวิ่ง <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </span>
+                </a>
+                <a href="order_shirt.php" class="px-8 py-4 bg-yellow-500 text-white rounded-full font-bold text-lg hover:bg-yellow-600 transition-all hover:-translate-y-1 shadow-xl hover:shadow-yellow-500/40">
+                    <i class="fas fa-tshirt"></i> สั่งเสื้อ (ไม่วิ่ง)
                 </a>
                 <a href="#about" class="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 text-white rounded-full font-bold text-lg hover:bg-white/20 transition-all hover:-translate-y-1">
                     รายละเอียดงาน
@@ -330,7 +344,7 @@ foreach ($category_counts as $row) {
                     </h2>
                     
                     <p class="text-gray-600 text-lg mb-8 leading-relaxed">
-                        Phichai Run 2026 กลับมาอีกครั้งกับความยิ่งใหญ่กว่าเดิม! เชิญชวนนักวิ่งทุกท่านมาร่วมสัมผัสบรรยากาศการวิ่งในเส้นทางหวนนึกถึงโรงเรียนพิชัย ผ่านสถานที่สำคัญของโรงเรียนพิชัย 
+                        Phichai Run 2026 กลับมาอีกครั้งกับความยิ่งใหญ่กว่าเดิม! เชิญชวนนักวิ่งทุกท่านมาร่วมสัมผัสวิ่งชมวิวแม่น้ำน่าน ในเส้นทางหวนนึกถึงโรงเรียนพิชัย ผ่านสถานที่สำคัญของโรงเรียนพิชัย 
                     </p>
 
                     <div class="space-y-6">
@@ -397,8 +411,8 @@ foreach ($category_counts as $row) {
                                 <tr class="border-b border-gray-200 text-gray-500 text-sm">
                                     <th class="py-3 font-medium">รุ่น (ช/ญ)</th>
                                     <th class="py-3 font-medium text-center">ค่าสมัคร</th>
-                                    <th class="py-3 font-medium text-center">เสื้อ</th>
-                                    <th class="py-3 font-medium text-center">เหรียญ</th>
+                                    <th class="py-3 font-medium text-center">เสื้อ*</th>
+                                    <th class="py-3 font-medium text-center">เหรียญ*</th>
                                     <th class="py-3 font-medium text-center">โล่รางวัล</th>
                                 </tr>
                             </thead>
@@ -433,7 +447,8 @@ foreach ($category_counts as $row) {
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="mt-6 relative z-10">
+                        <p class="text-xs text-gray-400 mt-3">*รับเหรียญรางวัลเมื่อเข้าเส้นชัยเท่านั้น</p>
+                        <div class="mt-4 relative z-10">
                             <a href="register.php" class="block w-full py-3 rounded-xl bg-orange-500 text-white font-bold text-center hover:bg-orange-600 transition shadow-lg shadow-orange-500/30">
                                 สมัครระยะ 3.5 km
                             </a>
@@ -441,15 +456,15 @@ foreach ($category_counts as $row) {
                     </div>
                 </div>
 
-                <!-- Fun Run 5.5 km -->
+                <!-- Fun Run 5.5 km (นักเรียน) -->
                 <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 relative group hover:-translate-y-1 transition duration-300">
                     <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm z-10">
-                        <i class="fas fa-users mr-1"></i> <?php echo number_format($stats['5.5km']); ?> คน
+                        <i class="fas fa-graduation-cap mr-1"></i> นักเรียน
                     </div>
                     <div class="bg-blue-600 p-6 text-white text-center relative overflow-hidden">
                         <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-                        <h3 class="text-2xl font-bold mb-1 relative z-10">Fun Run วิ่งเพื่อสุขภาพ</h3>
-                        <p class="text-3xl font-bold opacity-90 relative z-10">5.5 km</p>
+                        <h3 class="text-2xl font-bold mb-1 relative z-10">Fun Run 5.5 km</h3>
+                        <p class="text-lg font-medium opacity-90 relative z-10">(รุ่นนักเรียน)</p>
                     </div>
                     <div class="p-6">
                         <table class="w-full text-left border-collapse">
@@ -458,7 +473,7 @@ foreach ($category_counts as $row) {
                                     <th class="py-3 font-medium">รุ่น (ช/ญ)</th>
                                     <th class="py-3 font-medium text-center">ค่าสมัคร</th>
                                     <th class="py-3 font-medium text-center">เสื้อ</th>
-                                    <th class="py-3 font-medium text-center">เหรียญ</th>
+                                    <th class="py-3 font-medium text-center">เหรียญ*</th>
                                     <th class="py-3 font-medium text-center">โล่รางวัล</th>
                                 </tr>
                             </thead>
@@ -468,35 +483,91 @@ foreach ($category_counts as $row) {
                                     <td class="py-3 text-center">300</td>
                                     <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
                                     <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
-                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">1-3</td>
                                 </tr>
                                 <tr class="border-b border-gray-100">
                                     <td class="py-3 font-medium">ม.ต้น</td>
                                     <td class="py-3 text-center">300</td>
                                     <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
                                     <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
-                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">1-3</td>
                                 </tr>
-                                <tr class="border-b border-gray-100">
+                                <tr>
                                     <td class="py-3 font-medium">ม.ปลาย/ปวช.</td>
                                     <td class="py-3 text-center">300</td>
                                     <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
                                     <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
-                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">1-3</td>
                                 </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-xs text-gray-400 mt-3">*รับเหรียญรางวัลเมื่อเข้าเส้นชัยเท่านั้น</p>
+                        <div class="mt-4 relative z-10">
+                            <a href="register.php" class="block w-full py-3 rounded-xl bg-blue-600 text-white font-bold text-center hover:bg-blue-700 transition shadow-lg shadow-blue-600/30">
+                                สมัครระยะ 5.5 km (นักเรียน)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fun Run 5.5 km (บุคคลทั่วไป) - Full Width -->
+            <div class="mt-8 bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 relative group hover:-translate-y-1 transition duration-300">
+                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm z-10">
+                    <i class="fas fa-users mr-1"></i> <?php echo number_format($stats['5.5km']); ?> คน
+                </div>
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white text-center relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                    <h3 class="text-2xl font-bold mb-1 relative z-10">Fun Run 5.5 km</h3>
+                    <p class="text-lg font-medium opacity-90 relative z-10">(บุคคลทั่วไป)</p>
+                </div>
+                <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-200 text-gray-500 text-sm">
+                                    <th class="py-3 font-medium">รุ่น (ช/ญ)</th>
+                                    <th class="py-3 font-medium text-center">ค่าสมัคร</th>
+                                    <th class="py-3 font-medium text-center">เสื้อ</th>
+                                    <th class="py-3 font-medium text-center">เหรียญ*</th>
+                                    <th class="py-3 font-medium text-center">โล่รางวัล</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700">
                                 <tr class="border-b border-gray-100">
-                                    <td class="py-3 font-medium">บุคคลทั่วไป</td>
+                                    <td class="py-3 font-medium">19 - 29 ปี</td>
                                     <td class="py-3 text-center">450</td>
                                     <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
                                     <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
-                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">1-3</td>
                                 </tr>
                                 <tr class="border-b border-gray-100">
-                                    <td class="py-3 font-medium">อายุมากกว่า 50</td>
+                                    <td class="py-3 font-medium">30 - 39 ปี</td>
                                     <td class="py-3 text-center">450</td>
                                     <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
                                     <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
-                                    <td class="py-3 text-center">1-5</td>
+                                    <td class="py-3 text-center">1-3</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">40 - 49 ปี</td>
+                                    <td class="py-3 text-center">450</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center">1-3</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">50 - 59 ปี</td>
+                                    <td class="py-3 text-center">450</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center">1-3</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">60 ปีขึ้นไป</td>
+                                    <td class="py-3 text-center">450</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center">1-3</td>
                                 </tr>
                                 <tr>
                                     <td class="py-3 font-medium text-primary">VIP</td>
@@ -507,22 +578,23 @@ foreach ($category_counts as $row) {
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="mt-6 relative z-10">
-                            <a href="register.php" class="block w-full py-3 rounded-xl bg-blue-600 text-white font-bold text-center hover:bg-blue-700 transition shadow-lg shadow-blue-600/30">
-                                สมัครระยะ 5.5 km
-                            </a>
-                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-3">*รับเหรียญรางวัลเมื่อเข้าเส้นชัยเท่านั้น</p>
+                    <div class="mt-4 relative z-10 max-w-md mx-auto">
+                        <a href="register.php" class="block w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-center hover:from-blue-700 hover:to-indigo-700 transition shadow-lg shadow-blue-600/30">
+                            สมัครระยะ 5.5 km (บุคคลทั่วไป)
+                        </a>
                     </div>
                 </div>
             </div>
 
             <!-- Merch Item -->
-            <a href="register.php" class="mt-12 max-w-md mx-auto bg-white rounded-3xl p-6 shadow-lg border border-yellow-200 flex items-center gap-6 hover:shadow-xl transition group block relative z-10">
+            <a href="order_shirt.php" class="mt-12 max-w-md mx-auto bg-white rounded-3xl p-6 shadow-lg border border-yellow-200 flex items-center gap-6 hover:shadow-xl transition group block relative z-10">
                 <div class="w-20 h-20 bg-yellow-100 rounded-2xl flex items-center justify-center text-yellow-600 text-3xl flex-shrink-0 group-hover:scale-110 transition">
                     <i class="fas fa-tshirt"></i>
                 </div>
                 <div class="flex-1">
-                    <h3 class="text-lg font-bold text-gray-800">เสื้อที่ระลึก (Merch)</h3>
+                    <h3 class="text-lg font-bold text-gray-800">สั่งเสื้อที่ระลึก (ไม่วิ่ง)</h3>
                     <p class="text-gray-500 text-sm">Limited Edition Design</p>
                 </div>
                 <div class="text-right">

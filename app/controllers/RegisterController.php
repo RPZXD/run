@@ -55,6 +55,7 @@ class RegisterController {
 
             $this->registration->category = $_POST['category'];
             $this->registration->shirt_size = $_POST['shirt_size'];
+            $this->registration->shirt_quantity = isset($_POST['shirt_quantity']) ? (int)$_POST['shirt_quantity'] : 1;
             $this->registration->shipping_method = isset($_POST['shipping_method']) ? $_POST['shipping_method'] : 'SELF';
             $this->registration->payment_slip = $payment_slip;
             $this->registration->payment_amount = !empty($_POST['payment_amount']) ? $_POST['payment_amount'] : null;
@@ -84,6 +85,7 @@ class RegisterController {
         $message .= "👤 *Name:* " . $this->registration->full_name . "\n";
         $message .= "🏅 *Category:* " . $this->registration->category . "\n";
         $message .= "👕 *Shirt Size:* " . $this->registration->shirt_size . "\n";
+        $message .= "🔢 *Shirt Qty:* " . $this->registration->shirt_quantity . "\n";
         $message .= "📞 *Phone:* " . $this->registration->phone . "\n";
         $message .= "💰 *Amount:* " . ($this->registration->payment_amount ? number_format($this->registration->payment_amount, 2) : '0.00') . " THB\n";
         $message .= "🚚 *Shipping:* " . ($this->registration->shipping_method == 'POST' ? 'Post (+50)' : 'Self Pickup') . "\n";

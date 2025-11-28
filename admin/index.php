@@ -431,13 +431,18 @@ foreach ($registrations as $reg) {
                                     <option value="Walk & Run 3.5km - ม.ปลาย/ปวช.">ม.ปลาย/ปวช. (30 บาท)</option>
                                     <option value="Walk & Run 3.5km - VIP">VIP (1,200 บาท)</option>
                                 </optgroup>
-                                <optgroup label="Fun Run 5.5km">
-                                    <option value="Fun Run 5.5km - ประถมศึกษา">ประถมศึกษา (300 บาท)</option>
-                                    <option value="Fun Run 5.5km - ม.ต้น">ม.ต้น (300 บาท)</option>
-                                    <option value="Fun Run 5.5km - ม.ปลาย/ปวช.">ม.ปลาย/ปวช. (300 บาท)</option>
-                                    <option value="Fun Run 5.5km - บุคคลทั่วไป">บุคคลทั่วไป (450 บาท)</option>
-                                    <option value="Fun Run 5.5km - อายุมากกว่า 50">อายุมากกว่า 50 (450 บาท)</option>
-                                    <option value="Fun Run 5.5km - VIP">VIP (1,200 บาท)</option>
+                                <optgroup label="Fun Run 5.5km นักเรียน">
+                                    <option value="Fun Run 5.5km นักเรียน - ประถมศึกษา">ประถมศึกษา (300 บาท)</option>
+                                    <option value="Fun Run 5.5km นักเรียน - ม.ต้น">ม.ต้น (300 บาท)</option>
+                                    <option value="Fun Run 5.5km นักเรียน - ม.ปลาย/ปวช.">ม.ปลาย/ปวช. (300 บาท)</option>
+                                </optgroup>
+                                <optgroup label="Fun Run 5.5km บุคคลทั่วไป">
+                                    <option value="Fun Run 5.5km บุคคลทั่วไป - 19-29 ปี">19-29 ปี (450 บาท)</option>
+                                    <option value="Fun Run 5.5km บุคคลทั่วไป - 30-39 ปี">30-39 ปี (450 บาท)</option>
+                                    <option value="Fun Run 5.5km บุคคลทั่วไป - 40-49 ปี">40-49 ปี (450 บาท)</option>
+                                    <option value="Fun Run 5.5km บุคคลทั่วไป - 50-59 ปี">50-59 ปี (450 บาท)</option>
+                                    <option value="Fun Run 5.5km บุคคลทั่วไป - 60 ปีขึ้นไป">60 ปีขึ้นไป (450 บาท)</option>
+                                    <option value="Fun Run 5.5km บุคคลทั่วไป - VIP">VIP (1,200 บาท)</option>
                                 </optgroup>
                                 <optgroup label="Merchandise">
                                     <option value="Shirt Only">สั่งซื้อเสื้อที่ระลึก (ไม่วิ่ง) (250 บาท)</option>
