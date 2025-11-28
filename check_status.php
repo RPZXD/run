@@ -149,8 +149,8 @@ $totalResults = count($registrations) + count($shirtOrders);
                                 <i class="fas fa-search"></i> <span class="hidden sm:inline">ค้นหา</span>
                             </button>
                         </div>
-                        <p class="text-center text-white/70 text-sm mt-4">
-                            <i class="fas fa-info-circle mr-1"></i> ค้นหาได้ทั้งการสมัครวิ่งและการสั่งซื้อเสื้อ
+                        <p class="text-center text-gray-500 text-sm mt-4">
+                            <i class="fas fa-info-circle mr-1 "></i> ค้นหาได้ทั้งการสมัครวิ่งและการสั่งซื้อเสื้อ
                         </p>
                     </form>
                 </div>
