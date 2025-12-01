@@ -61,33 +61,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="antialiased text-gray-800 bg-light overflow-x-hidden">
+<body class="antialiased text-gray-800 bg-light overflow-x-hidden flex flex-col min-h-screen hero-gradient">
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-yellow-400/30 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute top-1/2 -right-24 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+    </div>
 
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-6">
-        <div class="container mx-auto bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-white/50 px-6 py-3 flex justify-between items-center">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-2 px-4 md:py-4 md:px-6">
+        <div class="container mx-auto bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-white/50 px-4 py-2 md:px-6 md:py-3 flex justify-between items-center">
             <a href="index.php" class="flex items-center gap-3 group">
                 <div class="relative">
                     <div class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
-                    <img src="assets/images/logo01.JPG" alt="Logo" class="relative h-10 w-10 rounded-full border-2 border-white object-cover">
+                    <img src="assets/images/logo01.JPG" alt="Logo" class="relative h-8 w-8 md:h-10 md:w-10 rounded-full border-2 border-white object-cover">
                 </div>
-                <span class="font-bold text-xl tracking-wide text-secondary group-hover:text-primary transition">PHICHAI RUN <span class="text-primary">2026</span></span>
+                <span class="font-bold text-lg md:text-xl tracking-wide text-secondary group-hover:text-primary transition">PHICHAI RUN <span class="text-primary">2026</span></span>
             </a>
             
             <a href="index.php" class="text-gray-600 hover:text-primary transition font-medium flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i> กลับหน้าหลัก
+                <i class="fas fa-arrow-left"></i> <span class="hidden md:inline">กลับหน้าหลัก</span>
             </a>
         </div>
     </nav>
 
-    <div class="relative min-h-screen pt-32 pb-20 flex items-center justify-center overflow-hidden hero-gradient">
-        <!-- Background Elements -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-yellow-400/30 rounded-full blur-3xl animate-float"></div>
-            <div class="absolute top-1/2 -right-24 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
-        </div>
-
-        <div class="container mx-auto px-4 max-w-3xl relative z-10">
+    <main class="flex-grow flex items-center justify-center relative z-10 pt-24 md:pt-32 pb-20">
+        <div class="container mx-auto px-4 max-w-3xl">
             
             <?php if ($message): ?>
                 <script>
@@ -114,22 +114,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <div class="glass-card rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up visible">
-                <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 p-8 text-center text-white relative overflow-hidden">
+                <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 p-6 md:p-8 text-center text-white relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-2 relative z-10">
+                    <h2 class="text-2xl md:text-4xl font-bold mb-2 relative z-10">
                         <i class="fas fa-tshirt mr-2"></i> สั่งซื้อเสื้อที่ระลึก
                     </h2>
-                    <p class="opacity-90 text-lg relative z-10">เสื้อ Phichai Run 2026 ราคาตัวละ 250 บาท</p>
+                    <p class="opacity-90 text-base md:text-lg relative z-10">เสื้อ Phichai Run 2026 ราคาตัวละ 250 บาท</p>
                 </div>
                 
-                <form id="shirtOrderForm" action="order_shirt.php" method="POST" enctype="multipart/form-data" class="p-8 md:p-10">
+                <form id="shirtOrderForm" action="order_shirt.php" method="POST" enctype="multipart/form-data" class="p-5 md:p-10">
                     
                     <!-- Progress Bar -->
                     <div class="mb-10">
                         <div class="w-full bg-gray-100 rounded-full h-3 overflow-hidden shadow-inner">
                             <div id="progressBar" class="h-full bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full transition-all duration-500 ease-out" style="width:33%"></div>
                         </div>
-                        <div class="flex justify-between text-sm mt-3 text-gray-500 font-medium">
+                        <div class="flex justify-between text-xs md:text-sm mt-3 text-gray-500 font-medium">
                             <div class="text-yellow-600">ข้อมูลผู้สั่ง</div>
                             <div>เลือกเสื้อ</div>
                             <div>ชำระเงิน</div>
@@ -195,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="mt-8 flex justify-end">
-                            <button type="button" class="next-btn bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-yellow-500/30 transition transform hover:-translate-y-1">
+                            <button type="button" class="next-btn w-full md:w-auto bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-yellow-500/30 transition transform hover:-translate-y-1">
                                 ถัดไป <i class="fas fa-arrow-right ml-2"></i>
                             </button>
                         </div>
@@ -396,11 +396,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="hidden" name="shirt_sizes" id="hidden_shirt_sizes">
                         <input type="hidden" name="shirt_quantity" id="hidden_shirt_quantity">
 
-                        <div class="mt-8 flex justify-between">
-                            <button type="button" class="prev-btn bg-gray-100 text-gray-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full transition">
+                        <div class="mt-8 flex flex-col-reverse md:flex-row justify-between gap-4 md:gap-0">
+                            <button type="button" class="prev-btn w-full md:w-auto bg-gray-100 text-gray-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full transition">
                                 <i class="fas fa-arrow-left mr-2"></i> ย้อนกลับ
                             </button>
-                            <button type="button" class="next-btn bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-yellow-500/30 transition transform hover:-translate-y-1">
+                            <button type="button" class="next-btn w-full md:w-auto bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-yellow-500/30 transition transform hover:-translate-y-1">
                                 ถัดไป <i class="fas fa-arrow-right ml-2"></i>
                             </button>
                         </div>
@@ -417,7 +417,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <!-- Bank Account Card -->
                             <div>
                                 <label class="block text-gray-700 font-bold mb-3 text-sm">โอนเงินเข้าบัญชี</label>
-                                <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden group transform transition hover:scale-[1.02]">
+                                <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl p-5 md:p-6 text-white shadow-lg relative overflow-hidden group transform transition hover:scale-[1.02]">
                                     <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
                                     <div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-20 h-20 bg-white opacity-10 rounded-full"></div>
                                     
@@ -479,9 +479,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             </div>
 
-                            <div id="upload-area" class="relative border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:bg-yellow-50 hover:border-yellow-300 transition group cursor-pointer bg-gray-50">
+                            <div id="upload-area" class="relative border-2 border-dashed border-gray-300 rounded-2xl p-6 md:p-8 text-center hover:bg-yellow-50 hover:border-yellow-300 transition group cursor-pointer bg-gray-50">
                                 <input type="file" name="payment_slip" id="payment_slip" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required>
-                                <i class="fas fa-cloud-upload-alt text-5xl text-gray-300 group-hover:text-yellow-400 transition mb-4"></i>
+                                <i class="fas fa-cloud-upload-alt text-4xl md:text-5xl text-gray-300 group-hover:text-yellow-400 transition mb-4"></i>
                                 <p class="text-gray-500 group-hover:text-gray-700 transition">คลิกหรือลากไฟล์มาวางที่นี่</p>
                                 <p class="text-sm text-gray-400 mt-2">รองรับ JPG, PNG (ไม่เกิน 5MB)</p>
                             </div>
@@ -502,11 +502,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="mt-8 flex justify-between">
-                            <button type="button" class="prev-btn bg-gray-100 text-gray-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full transition">
+                        <div class="mt-8 flex flex-col-reverse md:flex-row justify-between gap-4 md:gap-0">
+                            <button type="button" class="prev-btn w-full md:w-auto bg-gray-100 text-gray-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full transition">
                                 <i class="fas fa-arrow-left mr-2"></i> ย้อนกลับ
                             </button>
-                            <button type="submit" class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-yellow-500/30 transition transform hover:-translate-y-1">
+                            <button type="submit" class="w-full md:w-auto bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-yellow-500/30 transition transform hover:-translate-y-1">
                                 <i class="fas fa-check mr-2"></i> ยืนยันสั่งซื้อ
                             </button>
                         </div>
@@ -517,7 +517,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- Footer (simplified) -->
     <footer class="bg-dark text-white py-8">
