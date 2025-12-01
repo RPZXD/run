@@ -6,7 +6,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <div class="flex items-center gap-3">
             <div class="relative">
                 <div class="absolute -inset-1 bg-gradient-to-r from-red-500 to-orange-500 rounded-full blur opacity-75"></div>
-                <img src="../assets/images/logo-1.png" class="relative h-10 w-10 rounded-full border-2 border-white">
+                <img src="../assets/images/logo01.JPG" class="relative h-10 w-10 rounded-full border-2 border-white">
             </div>
             <span class="font-bold text-xl tracking-tight text-slate-800">Admin <span class="text-red-500">Panel</span></span>
         </div>

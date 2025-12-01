@@ -99,7 +99,7 @@ if ($search) {
                 <p class="text-gray-500 mt-1">Shirt Orders (แยกจากการสมัครวิ่ง)</p>
             </div>
             <div class="flex gap-2">
-                <a href="shirt_shipping.php" class="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg transition shadow-lg shadow-yellow-500/30">
+                <a href="shipping.php" class="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg transition shadow-lg shadow-yellow-500/30">
                     <i class="fas fa-print mr-2"></i> พิมพ์ใบจัดส่ง
                 </a>
                 <a href="dashboard.php" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition">

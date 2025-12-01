@@ -112,7 +112,7 @@ $totalResults = count($registrations) + count($shirtOrders);
             <a href="index.php" class="flex items-center gap-3 group">
                 <div class="relative">
                     <div class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
-                    <img src="assets/images/logo-1.png" alt="Logo" class="relative h-10 w-10 rounded-full border-2 border-white object-cover">
+                    <img src="assets/images/logo01.JPG" alt="Logo" class="relative h-10 w-10 rounded-full border-2 border-white object-cover">
                 </div>
                 <span class="font-bold text-xl tracking-wide text-secondary group-hover:text-primary transition">PHICHAI RUN <span class="text-primary">2026</span></span>
             </a>

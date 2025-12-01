@@ -497,14 +497,14 @@ foreach ($registrations as $reg) {
                             <label class="block text-slate-600 text-xs font-bold mb-1">เวลาโอน</label>
                             <input type="time" name="payment_time" id="modal_payment_time" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
                         </div>
-                        <div>
+                        <!-- <div>
                             <label class="block text-slate-600 text-xs font-bold mb-1">ธนาคาร/อ้างอิง</label>
                             <input type="text" name="bank_ref" id="modal_bank_ref" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-slate-600 text-xs font-bold mb-1">ชื่อผู้โอน</label>
                             <input type="text" name="sender_name" id="modal_sender_name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="flex gap-3 mt-8 sticky bottom-0 bg-white pt-4 border-t">

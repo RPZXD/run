@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="index.php" class="flex items-center gap-3 group">
                 <div class="relative">
                     <div class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
-                    <img src="assets/images/logo-1.png" alt="Logo" class="relative h-10 w-10 rounded-full border-2 border-white object-cover">
+                    <img src="assets/images/logo01.JPG" alt="Logo" class="relative h-10 w-10 rounded-full border-2 border-white object-cover">
                 </div>
                 <span class="font-bold text-xl tracking-wide text-secondary group-hover:text-primary transition">PHICHAI RUN <span class="text-primary">2026</span></span>
             </a>
@@ -413,28 +413,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </h3>
                         
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                            <!-- Bank Account -->
+
+                            <!-- Bank Account Card -->
                             <div>
-                                <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white shadow-xl">
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <i class="fas fa-university text-3xl opacity-80"></i>
-                                        <div>
-                                            <p class="text-sm opacity-80">ธนาคารกสิกรไทย</p>
-                                            <p class="text-xl font-bold">KBANK</p>
+                                <label class="block text-gray-700 font-bold mb-3 text-sm">โอนเงินเข้าบัญชี</label>
+                                <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden group transform transition hover:scale-[1.02]">
+                                    <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
+                                    <div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-20 h-20 bg-white opacity-10 rounded-full"></div>
+                                    
+                                    <div class="flex justify-between items-start mb-6 relative z-10">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fas fa-university text-2xl opacity-80"></i>
+                                            <span class="font-bold text-lg tracking-wide">Krungthai Bank</span>
+                                        </div>
+                                        <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-medium">ออมทรัพย์</span>
+                                    </div>
+                                    
+                                    <div class="mb-6 relative z-10">
+                                        <p class="text-blue-100 text-xs mb-1">เลขที่บัญชี Account No.</p>
+                                        <div class="flex items-center gap-3">
+                                            <span class="font-mono text-2xl md:text-3xl font-bold tracking-widest" id="acc-no">517-0-12428-7</span>
+                                            <button type="button" onclick="copyToClipboard('5170124287', this)" class="text-white/70 hover:text-white transition p-2 rounded-full hover:bg-white/10" title="คัดลอก">
+                                                <i class="far fa-copy"></i>
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="bg-white/20 rounded-xl p-4 backdrop-blur-sm">
-                                        <p class="text-sm opacity-80 mb-1">เลขที่บัญชี</p>
-                                        <p class="text-2xl font-mono font-bold tracking-wider">
-                                            035-8-81599-5
-                                            <button type="button" onclick="copyToClipboard('0358815995', this)" class="ml-2 text-white/80 hover:text-white transition">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                        </p>
+                                    
+                                    <div class="relative z-10">
+                                        <p class="text-blue-100 text-xs mb-1">ชื่อบัญชี Account Name</p>
+                                        <p class="font-medium text-lg truncate">สมาคมนักเรียนเก่าพิชัย</p>
                                     </div>
-                                    <p class="mt-4 text-sm">ชื่อบัญชี: <span class="font-bold">สมาคมนักเรียนเก่าพิชัย</span></p>
                                 </div>
-                            </div>
 
                             <!-- Payment Summary -->
                             <div class="flex flex-col justify-between">

@@ -1,4 +1,4 @@
-<div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm page-break relative label-card group hover:shadow-lg hover:border-blue-300 transition-all duration-300" data-id="<?php echo $row['id']; ?>">
+<div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm page-break relative label-card group hover:shadow-lg hover:border-blue-300 transition-all duration-300" data-id="<?php echo $row['id']; ?>" data-type="registration">
     <!-- Checkbox -->
     <div class="absolute top-4 left-4 no-print z-10">
         <input type="checkbox" value="<?php echo $row['id']; ?>" class="item-checkbox w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer transition-transform hover:scale-110">
