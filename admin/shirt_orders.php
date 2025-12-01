@@ -274,15 +274,15 @@ if ($search) {
                                             class="text-blue-500 hover:text-blue-700" title="ดูรายละเอียด">
                                         <i class="fas fa-eye"></i>
                                     </button>
-                                    <button onclick="updateStatus(<?php echo $order['id']; ?>, '<?php echo $order['status']; ?>')" 
+                                    <!-- <button onclick="updateStatus(<?php echo $order['id']; ?>, '<?php echo $order['status']; ?>')" 
                                             class="text-green-500 hover:text-green-700" title="อัพเดตสถานะ">
                                         <i class="fas fa-edit"></i>
-                                    </button>
+                                    </button> -->
                                     <?php if ($order['payment_slip']): ?>
-                                    <a href="../<?php echo htmlspecialchars($order['payment_slip']); ?>" target="_blank" 
+                                    <button onclick="viewSlip(<?php echo htmlspecialchars(json_encode($order)); ?>)" 
                                        class="text-purple-500 hover:text-purple-700" title="ดูสลิป">
                                         <i class="fas fa-receipt"></i>
-                                    </a>
+                                    </button>
                                     <?php endif; ?>
                                     <button onclick="deleteOrder(<?php echo $order['id']; ?>)" 
                                             class="text-red-500 hover:text-red-700" title="ลบ">
@@ -310,6 +310,90 @@ if ($search) {
                     </button>
                 </div>
                 <div id="orderDetails"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slip Modal -->
+    <div id="slipModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto flex flex-col md:flex-row">
+            <!-- Image Section -->
+            <div class="w-full md:w-1/2 bg-black flex items-center justify-center p-4 relative group">
+                <img id="slipImage" src="" alt="Payment Slip" class="max-h-[50vh] md:max-h-[80vh] max-w-full object-contain transition-transform duration-300">
+                <a id="slipDownloadLink" href="" target="_blank" class="absolute bottom-4 right-4 bg-white/90 text-gray-800 px-3 py-1 rounded-lg text-sm font-bold shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i class="fas fa-external-link-alt mr-1"></i> เปิดรูปเต็ม
+                </a>
+            </div>
+            <!-- Details Section -->
+            <div class="w-full md:w-1/2 p-6 flex flex-col bg-white">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-secondary flex items-center gap-2">
+                        <i class="fas fa-receipt text-purple-500"></i> ตรวจสอบสลิป
+                    </h3>
+                    <button onclick="closeModal('slipModal')" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-6 flex-grow overflow-y-auto pr-2">
+                    <!-- Transfer Info -->
+                    <div class="bg-purple-50 p-5 rounded-xl border border-purple-100">
+                        <h4 class="text-sm font-bold text-purple-800 mb-3 uppercase tracking-wider">ข้อมูลการโอนเงิน</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-end border-b border-purple-100 pb-2">
+                                <span class="text-sm text-gray-500">ชื่อผู้โอน</span>
+                                <span class="font-bold text-gray-800 text-lg" id="slipName"></span>
+                            </div>
+                            <div class="flex justify-between items-end border-b border-purple-100 pb-2">
+                                <span class="text-sm text-gray-500">ยอดเงิน</span>
+                                <span class="font-bold text-green-600 text-2xl" id="slipAmount"></span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 pt-1">
+                                <div>
+                                    <p class="text-xs text-gray-500 mb-1">วันที่โอน</p>
+                                    <p class="font-bold text-gray-800 bg-white px-3 py-1 rounded border border-purple-100 inline-block" id="slipDate"></p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 mb-1">เวลา</p>
+                                    <p class="font-bold text-gray-800 bg-white px-3 py-1 rounded border border-purple-100 inline-block" id="slipTime"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status Update Form -->
+                    <form method="POST" class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                        <input type="hidden" name="action" value="update_status">
+                        <input type="hidden" name="id" id="slipOrderId">
+                        
+                        <h4 class="text-sm font-bold text-gray-600 mb-3 uppercase tracking-wider">จัดการสถานะ</h4>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">สถานะออเดอร์</label>
+                            <div class="relative">
+                                <select name="status" id="slipStatus" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 appearance-none bg-white">
+                                    <option value="pending">รอตรวจสอบ</option>
+                                    <option value="paid">ชำระแล้ว (ตรวจสอบผ่าน)</option>
+                                    <option value="shipped">จัดส่งแล้ว</option>
+                                    <option value="completed">เสร็จสิ้น</option>
+                                    <option value="cancelled">ยกเลิก</option>
+                                </select>
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-tasks text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">หมายเหตุ</label>
+                            <textarea name="notes" id="slipNotes" rows="2" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm" placeholder="ระบุหมายเหตุเพิ่มเติม..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-3 rounded-lg transition shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2">
+                            <i class="fas fa-check-circle"></i> บันทึกการตรวจสอบ
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -472,6 +556,24 @@ if ($search) {
                 form.submit();
             }
         });
+    }
+
+    function viewSlip(order) {
+        const slipPath = '../' + order.payment_slip;
+        document.getElementById('slipImage').src = slipPath;
+        document.getElementById('slipDownloadLink').href = slipPath;
+        
+        document.getElementById('slipName').textContent = order.full_name;
+        document.getElementById('slipAmount').textContent = Number(order.payment_amount).toLocaleString() + ' ฿';
+        document.getElementById('slipDate').textContent = order.payment_date || '-';
+        document.getElementById('slipTime').textContent = order.payment_time || '-';
+        
+        document.getElementById('slipOrderId').value = order.id;
+        document.getElementById('slipStatus').value = order.status;
+        document.getElementById('slipNotes').value = order.notes || '';
+        
+        document.getElementById('slipModal').classList.remove('hidden');
+        document.getElementById('slipModal').classList.add('flex');
     }
 
     // Show success message

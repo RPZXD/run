@@ -187,14 +187,14 @@ foreach ($registrations as $reg) {
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse" id="registrationsTable">
                     <thead>
-                        <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
-                            <th class="px-6 py-4 font-bold">ID</th>
+                        <tr class="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100 backdrop-blur-sm">
+                            <th class="px-6 py-4 font-bold rounded-tl-2xl">ID</th>
                             <th class="px-6 py-4 font-bold">ผู้สมัคร</th>
-                            <th class="px-6 py-4 font-bold">ประเภท/ไซส์</th>
+                            <th class="px-6 py-4 font-bold">ข้อมูลการวิ่ง</th>
                             <th class="px-6 py-4 font-bold">การชำระเงิน</th>
                             <th class="px-6 py-4 font-bold text-center">สถานะ</th>
                             <th class="px-6 py-4 font-bold text-center">หลักฐาน</th>
-                            <th class="px-6 py-4 font-bold text-right">จัดการ</th>
+                            <th class="px-6 py-4 font-bold text-right rounded-tr-2xl">จัดการ</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
@@ -211,36 +211,68 @@ foreach ($registrations as $reg) {
                             </tr>
                         <?php else: ?>
                             <?php foreach ($registrations as $row): ?>
-                                <tr class="hover:bg-blue-50/30 transition-colors group">
-                                    <td class="px-6 py-4 text-slate-400 font-mono text-xs">#<?php echo str_pad($row['id'], 4, '0', STR_PAD_LEFT); ?></td>
+                                <tr class="hover:bg-blue-50/40 transition-all duration-200 group hover:shadow-sm">
+                                    <td class="px-6 py-4">
+                                        <span class="font-mono text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md">#<?php echo str_pad($row['id'], 4, '0', STR_PAD_LEFT); ?></span>
+                                    </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-3">
-                                            <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-blue-600 font-bold text-sm shadow-sm border border-white">
-                                                <?php echo mb_substr($row['first_name'] ?? $row['full_name'], 0, 1); ?>
+                                            <div class="relative">
+                                                <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-md ring-2 ring-white">
+                                                    <?php echo mb_substr($row['first_name'] ?? $row['full_name'], 0, 1); ?>
+                                                </div>
+                                                <?php if(($row['gender'] ?? '') == 'Male'): ?>
+                                                    <div class="absolute -bottom-1 -right-1 bg-blue-100 text-blue-600 rounded-full w-4 h-4 flex items-center justify-center text-[10px] border border-white"><i class="fas fa-mars"></i></div>
+                                                <?php elseif(($row['gender'] ?? '') == 'Female'): ?>
+                                                    <div class="absolute -bottom-1 -right-1 bg-pink-100 text-pink-600 rounded-full w-4 h-4 flex items-center justify-center text-[10px] border border-white"><i class="fas fa-venus"></i></div>
+                                                <?php endif; ?>
                                             </div>
                                             <div>
-                                                <div class="font-bold text-slate-800"><?php echo $row['full_name']; ?></div>
-                                                <div class="text-xs text-slate-500 flex items-center gap-2">
-                                                    <span class="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]"><i class="fas fa-phone-alt text-[9px] mr-1"></i> <?php echo $row['phone']; ?></span>
+                                                <div class="font-bold text-slate-800 text-sm"><?php echo $row['full_name']; ?></div>
+                                                <div class="text-xs text-slate-500 mt-0.5 flex items-center gap-2">
+                                                    <span class="bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-500 font-medium group-hover:bg-white transition-colors">
+                                                        <i class="fas fa-phone-alt text-[9px] mr-1 text-slate-400"></i> <?php echo $row['phone']; ?>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-sm font-medium text-slate-700"><?php echo $row['category']; ?></div>
-                                        <div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 text-[10px] font-bold uppercase tracking-wide border border-indigo-100">
-                                            <i class="fas fa-tshirt"></i> <?php echo $row['shirt_size']; ?>
+                                        <div class="flex flex-col items-start gap-1.5">
+                                            <?php 
+                                                $catColor = 'bg-slate-100 text-slate-600';
+                                                if(strpos($row['category'], 'VIP') !== false) $catColor = 'bg-amber-100 text-amber-700 border border-amber-200';
+                                                elseif(strpos($row['category'], 'Fun Run') !== false) $catColor = 'bg-emerald-50 text-emerald-700 border border-emerald-100';
+                                                elseif(strpos($row['category'], 'Walk') !== false) $catColor = 'bg-blue-50 text-blue-700 border border-blue-100';
+                                            ?>
+                                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold <?php echo $catColor; ?>">
+                                                <?php echo $row['category']; ?>
+                                            </span>
+                                            <div class="flex items-center gap-2 text-xs text-slate-500">
+                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 border border-slate-100">
+                                                    <i class="fas fa-tshirt text-slate-400"></i> 
+                                                    <span class="font-bold text-slate-700"><?php echo $row['shirt_size']; ?></span>
+                                                </span>
+                                                <?php if(($row['shipping_method'] ?? '') == 'POST'): ?>
+                                                    <span class="text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100" title="จัดส่งไปรษณีย์"><i class="fas fa-truck mr-1"></i> ส่ง ปณ.</span>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <?php if (!empty($row['payment_date'])): ?>
-                                            <div class="text-sm font-bold text-slate-700">฿<?php echo number_format($row['payment_amount']); ?></div>
-                                            <div class="text-xs text-slate-400 flex items-center gap-1">
-                                                <i class="far fa-clock"></i>
-                                                <?php echo date('d/m/y', strtotime($row['payment_date'])); ?> • <?php echo date('H:i', strtotime($row['payment_time'])); ?>
+                                            <div class="flex flex-col">
+                                                <span class="text-sm font-bold text-slate-700">฿<?php echo number_format($row['payment_amount']); ?></span>
+                                                <span class="text-[10px] text-slate-400 mt-0.5">
+                                                    <i class="far fa-calendar-alt mr-0.5"></i> <?php echo date('d/m/y', strtotime($row['payment_date'])); ?>
+                                                    <span class="mx-1 text-slate-300">|</span>
+                                                    <i class="far fa-clock mr-0.5"></i> <?php echo date('H:i', strtotime($row['payment_time'])); ?>
+                                                </span>
                                             </div>
                                         <?php else: ?>
-                                            <span class="text-slate-300 text-xs italic bg-slate-50 px-2 py-1 rounded">ยังไม่แจ้งโอน</span>
+                                            <span class="inline-flex items-center px-2 py-1 rounded bg-slate-100 text-slate-400 text-xs font-medium">
+                                                <i class="fas fa-minus-circle mr-1"></i> ยังไม่แจ้ง
+                                            </span>
                                         <?php endif; ?>
                                     </td>
                                     <td class="px-6 py-4 text-center">
@@ -257,20 +289,22 @@ foreach ($registrations as $reg) {
                                             ];
                                             $s = $row['status'] ?? 'pending';
                                         ?>
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border ring-2 ring-offset-1 <?php echo $statusStyles[$s]; ?>">
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border ring-2 ring-offset-1 <?php echo $statusStyles[$s]; ?>" data-status="<?php echo $statusLabels[$s]; ?>">
                                             <span class="w-1.5 h-1.5 rounded-full bg-current mr-1.5 animate-pulse"></span>
                                             <?php echo $statusLabels[$s]; ?>
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         <?php if ($row['payment_slip']): ?>
-                                            <div class="relative group/slip inline-block">
+                                            <button onclick='viewSlip(<?php echo json_encode($row); ?>)' 
+                                                    class="relative group/slip inline-block focus:outline-none">
                                                 <img src="view_slip.php?file=<?php echo $row['payment_slip']; ?>" 
-                                                     class="h-10 w-10 object-cover rounded-lg border-2 border-white shadow-md cursor-zoom-in hover:scale-110 transition-transform duration-200"
-                                                     onclick="openImageModal('view_slip.php?file=<?php echo $row['payment_slip']; ?>')"
+                                                     class="h-10 w-10 object-cover rounded-lg border-2 border-white shadow-md hover:scale-110 transition-transform duration-200"
                                                      alt="Slip">
-                                                <div class="absolute inset-0 bg-black/20 rounded-lg opacity-0 group-hover/slip:opacity-100 transition-opacity pointer-events-none"></div>
-                                            </div>
+                                                <div class="absolute inset-0 bg-black/20 rounded-lg opacity-0 group-hover/slip:opacity-100 transition-opacity pointer-events-none flex items-center justify-center">
+                                                    <i class="fas fa-eye text-white text-xs"></i>
+                                                </div>
+                                            </button>
                                         <?php else: ?>
                                             <span class="text-slate-300">-</span>
                                         <?php endif; ?>
@@ -520,13 +554,88 @@ foreach ($registrations as $reg) {
         </div>
     </div>
 
-    <!-- Image Modal -->
-    <div id="imageModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center z-[60] transition-opacity" onclick="closeImageModal()">
-        <div class="relative max-w-5xl max-h-screen p-4 w-full flex justify-center">
-            <button onclick="closeImageModal()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white rounded-full w-10 h-10 flex items-center justify-center transition backdrop-blur-md z-50">
-                <i class="fas fa-times"></i>
-            </button>
-            <img id="modalImage" src="" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain" onclick="event.stopPropagation()">
+    <!-- Slip Modal -->
+    <div id="slipModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm hidden items-center justify-center z-[60] transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto flex flex-col md:flex-row">
+            <!-- Image Section -->
+            <div class="w-full md:w-1/2 bg-black flex items-center justify-center p-4 relative group">
+                <button onclick="closeSlipModal()" class="absolute top-4 left-4 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center md:hidden z-10">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <img id="slipImage" src="" alt="Payment Slip" class="max-h-[50vh] md:max-h-[80vh] max-w-full object-contain transition-transform duration-300">
+                <a id="slipDownloadLink" href="" target="_blank" class="absolute bottom-4 right-4 bg-white/90 text-gray-800 px-3 py-1 rounded-lg text-sm font-bold shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i class="fas fa-external-link-alt mr-1"></i> เปิดรูปเต็ม
+                </a>
+            </div>
+            <!-- Details Section -->
+            <div class="w-full md:w-1/2 p-6 flex flex-col bg-white">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fas fa-receipt text-purple-500"></i> ตรวจสอบสลิป
+                    </h3>
+                    <button onclick="closeSlipModal()" class="text-slate-400 hover:text-slate-600 transition-colors">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-6 flex-grow overflow-y-auto pr-2">
+                    <!-- Transfer Info -->
+                    <div class="bg-purple-50 p-5 rounded-xl border border-purple-100">
+                        <h4 class="text-sm font-bold text-purple-800 mb-3 uppercase tracking-wider">ข้อมูลการโอนเงิน</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-end border-b border-purple-100 pb-2">
+                                <span class="text-sm text-slate-500">ชื่อผู้โอน</span>
+                                <span class="font-bold text-slate-800 text-lg" id="slipName"></span>
+                            </div>
+                            <div class="flex justify-between items-end border-b border-purple-100 pb-2">
+                                <span class="text-sm text-slate-500">ยอดเงิน</span>
+                                <span class="font-bold text-green-600 text-2xl" id="slipAmount"></span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 pt-1">
+                                <div>
+                                    <p class="text-xs text-slate-500 mb-1">วันที่โอน</p>
+                                    <p class="font-bold text-slate-800 bg-white px-3 py-1 rounded border border-purple-100 inline-block" id="slipDate"></p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 mb-1">เวลา</p>
+                                    <p class="font-bold text-slate-800 bg-white px-3 py-1 rounded border border-purple-100 inline-block" id="slipTime"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status Update Form -->
+                    <form method="POST" class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <input type="hidden" name="action" value="update_status">
+                        <input type="hidden" name="id" id="slipOrderId">
+                        
+                        <h4 class="text-sm font-bold text-slate-600 mb-3 uppercase tracking-wider">จัดการสถานะ</h4>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">สถานะการสมัคร</label>
+                            <div class="relative">
+                                <select name="status" id="slipStatus" onchange="toggleSlipReason()" class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 appearance-none bg-white">
+                                    <option value="pending">รอตรวจสอบ</option>
+                                    <option value="approved">อนุมัติ (ตรวจสอบผ่าน)</option>
+                                    <option value="rejected">ปฏิเสธ / มีปัญหา</option>
+                                </select>
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-tasks text-slate-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4 hidden" id="slipReasonDiv">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">เหตุผล (กรณีปฏิเสธ)</label>
+                            <input type="text" name="reject_reason" id="slipReason" class="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm" placeholder="ระบุเหตุผล...">
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-3 rounded-lg transition shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2">
+                            <i class="fas fa-check-circle"></i> บันทึกการตรวจสอบ
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -572,16 +681,39 @@ foreach ($registrations as $reg) {
             return false;
         }
 
-        function openImageModal(src) {
-            document.getElementById('imageModal').classList.remove('hidden');
-            document.getElementById('modalImage').src = src;
+        function viewSlip(data) {
+            const slipPath = 'view_slip.php?file=' + data.payment_slip;
+            document.getElementById('slipImage').src = slipPath;
+            document.getElementById('slipDownloadLink').href = slipPath;
+            
+            document.getElementById('slipName').textContent = data.full_name;
+            document.getElementById('slipAmount').textContent = Number(data.payment_amount).toLocaleString() + ' ฿';
+            document.getElementById('slipDate').textContent = data.payment_date || '-';
+            document.getElementById('slipTime').textContent = data.payment_time || '-';
+            
+            document.getElementById('slipOrderId').value = data.id;
+            document.getElementById('slipStatus').value = data.status || 'pending';
+            document.getElementById('slipReason').value = data.reject_reason || '';
+            
+            toggleSlipReason();
+            
+            document.getElementById('slipModal').classList.remove('hidden');
+            document.getElementById('slipModal').classList.add('flex');
         }
 
-        function closeImageModal() {
-            document.getElementById('imageModal').classList.add('hidden');
-            setTimeout(() => {
-                document.getElementById('modalImage').src = '';
-            }, 200);
+        function closeSlipModal() {
+            document.getElementById('slipModal').classList.add('hidden');
+            document.getElementById('slipModal').classList.remove('flex');
+        }
+
+        function toggleSlipReason() {
+            const status = document.getElementById('slipStatus').value;
+            const reasonDiv = document.getElementById('slipReasonDiv');
+            if (status === 'rejected') {
+                reasonDiv.classList.remove('hidden');
+            } else {
+                reasonDiv.classList.add('hidden');
+            }
         }
 
         function openModal(data) {
