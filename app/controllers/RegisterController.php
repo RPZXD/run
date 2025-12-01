@@ -80,16 +80,16 @@ class RegisterController {
         $discord_webhook_url = 'https://discordapp.com/api/webhooks/1443091303947698339/spMmqpe3TjyfSn5F-1-N7Qv5Ie9byt25Kh8-AB06NsDelEIbJ5JoJaIEUHD31oEIkZQ1';
 
         // Prepare Message
-        $message = "🏃‍♂️ *New Registration!* 🏃‍♀️\n";
+        $message = "🏃‍♂️ *มีผู้สมัครใหม่! (New Registration)* 🏃‍♀️\n";
         $message .= "--------------------------------\n";
-        $message .= "👤 *Name:* " . $this->registration->full_name . "\n";
-        $message .= "🏅 *Category:* " . $this->registration->category . "\n";
-        $message .= "👕 *Shirt Size:* " . $this->registration->shirt_size . "\n";
-        $message .= "🔢 *Shirt Qty:* " . $this->registration->shirt_quantity . "\n";
-        $message .= "📞 *Phone:* " . $this->registration->phone . "\n";
-        $message .= "💰 *Amount:* " . ($this->registration->payment_amount ? number_format($this->registration->payment_amount, 2) : '0.00') . " THB\n";
-        $message .= "🚚 *Shipping:* " . ($this->registration->shipping_method == 'POST' ? 'Post (+50)' : 'Self Pickup') . "\n";
-        $message .= "📅 *Date:* " . date('Y-m-d H:i:s') . "\n";
+        $message .= "👤 *ชื่อ-นามสกุล:* " . $this->registration->full_name . "\n";
+        $message .= "🏅 *ประเภท:* " . $this->registration->category . "\n";
+        $message .= "👕 *ไซส์เสื้อ:* " . $this->registration->shirt_size . "\n";
+        $message .= "🔢 *จำนวนเสื้อ:* " . $this->registration->shirt_quantity . " ตัว\n";
+        $message .= "📞 *เบอร์โทร:* " . $this->registration->phone . "\n";
+        $message .= "💰 *ยอดโอน:* " . ($this->registration->payment_amount ? number_format($this->registration->payment_amount, 2) : '0.00') . " บาท\n";
+        $message .= "🚚 *การจัดส่ง:* " . ($this->registration->shipping_method == 'POST' ? 'จัดส่งไปรษณีย์ (+50)' : 'รับด้วยตนเอง') . "\n";
+        $message .= "📅 *วันที่:* " . date('Y-m-d H:i:s') . "\n";
 
         // Send to Telegram
         if ($telegram_token !== 'YOUR_TELEGRAM_BOT_TOKEN') {

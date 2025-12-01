@@ -67,16 +67,16 @@ class ShirtOrderController {
         $telegram_chat_id = '-5016102496';
         $discord_webhook_url = 'https://discordapp.com/api/webhooks/1443091303947698339/spMmqpe3TjyfSn5F-1-N7Qv5Ie9byt25Kh8-AB06NsDelEIbJ5JoJaIEUHD31oEIkZQ1';
 
-        $message = "👕 *New Shirt Order!* 👕\n";
+        $message = "👕 *มีคำสั่งซื้อเสื้อใหม่! (New Shirt Order)* 👕\n";
         $message .= "--------------------------------\n";
-        $message .= "📦 *Order:* " . $orderNumber . "\n";
-        $message .= "👤 *Name:* " . $this->shirtOrder->full_name . "\n";
-        $message .= "👕 *Sizes:* " . $this->shirtOrder->shirt_sizes . "\n";
-        $message .= "🔢 *Qty:* " . $this->shirtOrder->shirt_quantity . " ตัว\n";
-        $message .= "📞 *Phone:* " . $this->shirtOrder->phone . "\n";
-        $message .= "💰 *Amount:* " . ($this->shirtOrder->payment_amount ? number_format($this->shirtOrder->payment_amount, 2) : '0.00') . " THB\n";
-        $message .= "🚚 *Shipping:* " . ($this->shirtOrder->shipping_method == 'POST' ? 'Post (+50)' : 'Self Pickup') . "\n";
-        $message .= "📅 *Date:* " . date('Y-m-d H:i:s') . "\n";
+        $message .= "📦 *เลขที่คำสั่งซื้อ:* " . $orderNumber . "\n";
+        $message .= "👤 *ชื่อ-นามสกุล:* " . $this->shirtOrder->full_name . "\n";
+        $message .= "👕 *ไซส์:* " . $this->shirtOrder->shirt_sizes . "\n";
+        $message .= "🔢 *จำนวน:* " . $this->shirtOrder->shirt_quantity . " ตัว\n";
+        $message .= "📞 *เบอร์โทร:* " . $this->shirtOrder->phone . "\n";
+        $message .= "💰 *ยอดโอน:* " . ($this->shirtOrder->payment_amount ? number_format($this->shirtOrder->payment_amount, 2) : '0.00') . " บาท\n";
+        $message .= "🚚 *การจัดส่ง:* " . ($this->shirtOrder->shipping_method == 'POST' ? 'จัดส่งไปรษณีย์ (+50)' : 'รับด้วยตนเอง') . "\n";
+        $message .= "📅 *วันที่:* " . date('Y-m-d H:i:s') . "\n";
 
         if ($telegram_token !== 'YOUR_TELEGRAM_BOT_TOKEN') {
             $this->sendTelegram($telegram_token, $telegram_chat_id, $message);
