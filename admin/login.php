@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     
     // Simple hardcoded credentials
-    if ($username === 'admin' && $password === 'admin123') {
+    if ($username === 'adminphichairun' && $password === 'v8GOllNF08D4Ep4FbqZ#') {
         $_SESSION['admin_logged_in'] = true;
         header('Location: index.php');
         exit;
