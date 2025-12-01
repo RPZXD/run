@@ -193,14 +193,13 @@ foreach ($registrations as $reg) {
                             <th class="px-6 py-4 font-bold">ข้อมูลการวิ่ง</th>
                             <th class="px-6 py-4 font-bold">การชำระเงิน</th>
                             <th class="px-6 py-4 font-bold text-center">สถานะ</th>
-                            <th class="px-6 py-4 font-bold text-center">หลักฐาน</th>
                             <th class="px-6 py-4 font-bold text-right rounded-tr-2xl">จัดการ</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
                         <?php if (empty($registrations)): ?>
                             <tr>
-                                <td colspan="7" class="px-6 py-12 text-center text-slate-400">
+                                <td colspan="6" class="px-6 py-12 text-center text-slate-400">
                                     <div class="flex flex-col items-center justify-center">
                                         <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                                             <i class="fas fa-inbox text-3xl text-slate-300"></i>
@@ -294,23 +293,13 @@ foreach ($registrations as $reg) {
                                             <?php echo $statusLabels[$s]; ?>
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 text-center">
-                                        <?php if ($row['payment_slip']): ?>
-                                            <button onclick='viewSlip(<?php echo json_encode($row); ?>)' 
-                                                    class="relative group/slip inline-block focus:outline-none">
-                                                <img src="view_slip.php?file=<?php echo $row['payment_slip']; ?>" 
-                                                     class="h-10 w-10 object-cover rounded-lg border-2 border-white shadow-md hover:scale-110 transition-transform duration-200"
-                                                     alt="Slip">
-                                                <div class="absolute inset-0 bg-black/20 rounded-lg opacity-0 group-hover/slip:opacity-100 transition-opacity pointer-events-none flex items-center justify-center">
-                                                    <i class="fas fa-eye text-white text-xs"></i>
-                                                </div>
-                                            </button>
-                                        <?php else: ?>
-                                            <span class="text-slate-300">-</span>
-                                        <?php endif; ?>
-                                    </td>
                                     <td class="px-6 py-4 text-right">
                                         <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200 transform translate-x-2 group-hover:translate-x-0">
+                                            <?php if ($row['payment_slip']): ?>
+                                                <button onclick='viewSlip(<?php echo json_encode($row); ?>)' class="w-8 h-8 rounded-full bg-purple-50 text-purple-600 hover:bg-purple-500 hover:text-white flex items-center justify-center transition-all shadow-sm hover:shadow-md" title="ดูสลิป">
+                                                    <i class="fas fa-receipt"></i>
+                                                </button>
+                                            <?php endif; ?>
                                             <?php if ($row['status'] === 'pending'): ?>
                                                 <form method="POST" onsubmit="return confirmAction(event, 'ยืนยันการอนุมัติ?', 'อนุมัติ');">
                                                     <input type="hidden" name="action" value="update_status">
@@ -579,6 +568,42 @@ foreach ($registrations as $reg) {
                 </div>
                 
                 <div class="space-y-6 flex-grow overflow-y-auto pr-2">
+                    <!-- Registration Info -->
+                    <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                        <h4 class="text-sm font-bold text-blue-800 mb-3 uppercase tracking-wider">ข้อมูลการสมัคร</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between items-start">
+                                <span class="text-slate-500 whitespace-nowrap mr-2">ประเภท</span>
+                                <span class="font-bold text-slate-800 text-right" id="slipCategory"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">ไซส์เสื้อ</span>
+                                <span class="font-bold text-slate-800" id="slipShirtSize"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">การจัดส่ง</span>
+                                <span class="font-bold text-slate-800" id="slipShipping"></span>
+                            </div>
+
+                            <!-- Breakdown -->
+                            <div class="bg-white/60 rounded-lg p-2 mt-2 space-y-1 text-xs text-slate-600">
+                                <div class="flex justify-between">
+                                    <span>ค่าสมัคร</span>
+                                    <span class="font-medium" id="slipBasePrice"></span>
+                                </div>
+                                <div class="flex justify-between hidden" id="slipShippingCostRow">
+                                    <span>ค่าจัดส่ง</span>
+                                    <span class="font-medium">50 ฿</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-blue-200 flex justify-between items-end mt-2">
+                                <span class="text-slate-500">ยอดที่ต้องชำระ</span>
+                                <span class="font-bold text-blue-600 text-lg" id="slipExpectedAmount"></span>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Transfer Info -->
                     <div class="bg-purple-50 p-5 rounded-xl border border-purple-100">
                         <h4 class="text-sm font-bold text-purple-800 mb-3 uppercase tracking-wider">ข้อมูลการโอนเงิน</h4>
@@ -686,6 +711,36 @@ foreach ($registrations as $reg) {
             document.getElementById('slipImage').src = slipPath;
             document.getElementById('slipDownloadLink').href = slipPath;
             
+            // Registration Info
+            document.getElementById('slipCategory').textContent = data.category;
+            document.getElementById('slipShirtSize').textContent = data.shirt_size;
+            
+            const isShipping = data.shipping_method === 'POST';
+            document.getElementById('slipShipping').textContent = isShipping ? 'จัดส่งไปรษณีย์ (+50)' : 'รับด้วยตนเอง';
+
+            // Calculate Expected Price
+            let price = 0;
+            const cat = data.category || '';
+            
+            if (cat.includes('VIP')) price = 1200;
+            else if (cat.includes('Walk & Run')) price = 30;
+            else if (cat.includes('Fun Run') && cat.includes('นักเรียน')) price = 300;
+            else if (cat.includes('Fun Run') && cat.includes('บุคคลทั่วไป')) price = 450;
+            else if (cat.includes('Shirt Only')) price = 250;
+
+            // Update Base Price
+            document.getElementById('slipBasePrice').textContent = price.toLocaleString() + ' ฿';
+
+            if (isShipping) {
+                price += 50;
+                document.getElementById('slipShippingCostRow').classList.remove('hidden');
+            } else {
+                document.getElementById('slipShippingCostRow').classList.add('hidden');
+            }
+            
+            document.getElementById('slipExpectedAmount').textContent = price.toLocaleString() + ' ฿';
+
+            // Transfer Info
             document.getElementById('slipName').textContent = data.full_name;
             document.getElementById('slipAmount').textContent = Number(data.payment_amount).toLocaleString() + ' ฿';
             document.getElementById('slipDate').textContent = data.payment_date || '-';

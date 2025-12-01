@@ -336,6 +336,38 @@ if ($search) {
                 </div>
                 
                 <div class="space-y-6 flex-grow overflow-y-auto pr-2">
+                    <!-- Order Info -->
+                    <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                        <h4 class="text-sm font-bold text-blue-800 mb-3 uppercase tracking-wider">ข้อมูลคำสั่งซื้อ</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between items-start">
+                                <span class="text-gray-500">สินค้า</span>
+                                <span class="font-bold text-gray-800 text-right" id="slipOrderItems"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">การจัดส่ง</span>
+                                <span class="font-bold text-gray-800" id="slipOrderShipping"></span>
+                            </div>
+                            
+                            <!-- Breakdown -->
+                            <div class="bg-white/60 rounded-lg p-2 mt-2 space-y-1 text-xs text-slate-600">
+                                <div class="flex justify-between">
+                                    <span>ค่าเสื้อ (<span id="slipOrderQty"></span> ตัว × 250)</span>
+                                    <span class="font-medium" id="slipOrderShirtTotal"></span>
+                                </div>
+                                <div class="flex justify-between" id="slipOrderShippingCostRow">
+                                    <span>ค่าจัดส่ง</span>
+                                    <span class="font-medium" id="slipOrderShippingCost"></span>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-blue-200 flex justify-between items-end mt-2">
+                                <span class="text-gray-500">ยอดที่ต้องชำระ</span>
+                                <span class="font-bold text-blue-600 text-lg" id="slipOrderExpectedAmount"></span>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Transfer Info -->
                     <div class="bg-purple-50 p-5 rounded-xl border border-purple-100">
                         <h4 class="text-sm font-bold text-purple-800 mb-3 uppercase tracking-wider">ข้อมูลการโอนเงิน</h4>
@@ -563,6 +595,25 @@ if ($search) {
         document.getElementById('slipImage').src = slipPath;
         document.getElementById('slipDownloadLink').href = slipPath;
         
+        // Order Info
+        document.getElementById('slipOrderItems').textContent = order.shirt_sizes;
+        document.getElementById('slipOrderShipping').textContent = order.shipping_method === 'POST' ? 'ไปรษณีย์' : 'รับเอง';
+        
+        // Breakdown
+        const qty = parseInt(order.shirt_quantity);
+        const shirtTotal = qty * 250;
+        document.getElementById('slipOrderQty').textContent = qty;
+        document.getElementById('slipOrderShirtTotal').textContent = shirtTotal.toLocaleString() + ' ฿';
+        
+        if (order.shipping_method === 'POST') {
+            document.getElementById('slipOrderShippingCostRow').classList.remove('hidden');
+            document.getElementById('slipOrderShippingCost').textContent = '50 ฿';
+        } else {
+            document.getElementById('slipOrderShippingCostRow').classList.add('hidden');
+        }
+
+        document.getElementById('slipOrderExpectedAmount').textContent = Number(order.payment_amount).toLocaleString() + ' ฿';
+
         document.getElementById('slipName').textContent = order.full_name;
         document.getElementById('slipAmount').textContent = Number(order.payment_amount).toLocaleString() + ' ฿';
         document.getElementById('slipDate').textContent = order.payment_date || '-';
