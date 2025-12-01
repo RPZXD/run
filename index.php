@@ -200,10 +200,16 @@ foreach ($category_counts as $row) {
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-red-400 to-accent">2026</span>
             </h1>
 
-            <p class="text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
+            <p class="text-xl md:text-2xl text-gray-200 mb-6 max-w-3xl mx-auto font-light leading-relaxed">
                 เพื่อสมทบทุนจัดซื้อจอ LED, รถตัดหญ้า และพัฒนาการศึกษาโรงเรียนพิชัย <br class="hidden md:block">
                 <span class="text-accent font-medium">"ลูกพิชัย พอเพียง กล้าหาญ เสียสละ กตัญญู"</span>
             </p>
+
+            <div class="mb-10">
+                <span class="inline-block py-2 px-6 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white font-medium text-lg animate-pulse">
+                    <i class="far fa-calendar-alt mr-2 text-accent"></i> สมัครตั้งแต่วันนี้ - 5 กุมภาพันธ์ 2569
+                </span>
+            </div>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a href="register.php" class="group relative px-8 py-4 bg-primary text-white rounded-full font-bold text-lg shadow-xl hover:shadow-red-600/40 transition-all hover:-translate-y-1 overflow-hidden">

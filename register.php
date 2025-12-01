@@ -6,6 +6,44 @@ require_once 'app/controllers/RegisterController.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Check Deadline
+$deadline = '2026-02-05';
+$currentDate = date('Y-m-d');
+
+if ($currentDate > $deadline) {
+    ?>
+    <!DOCTYPE html>
+    <html lang="th">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>หมดเขตรับสมัคร - Phichai Run 2026</title>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <style> body { font-family: 'Kanit', sans-serif; background-color: #f3f4f6; } </style>
+    </head>
+    <body>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'หมดเขตรับสมัคร',
+                    text: 'ขออภัย ขณะนี้หมดเขตการรับสมัครแล้ว (สิ้นสุดวันที่ 5 ก.พ. 2569)',
+                    confirmButtonText: 'กลับหน้าหลัก',
+                    confirmButtonColor: '#E63946',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then((result) => {
+                    window.location.href = 'index.php';
+                });
+            });
+        </script>
+    </body>
+    </html>
+    <?php
+    exit;
+}
+
 $message = '';
 $status = '';
 
@@ -23,6 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $status = "error";
     }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="th" class="scroll-smooth">
@@ -139,6 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
                     <h2 class="text-3xl md:text-4xl font-bold mb-2 relative z-10">ลงทะเบียนเข้าร่วมงาน</h2>
                     <p class="opacity-90 text-lg relative z-10">กรอกข้อมูลให้ครบถ้วนเพื่อสมัครวิ่ง</p>
+                    <p class="text-sm mt-2 text-yellow-300 font-medium relative z-10"><i class="far fa-clock mr-1"></i> สมัครตั้งแต่วันนี้ - 5 กุมภาพันธ์ 2569</p>
                 </div>
                 
                 <form id="regForm" action="register.php" method="POST" enctype="multipart/form-data" class="p-8 md:p-10">

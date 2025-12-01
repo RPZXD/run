@@ -6,6 +6,44 @@ require_once 'app/controllers/ShirtOrderController.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Check Deadline
+$deadline = '2026-02-05';
+$currentDate = date('Y-m-d');
+
+if ($currentDate > $deadline) {
+    ?>
+    <!DOCTYPE html>
+    <html lang="th">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>หมดเขตรับสมัคร - Phichai Run 2026</title>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <style> body { font-family: 'Kanit', sans-serif; background-color: #f3f4f6; } </style>
+    </head>
+    <body>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'หมดเขตการสั่งซื้อ',
+                    text: 'ขออภัย ขณะนี้หมดเขตการสั่งซื้อเสื้อแล้ว (สิ้นสุดวันที่ 5 ก.พ. 2569)',
+                    confirmButtonText: 'กลับหน้าหลัก',
+                    confirmButtonColor: '#E63946',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then((result) => {
+                    window.location.href = 'index.php';
+                });
+            });
+        </script>
+    </body>
+    </html>
+    <?php
+    exit;
+}
+
 $message = '';
 $status = '';
 $orderNumber = '';
@@ -25,6 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $status = "error";
     }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="th" class="scroll-smooth">
