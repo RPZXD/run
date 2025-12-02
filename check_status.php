@@ -493,7 +493,7 @@ $totalResults = count($registrations) + count($shirtOrders);
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fas fa-phone text-primary"></i>
-                            <a href="tel:055-421-402" class="hover:text-white transition">055-421-402</a>
+                            <a href="tel:055-421-406" class="hover:text-white transition">055-421-406</a>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fas fa-envelope text-primary"></i>
