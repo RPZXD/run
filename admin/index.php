@@ -294,21 +294,11 @@ foreach ($registrations as $reg) {
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-right">
-                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200 transform translate-x-2 group-hover:translate-x-0">
+                                        <div class="flex items-center justify-end gap-2">
                                             <?php if ($row['payment_slip']): ?>
                                                 <button onclick='viewSlip(<?php echo json_encode($row); ?>)' class="w-8 h-8 rounded-full bg-purple-50 text-purple-600 hover:bg-purple-500 hover:text-white flex items-center justify-center transition-all shadow-sm hover:shadow-md" title="ดูสลิป">
                                                     <i class="fas fa-receipt"></i>
                                                 </button>
-                                            <?php endif; ?>
-                                            <?php if ($row['status'] === 'pending'): ?>
-                                                <form method="POST" onsubmit="return confirmAction(event, 'ยืนยันการอนุมัติ?', 'อนุมัติ');">
-                                                    <input type="hidden" name="action" value="update_status">
-                                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                    <input type="hidden" name="status" value="approved">
-                                                    <button type="submit" class="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-500 hover:text-white flex items-center justify-center transition-all shadow-sm hover:shadow-md" title="อนุมัติ">
-                                                        <i class="fas fa-check"></i>
-                                                    </button>
-                                                </form>
                                             <?php endif; ?>
                                             
                                             <button onclick='openModal(<?php echo json_encode($row); ?>)' class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white flex items-center justify-center transition-all shadow-sm hover:shadow-md" title="แก้ไข">
@@ -380,16 +370,57 @@ foreach ($registrations as $reg) {
                         <div>
                             <label class="block text-slate-600 text-xs font-bold mb-1">คำนำหน้า</label>
                             <select name="prefix" id="modal_prefix" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
-                                <option value="นาย">นาย</option>
-                                <option value="นาง">นาง</option>
-                                <option value="นางสาว">นางสาว</option>
-                                <option value="ด.ช.">ด.ช.</option>
-                                <option value="ด.ญ.">ด.ญ.</option>
+                                <optgroup label="บุคคลทั่วไป">
+                                    <option value="นาย">นาย</option>
+                                    <option value="นาง">นาง</option>
+                                    <option value="นางสาว">นางสาว</option>
+                                    <option value="ด.ช.">ด.ช.</option>
+                                    <option value="ด.ญ.">ด.ญ.</option>
+                                </optgroup>
+                                <optgroup label="วุฒิการศึกษา">
+                                    <option value="ดร.">ดร.</option>
+                                    <option value="ผศ.">ผศ.</option>
+                                    <option value="รศ.">รศ.</option>
+                                    <option value="ศ.">ศ.</option>
+                                    <option value="ผศ.ดร.">ผศ.ดร.</option>
+                                    <option value="รศ.ดร.">รศ.ดร.</option>
+                                    <option value="ศ.ดร.">ศ.ดร.</option>
+                                </optgroup>
+                                <optgroup label="วิชาชีพแพทย์">
+                                    <option value="นพ.">นพ.</option>
+                                    <option value="พญ.">พญ.</option>
+                                    <option value="ทพ.">ทพ.</option>
+                                    <option value="ทพญ.">ทพญ.</option>
+                                    <option value="สพ.ญ.">สพ.ญ.</option>
+                                    <option value="น.สพ.">น.สพ.</option>
+                                </optgroup>
+                                <optgroup label="ยศตำรวจ/ทหาร">
+                                    <option value="ว่าที่ร้อยตรี">ว่าที่ร้อยตรี</option>
+                                    <option value="ร.ต.ต.">ร.ต.ต.</option>
+                                    <option value="ร.ต.ท.">ร.ต.ท.</option>
+                                    <option value="ร.ต.อ.">ร.ต.อ.</option>
+                                    <option value="พ.ต.ต.">พ.ต.ต.</option>
+                                    <option value="พ.ต.ท.">พ.ต.ท.</option>
+                                    <option value="พ.ต.อ.">พ.ต.อ.</option>
+                                    <option value="พล.ต.ต.">พล.ต.ต.</option>
+                                    <option value="พล.ต.ท.">พล.ท.</option>
+                                    <option value="พล.ต.อ.">พล.ต.อ.</option>
+                                    <option value="ร.ต.">ร.ต.</option>
+                                    <option value="ร.ท.">ร.ท.</option>
+                                    <option value="ร.อ.">ร.อ.</option>
+                                    <option value="พ.ต.">พ.ต.</option>
+                                    <option value="พ.ท.">พ.ท.</option>
+                                    <option value="พ.อ.">พ.อ.</option>
+                                    <option value="พล.ต.">พล.ต.</option>
+                                    <option value="พล.ท.">พล.ท.</option>
+                                    <option value="พล.อ.">พล.อ.</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-slate-600 text-xs font-bold mb-1">ชื่อ-นามสกุล</label>
-                            <input type="text" name="full_name" id="modal_full_name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-1">ชื่อ-นามสกุล (ไม่รวมคำนำหน้า)</label>
+                            <input type="text" name="full_name" id="modal_full_name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm" placeholder="ชื่อ นามสกุล">
+                            <p class="text-xs text-slate-400 mt-1">* กรุณากรอกเฉพาะชื่อและนามสกุล ไม่ต้องใส่คำนำหน้า</p>
                         </div>
                         <div>
                             <label class="block text-slate-600 text-xs font-bold mb-1">เลขบัตรประชาชน</label>
@@ -520,14 +551,7 @@ foreach ($registrations as $reg) {
                             <label class="block text-slate-600 text-xs font-bold mb-1">เวลาโอน</label>
                             <input type="time" name="payment_time" id="modal_payment_time" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
                         </div>
-                        <!-- <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">ธนาคาร/อ้างอิง</label>
-                            <input type="text" name="bank_ref" id="modal_bank_ref" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-slate-600 text-xs font-bold mb-1">ชื่อผู้โอน</label>
-                            <input type="text" name="sender_name" id="modal_sender_name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
-                        </div> -->
+
                     </div>
 
                     <div class="flex gap-3 mt-8 sticky bottom-0 bg-white pt-4 border-t">
@@ -771,6 +795,32 @@ foreach ($registrations as $reg) {
             }
         }
 
+        // List of all possible prefixes for stripping from full_name
+        const allPrefixes = [
+            'นาย', 'นาง', 'นางสาว', 'ด.ช.', 'ด.ญ.',
+            'ดร.', 'ผศ.', 'รศ.', 'ศ.', 'ผศ.ดร.', 'รศ.ดร.', 'ศ.ดร.',
+            'นพ.', 'พญ.', 'ทพ.', 'ทพญ.', 'สพ.ญ.', 'น.สพ.',
+            'ว่าที่ร้อยตรี', 'ร.ต.ต.', 'ร.ต.ท.', 'ร.ต.อ.', 'พ.ต.ต.', 'พ.ต.ท.', 'พ.ต.อ.',
+            'พล.ต.ต.', 'พล.ต.ท.', 'พล.ต.อ.', 'ร.ต.', 'ร.ท.', 'ร.อ.',
+            'พ.ต.', 'พ.ท.', 'พ.อ.', 'พล.ต.', 'พล.ท.', 'พล.อ.'
+        ];
+
+        // Function to strip prefix from full_name
+        function stripPrefix(fullName) {
+            if (!fullName) return '';
+            // Sort by length descending to match longer prefixes first
+            const sortedPrefixes = [...allPrefixes].sort((a, b) => b.length - a.length);
+            for (const prefix of sortedPrefixes) {
+                if (fullName.startsWith(prefix + ' ')) {
+                    return fullName.substring(prefix.length + 1).trim();
+                }
+                if (fullName.startsWith(prefix)) {
+                    return fullName.substring(prefix.length).trim();
+                }
+            }
+            return fullName;
+        }
+
         function openModal(data) {
             document.getElementById('editModal').classList.remove('hidden');
             document.getElementById('modal_id').value = data.id;
@@ -779,9 +829,14 @@ foreach ($registrations as $reg) {
             document.getElementById('modal_status').value = data.status || 'pending';
             document.getElementById('modal_reason').value = data.reject_reason || '';
             
-            // Personal
-            document.getElementById('modal_prefix').value = data.prefix || 'นาย';
-            document.getElementById('modal_full_name').value = data.full_name;
+            // Personal - Strip prefix from full_name
+            const prefix = data.prefix || 'นาย';
+            document.getElementById('modal_prefix').value = prefix;
+            
+            // Remove prefix from full_name for display
+            const nameWithoutPrefix = stripPrefix(data.full_name);
+            document.getElementById('modal_full_name').value = nameWithoutPrefix;
+            
             document.getElementById('modal_citizen_id').value = data.citizen_id;
             document.getElementById('modal_birth_date').value = data.birth_date;
             document.getElementById('modal_age').value = data.age;
@@ -805,8 +860,6 @@ foreach ($registrations as $reg) {
             document.getElementById('modal_payment_amount').value = data.payment_amount || '';
             document.getElementById('modal_payment_date').value = data.payment_date || '';
             document.getElementById('modal_payment_time').value = data.payment_time || '';
-            document.getElementById('modal_bank_ref').value = data.bank_ref || '';
-            document.getElementById('modal_sender_name').value = data.sender_name || '';
 
             toggleReason();
         }
@@ -824,6 +877,16 @@ foreach ($registrations as $reg) {
                 reasonDiv.classList.add('hidden');
             }
         }
+
+        // Handle form submit - combine prefix with full_name
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            const prefix = document.getElementById('modal_prefix').value;
+            const fullNameInput = document.getElementById('modal_full_name');
+            const nameWithoutPrefix = fullNameInput.value.trim();
+            
+            // Combine prefix + name
+            fullNameInput.value = prefix + ' ' + nameWithoutPrefix;
+        });
 
         // Close modal if clicked outside
         window.onclick = function(event) {

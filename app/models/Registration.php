@@ -69,10 +69,10 @@ class Registration {
         $this->emergency_contact_name = $this->emergency_contact_name ? htmlspecialchars(strip_tags($this->emergency_contact_name)) : null;
         $this->emergency_contact_phone = $this->emergency_contact_phone ? htmlspecialchars(strip_tags($this->emergency_contact_phone)) : null;
         $this->address = htmlspecialchars(strip_tags($this->address));
-        $this->category = htmlspecialchars(strip_tags($this->category));
-        $this->shirt_size = htmlspecialchars(strip_tags($this->shirt_size));
+        $this->category = strip_tags($this->category); // Don't use htmlspecialchars for ENUM fields with & character
+        $this->shirt_size = strip_tags($this->shirt_size); // ENUM field
         $this->shirt_quantity = $this->shirt_quantity ? (int)$this->shirt_quantity : 1;
-        $this->shipping_method = htmlspecialchars(strip_tags($this->shipping_method));
+        $this->shipping_method = strip_tags($this->shipping_method); // ENUM field
         $this->payment_slip = htmlspecialchars(strip_tags($this->payment_slip));
         $this->payment_amount = $this->payment_amount ? htmlspecialchars(strip_tags($this->payment_amount)) : null;
         $this->payment_date = $this->payment_date ? htmlspecialchars(strip_tags($this->payment_date)) : null;
@@ -144,8 +144,6 @@ class Registration {
                       payment_amount = :payment_amount,
                       payment_date = :payment_date,
                       payment_time = :payment_time,
-                      bank_ref = :bank_ref,
-                      sender_name = :sender_name,
                       status = :status,
                       reject_reason = :reject_reason
                   WHERE id = :id";
@@ -164,14 +162,12 @@ class Registration {
         $emergency_contact_name = !empty($data['emergency_contact_name']) ? htmlspecialchars(strip_tags($data['emergency_contact_name'])) : null;
         $emergency_contact_phone = !empty($data['emergency_contact_phone']) ? htmlspecialchars(strip_tags($data['emergency_contact_phone'])) : null;
         $address = htmlspecialchars(strip_tags($data['address']));
-        $category = htmlspecialchars(strip_tags($data['category']));
-        $shirt_size = htmlspecialchars(strip_tags($data['shirt_size']));
-        $shipping_method = htmlspecialchars(strip_tags($data['shipping_method']));
+        $category = strip_tags($data['category']); // Don't use htmlspecialchars for ENUM fields with & character
+        $shirt_size = strip_tags($data['shirt_size']); // ENUM field
+        $shipping_method = strip_tags($data['shipping_method']); // ENUM field
         $payment_amount = !empty($data['payment_amount']) ? htmlspecialchars(strip_tags($data['payment_amount'])) : null;
         $payment_date = !empty($data['payment_date']) ? htmlspecialchars(strip_tags($data['payment_date'])) : null;
         $payment_time = !empty($data['payment_time']) ? htmlspecialchars(strip_tags($data['payment_time'])) : null;
-        $bank_ref = !empty($data['bank_ref']) ? htmlspecialchars(strip_tags($data['bank_ref'])) : null;
-        $sender_name = !empty($data['sender_name']) ? htmlspecialchars(strip_tags($data['sender_name'])) : null;
         $status = htmlspecialchars(strip_tags($data['status']));
         $reject_reason = !empty($data['reject_reason']) ? htmlspecialchars(strip_tags($data['reject_reason'])) : null;
         $id = htmlspecialchars(strip_tags($id));
@@ -194,8 +190,6 @@ class Registration {
         $stmt->bindParam(':payment_amount', $payment_amount);
         $stmt->bindParam(':payment_date', $payment_date);
         $stmt->bindParam(':payment_time', $payment_time);
-        $stmt->bindParam(':bank_ref', $bank_ref);
-        $stmt->bindParam(':sender_name', $sender_name);
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':reject_reason', $reject_reason);
         $stmt->bindParam(':id', $id);
