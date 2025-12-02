@@ -76,13 +76,26 @@ foreach ($registrations as $reg) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Phichai Run 2026</title>
     <link rel="icon" type="image/png" href="../assets/images/logo01.JPG"> 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Use Sarabun for better Thai readability -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- K2D Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'k2d': ['K2D', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Sarabun', 'Kanit', sans-serif; }
+        body { font-family: 'K2D', sans-serif; }
         @keyframes fade-in-up {
             0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
@@ -93,91 +106,125 @@ foreach ($registrations as $reg) {
         }
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Table row hover effect */
+        .table-row-hover {
+            transition: all 0.2s ease;
+        }
+        .table-row-hover:hover {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%);
+            transform: scale(1.002);
+        }
+        
+        /* Glass morphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-600 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMCwgMCwgMCwgMC4wNSkiLz48L3N2Zz4=')]">
+<body class="bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 font-k2d text-slate-600 min-h-screen">
     <!-- Navbar -->
     <?php include 'navbar.php'; ?>
 
     <div class="container mx-auto px-4 py-8 max-w-7xl">
         
         <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 hidden">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
             <!-- Total -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            <div class="group bg-white/80 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-sm border border-white/50 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">ผู้สมัครทั้งหมด</p>
-                        <h3 class="text-3xl font-bold text-slate-800 mt-1"><?php echo number_format($stats['total']); ?></h3>
+                        <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">ผู้สมัครทั้งหมด</p>
+                        <h3 class="text-2xl md:text-3xl font-extrabold text-slate-800 mt-1"><?php echo number_format($stats['total']); ?></h3>
+                        <p class="text-[10px] text-slate-400 mt-1 hidden md:block">คน</p>
                     </div>
-                    <div class="p-3 bg-blue-50 rounded-xl text-blue-600">
-                        <i class="fas fa-users text-xl"></i>
+                    <div class="p-3 md:p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl text-white shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-users text-lg md:text-xl"></i>
                     </div>
                 </div>
             </div>
             
             <!-- Pending -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            <div class="group bg-white/80 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-sm border border-white/50 hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 hover:-translate-y-1">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">รอตรวจสอบ</p>
-                        <h3 class="text-3xl font-bold text-yellow-600 mt-1"><?php echo number_format($stats['pending']); ?></h3>
+                        <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">รอตรวจสอบ</p>
+                        <h3 class="text-2xl md:text-3xl font-extrabold text-amber-600 mt-1"><?php echo number_format($stats['pending']); ?></h3>
+                        <p class="text-[10px] text-slate-400 mt-1 hidden md:block">รายการ</p>
                     </div>
-                    <div class="p-3 bg-yellow-50 rounded-xl text-yellow-600">
-                        <i class="fas fa-clock text-xl"></i>
+                    <div class="p-3 md:p-4 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl text-white shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-clock text-lg md:text-xl"></i>
                     </div>
                 </div>
             </div>
 
             <!-- Approved -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            <div class="group bg-white/80 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-sm border border-white/50 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 hover:-translate-y-1">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">อนุมัติแล้ว</p>
-                        <h3 class="text-3xl font-bold text-green-600 mt-1"><?php echo number_format($stats['approved']); ?></h3>
+                        <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">อนุมัติแล้ว</p>
+                        <h3 class="text-2xl md:text-3xl font-extrabold text-emerald-600 mt-1"><?php echo number_format($stats['approved']); ?></h3>
+                        <p class="text-[10px] text-slate-400 mt-1 hidden md:block">รายการ</p>
                     </div>
-                    <div class="p-3 bg-green-50 rounded-xl text-green-600">
-                        <i class="fas fa-check-circle text-xl"></i>
+                    <div class="p-3 md:p-4 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl text-white shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-check-circle text-lg md:text-xl"></i>
                     </div>
                 </div>
             </div>
 
             <!-- Income -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            <div class="group bg-white/80 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-sm border border-white/50 hover:shadow-xl hover:shadow-rose-500/10 transition-all duration-300 hover:-translate-y-1">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">ยอดเงินรวม</p>
-                        <h3 class="text-3xl font-bold text-red-600 mt-1">฿<?php echo number_format($stats['income']); ?></h3>
+                        <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">ยอดเงินรวม</p>
+                        <h3 class="text-2xl md:text-3xl font-extrabold text-rose-600 mt-1">฿<?php echo number_format($stats['income']); ?></h3>
+                        <p class="text-[10px] text-slate-400 mt-1 hidden md:block">บาท</p>
                     </div>
-                    <div class="p-3 bg-red-50 rounded-xl text-red-600">
-                        <i class="fas fa-coins text-xl"></i>
+                    <div class="p-3 md:p-4 bg-gradient-to-br from-rose-400 to-pink-500 rounded-2xl text-white shadow-lg shadow-rose-500/30 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-coins text-lg md:text-xl"></i>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Main Table Card -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden animate-fade-in-up">
-            <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-white">
-                <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                    <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 border border-white/50 overflow-hidden animate-fade-in-up">
+            <div class="p-4 md:p-6 border-b border-slate-100/80 flex flex-col md:flex-row justify-between items-center gap-4 bg-gradient-to-r from-white to-slate-50/50">
+                <h2 class="text-lg md:text-xl font-bold text-slate-800 flex items-center gap-3">
+                    <div class="p-2.5 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg shadow-blue-500/30">
                         <i class="fas fa-list-alt"></i>
                     </div>
-                    รายการผู้สมัคร
+                    <span class="gradient-text">รายการผู้สมัคร</span>
                 </h2>
                 <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                     <div class="relative group">
-                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
-                        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="ค้นหาชื่อ, เบอร์โทร..." class="pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 w-full sm:w-64 transition-all bg-slate-50 focus:bg-white">
+                        <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
+                        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="ค้นหาชื่อ, เบอร์โทร..." class="pl-10 pr-4 py-2.5 border-2 border-slate-200/80 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 w-full sm:w-64 transition-all bg-white/80 hover:bg-white hover:border-slate-300 placeholder:text-slate-400">
                     </div>
                     <div class="flex gap-2">
-                        <select id="statusFilter" onchange="filterTable()" class="px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-slate-50 focus:bg-white text-slate-600 cursor-pointer transition-all">
-                            <option value="all">สถานะทั้งหมด</option>
-                            <option value="pending">รอตรวจสอบ</option>
-                            <option value="approved">อนุมัติแล้ว</option>
-                            <option value="rejected">ปฏิเสธ</option>
+                        <select id="statusFilter" onchange="filterTable()" class="px-4 py-2.5 border-2 border-slate-200/80 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 bg-white/80 hover:bg-white hover:border-slate-300 text-slate-600 cursor-pointer transition-all font-medium">
+                            <option value="all">📋 สถานะทั้งหมด</option>
+                            <option value="pending">⏳ รอตรวจสอบ</option>
+                            <option value="approved">✅ อนุมัติแล้ว</option>
+                            <option value="rejected">❌ ปฏิเสธ</option>
                         </select>
-                        <button onclick="exportTableToCSV('registrations.csv')" class="px-4 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl text-sm font-bold hover:shadow-lg hover:shadow-green-500/30 transition-all transform hover:-translate-y-0.5 flex items-center gap-2 whitespace-nowrap">
+                        <button onclick="exportTableToCSV('registrations.csv')" class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl text-sm font-bold hover:shadow-xl hover:shadow-emerald-500/30 transition-all duration-300 transform hover:-translate-y-0.5 hover:scale-105 flex items-center gap-2 whitespace-nowrap">
                             <i class="fas fa-file-excel"></i> <span class="hidden sm:inline">Export</span>
                         </button>
                     </div>
@@ -187,129 +234,139 @@ foreach ($registrations as $reg) {
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse" id="registrationsTable">
                     <thead>
-                        <tr class="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100 backdrop-blur-sm">
-                            <th class="px-6 py-4 font-bold rounded-tl-2xl">ID</th>
-                            <th class="px-6 py-4 font-bold">ผู้สมัคร</th>
-                            <th class="px-6 py-4 font-bold">ข้อมูลการวิ่ง</th>
-                            <th class="px-6 py-4 font-bold">การชำระเงิน</th>
-                            <th class="px-6 py-4 font-bold text-center">สถานะ</th>
-                            <th class="px-6 py-4 font-bold text-right rounded-tr-2xl">จัดการ</th>
+                        <tr class="bg-gradient-to-r from-slate-50 to-slate-100/80 text-slate-500 text-[11px] uppercase tracking-wider border-b border-slate-200/50">
+                            <th class="px-4 md:px-6 py-4 font-bold">ID</th>
+                            <th class="px-4 md:px-6 py-4 font-bold">ผู้สมัคร</th>
+                            <th class="px-4 md:px-6 py-4 font-bold hidden md:table-cell">ข้อมูลการวิ่ง</th>
+                            <th class="px-4 md:px-6 py-4 font-bold hidden lg:table-cell">การชำระเงิน</th>
+                            <th class="px-4 md:px-6 py-4 font-bold text-center">สถานะ</th>
+                            <th class="px-4 md:px-6 py-4 font-bold text-right">จัดการ</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100">
+                    <tbody class="divide-y divide-slate-100/80">
                         <?php if (empty($registrations)): ?>
                             <tr>
-                                <td colspan="6" class="px-6 py-12 text-center text-slate-400">
+                                <td colspan="6" class="px-6 py-16 text-center text-slate-400">
                                     <div class="flex flex-col items-center justify-center">
-                                        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                                            <i class="fas fa-inbox text-3xl text-slate-300"></i>
+                                        <div class="w-20 h-20 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center mb-4 shadow-inner">
+                                            <i class="fas fa-inbox text-4xl text-slate-300"></i>
                                         </div>
-                                        <p>ยังไม่มีข้อมูลผู้สมัคร</p>
+                                        <p class="text-lg font-medium">ยังไม่มีข้อมูลผู้สมัคร</p>
+                                        <p class="text-sm text-slate-400 mt-1">ข้อมูลจะแสดงที่นี่เมื่อมีผู้สมัครใหม่</p>
                                     </div>
                                 </td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($registrations as $row): ?>
-                                <tr class="hover:bg-blue-50/40 transition-all duration-200 group hover:shadow-sm">
-                                    <td class="px-6 py-4">
-                                        <span class="font-mono text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md">#<?php echo str_pad($row['id'], 4, '0', STR_PAD_LEFT); ?></span>
+                                <tr class="table-row-hover group">
+                                    <td class="px-4 md:px-6 py-4">
+                                        <span class="font-mono text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1.5 rounded-lg group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">#<?php echo str_pad($row['id'], 4, '0', STR_PAD_LEFT); ?></span>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-4 md:px-6 py-4">
                                         <div class="flex items-center gap-3">
                                             <div class="relative">
-                                                <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-md ring-2 ring-white">
+                                                <div class="h-10 w-10 md:h-11 md:w-11 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-blue-500/30 ring-2 ring-white group-hover:scale-110 transition-transform duration-300">
                                                     <?php echo mb_substr($row['first_name'] ?? $row['full_name'], 0, 1); ?>
                                                 </div>
                                                 <?php if(($row['gender'] ?? '') == 'Male'): ?>
-                                                    <div class="absolute -bottom-1 -right-1 bg-blue-100 text-blue-600 rounded-full w-4 h-4 flex items-center justify-center text-[10px] border border-white"><i class="fas fa-mars"></i></div>
+                                                    <div class="absolute -bottom-0.5 -right-0.5 bg-blue-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px] border-2 border-white shadow"><i class="fas fa-mars"></i></div>
                                                 <?php elseif(($row['gender'] ?? '') == 'Female'): ?>
-                                                    <div class="absolute -bottom-1 -right-1 bg-pink-100 text-pink-600 rounded-full w-4 h-4 flex items-center justify-center text-[10px] border border-white"><i class="fas fa-venus"></i></div>
+                                                    <div class="absolute -bottom-0.5 -right-0.5 bg-pink-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px] border-2 border-white shadow"><i class="fas fa-venus"></i></div>
                                                 <?php endif; ?>
                                             </div>
                                             <div>
-                                                <div class="font-bold text-slate-800 text-sm"><?php echo $row['full_name']; ?></div>
-                                                <div class="text-xs text-slate-500 mt-0.5 flex items-center gap-2">
-                                                    <span class="bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-500 font-medium group-hover:bg-white transition-colors">
-                                                        <i class="fas fa-phone-alt text-[9px] mr-1 text-slate-400"></i> <?php echo $row['phone']; ?>
+                                                <div class="font-bold text-slate-800 text-sm group-hover:text-blue-600 transition-colors"><?php echo $row['full_name']; ?></div>
+                                                <div class="text-xs text-slate-500 mt-1 flex items-center gap-2">
+                                                    <span class="bg-slate-100 px-2 py-0.5 rounded-md text-[10px] text-slate-500 font-medium group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                                                        <i class="fas fa-phone-alt text-[9px] mr-1"></i> <?php echo $row['phone']; ?>
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex flex-col items-start gap-1.5">
+                                    <td class="px-4 md:px-6 py-4 hidden md:table-cell">
+                                        <div class="flex flex-col items-start gap-2">
                                             <?php 
-                                                $catColor = 'bg-slate-100 text-slate-600';
-                                                if(strpos($row['category'], 'VIP') !== false) $catColor = 'bg-amber-100 text-amber-700 border border-amber-200';
-                                                elseif(strpos($row['category'], 'Fun Run') !== false) $catColor = 'bg-emerald-50 text-emerald-700 border border-emerald-100';
-                                                elseif(strpos($row['category'], 'Walk') !== false) $catColor = 'bg-blue-50 text-blue-700 border border-blue-100';
+                                                $catColor = 'bg-slate-100 text-slate-600 border-slate-200';
+                                                $catIcon = '🏃';
+                                                if(strpos($row['category'], 'VIP') !== false) {
+                                                    $catColor = 'bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-700 border-amber-300 shadow-amber-100';
+                                                    $catIcon = '⭐';
+                                                } elseif(strpos($row['category'], 'Fun Run') !== false) {
+                                                    $catColor = 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 border-emerald-200';
+                                                    $catIcon = '🏃';
+                                                } elseif(strpos($row['category'], 'Walk') !== false) {
+                                                    $catColor = 'bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border-blue-200';
+                                                    $catIcon = '🚶';
+                                                }
                                             ?>
-                                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold <?php echo $catColor; ?>">
-                                                <?php echo $row['category']; ?>
+                                            <span class="px-3 py-1.5 rounded-xl text-xs font-bold border shadow-sm <?php echo $catColor; ?>">
+                                                <?php echo $catIcon; ?> <?php echo $row['category']; ?>
                                             </span>
                                             <div class="flex items-center gap-2 text-xs text-slate-500">
-                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 border border-slate-100">
-                                                    <i class="fas fa-tshirt text-slate-400"></i> 
+                                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 group-hover:bg-indigo-50 group-hover:border-indigo-200 transition-colors">
+                                                    <i class="fas fa-tshirt text-indigo-400"></i> 
                                                     <span class="font-bold text-slate-700"><?php echo $row['shirt_size']; ?></span>
                                                 </span>
                                                 <?php if(($row['shipping_method'] ?? '') == 'POST'): ?>
-                                                    <span class="text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100" title="จัดส่งไปรษณีย์"><i class="fas fa-truck mr-1"></i> ส่ง ปณ.</span>
+                                                    <span class="inline-flex items-center gap-1 text-blue-600 bg-blue-50 px-2 py-1 rounded-lg border border-blue-200 font-medium" title="จัดส่งไปรษณีย์">
+                                                        <i class="fas fa-truck text-[10px]"></i> ส่ง ปณ.
+                                                    </span>
                                                 <?php endif; ?>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-4 md:px-6 py-4 hidden lg:table-cell">
                                         <?php if (!empty($row['payment_date'])): ?>
                                             <div class="flex flex-col">
-                                                <span class="text-sm font-bold text-slate-700">฿<?php echo number_format($row['payment_amount']); ?></span>
-                                                <span class="text-[10px] text-slate-400 mt-0.5">
-                                                    <i class="far fa-calendar-alt mr-0.5"></i> <?php echo date('d/m/y', strtotime($row['payment_date'])); ?>
-                                                    <span class="mx-1 text-slate-300">|</span>
-                                                    <i class="far fa-clock mr-0.5"></i> <?php echo date('H:i', strtotime($row['payment_time'])); ?>
+                                                <span class="text-base font-extrabold text-emerald-600">฿<?php echo number_format($row['payment_amount']); ?></span>
+                                                <span class="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
+                                                    <i class="far fa-calendar-alt"></i> <?php echo date('d/m/y', strtotime($row['payment_date'])); ?>
+                                                    <span class="text-slate-300">•</span>
+                                                    <i class="far fa-clock"></i> <?php echo date('H:i', strtotime($row['payment_time'])); ?>
                                                 </span>
                                             </div>
                                         <?php else: ?>
-                                            <span class="inline-flex items-center px-2 py-1 rounded bg-slate-100 text-slate-400 text-xs font-medium">
-                                                <i class="fas fa-minus-circle mr-1"></i> ยังไม่แจ้ง
+                                            <span class="inline-flex items-center px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-400 text-xs font-medium border border-slate-200">
+                                                <i class="fas fa-minus-circle mr-1.5"></i> ยังไม่แจ้ง
                                             </span>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="px-6 py-4 text-center">
+                                    <td class="px-4 md:px-6 py-4 text-center">
                                         <?php 
                                             $statusStyles = [
-                                                'pending' => 'bg-yellow-50 text-yellow-700 border-yellow-200 ring-yellow-500/20',
-                                                'approved' => 'bg-green-50 text-green-700 border-green-200 ring-green-500/20',
-                                                'rejected' => 'bg-red-50 text-red-700 border-red-200 ring-red-500/20'
+                                                'pending' => 'bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-700 border-amber-300 shadow-amber-100',
+                                                'approved' => 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 border-emerald-300 shadow-emerald-100',
+                                                'rejected' => 'bg-gradient-to-r from-red-50 to-rose-50 text-red-700 border-red-300 shadow-red-100'
                                             ];
                                             $statusLabels = [
-                                                'pending' => 'รอตรวจสอบ',
-                                                'approved' => 'อนุมัติแล้ว',
-                                                'rejected' => 'ปฏิเสธ'
+                                                'pending' => '⏳ รอตรวจสอบ',
+                                                'approved' => '✅ อนุมัติแล้ว',
+                                                'rejected' => '❌ ปฏิเสธ'
                                             ];
                                             $s = $row['status'] ?? 'pending';
                                         ?>
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border ring-2 ring-offset-1 <?php echo $statusStyles[$s]; ?>" data-status="<?php echo $statusLabels[$s]; ?>">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-current mr-1.5 animate-pulse"></span>
+                                        <span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-bold border shadow-sm <?php echo $statusStyles[$s]; ?>" data-status="<?php echo $statusLabels[$s]; ?>">
                                             <?php echo $statusLabels[$s]; ?>
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <div class="flex items-center justify-end gap-2">
+                                    <td class="px-4 md:px-6 py-4 text-right">
+                                        <div class="flex items-center justify-end gap-1.5">
                                             <?php if ($row['payment_slip']): ?>
-                                                <button onclick='viewSlip(<?php echo json_encode($row); ?>)' class="w-8 h-8 rounded-full bg-purple-50 text-purple-600 hover:bg-purple-500 hover:text-white flex items-center justify-center transition-all shadow-sm hover:shadow-md" title="ดูสลิป">
-                                                    <i class="fas fa-receipt"></i>
+                                                <button onclick='viewSlip(<?php echo json_encode($row); ?>)' class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 text-white hover:shadow-lg hover:shadow-purple-500/40 hover:scale-110 flex items-center justify-center transition-all duration-300" title="ดูสลิป">
+                                                    <i class="fas fa-receipt text-sm"></i>
                                                 </button>
                                             <?php endif; ?>
                                             
-                                            <button onclick='openModal(<?php echo json_encode($row); ?>)' class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white flex items-center justify-center transition-all shadow-sm hover:shadow-md" title="แก้ไข">
-                                                <i class="fas fa-pen"></i>
+                                            <button onclick='openModal(<?php echo json_encode($row); ?>)' class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white hover:shadow-lg hover:shadow-blue-500/40 hover:scale-110 flex items-center justify-center transition-all duration-300" title="แก้ไข">
+                                                <i class="fas fa-pen text-sm"></i>
                                             </button>
                                             
                                             <form method="POST" onsubmit="return confirmAction(event, 'ยืนยันการลบข้อมูลนี้?', 'ลบข้อมูล');">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                <button type="submit" class="w-8 h-8 rounded-full bg-red-50 text-red-600 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all shadow-sm hover:shadow-md" title="ลบ">
-                                                    <i class="fas fa-trash-alt"></i>
+                                                <button type="submit" class="w-9 h-9 rounded-xl bg-gradient-to-br from-red-500 to-rose-600 text-white hover:shadow-lg hover:shadow-red-500/40 hover:scale-110 flex items-center justify-center transition-all duration-300" title="ลบ">
+                                                    <i class="fas fa-trash-alt text-sm"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -321,55 +378,77 @@ foreach ($registrations as $reg) {
                 </table>
             </div>
             
-            <!-- Pagination (Placeholder) -->
-            <div class="px-6 py-4 border-t border-slate-100 bg-slate-50 flex justify-between items-center">
-                <span class="text-xs text-slate-500">แสดง <?php echo count($registrations); ?> รายการ</span>
-                <div class="flex gap-1">
-                    <button class="px-3 py-1 rounded border border-slate-200 bg-white text-slate-500 text-xs hover:bg-slate-50 disabled:opacity-50" disabled>Previous</button>
-                    <button class="px-3 py-1 rounded border border-slate-200 bg-white text-slate-500 text-xs hover:bg-slate-50 disabled:opacity-50" disabled>Next</button>
+            <!-- Pagination Footer -->
+            <div class="px-4 md:px-6 py-4 border-t border-slate-100/80 bg-gradient-to-r from-slate-50 to-white flex flex-col sm:flex-row justify-between items-center gap-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <span class="text-sm text-slate-600 font-medium">แสดง <span class="font-bold text-slate-800"><?php echo count($registrations); ?></span> รายการ</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="px-4 py-2 rounded-lg border-2 border-slate-200 bg-white text-slate-500 text-sm font-medium hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-2" disabled>
+                        <i class="fas fa-chevron-left text-xs"></i> ก่อนหน้า
+                    </button>
+                    <div class="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-bold shadow-lg shadow-blue-500/30">1</div>
+                    <button class="px-4 py-2 rounded-lg border-2 border-slate-200 bg-white text-slate-500 text-sm font-medium hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-2" disabled>
+                        ถัดไป <i class="fas fa-chevron-right text-xs"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Edit Modal -->
-    <div id="editModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden overflow-y-auto h-full w-full z-50 transition-opacity">
-        <div class="relative top-10 mx-auto p-0 border-0 w-full max-w-4xl shadow-2xl rounded-2xl bg-white overflow-hidden transform transition-all scale-100 mb-10">
-            <div class="bg-slate-50 px-6 py-4 border-b border-slate-100 flex justify-between items-center sticky top-0 z-10">
-                <h3 class="text-lg font-bold text-slate-800">แก้ไขข้อมูลผู้สมัคร</h3>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 transition"><i class="fas fa-times"></i></button>
+    <div id="editModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden overflow-y-auto h-full w-full z-50 transition-all duration-300">
+        <div class="relative top-4 md:top-10 mx-auto p-0 border-0 w-full max-w-4xl shadow-2xl rounded-3xl bg-white overflow-hidden transform transition-all scale-100 mb-10 mx-4">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-5 flex justify-between items-center sticky top-0 z-10">
+                <h3 class="text-lg font-bold text-white flex items-center gap-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    แก้ไขข้อมูลผู้สมัคร
+                </h3>
+                <button onclick="closeModal()" class="w-10 h-10 rounded-xl bg-white/20 text-white hover:bg-white/30 transition-colors flex items-center justify-center backdrop-blur-sm">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
-            <div class="p-6 max-h-[80vh] overflow-y-auto">
+            <div class="p-4 md:p-6 max-h-[80vh] overflow-y-auto">
                 <form method="POST" id="editForm">
                     <input type="hidden" name="action" value="update_info">
                     <input type="hidden" name="id" id="modal_id">
                     
                     <!-- Status Section -->
-                    <div class="mb-6 bg-blue-50 p-4 rounded-xl border border-blue-100">
-                        <h4 class="text-blue-800 font-bold mb-3 flex items-center gap-2"><i class="fas fa-info-circle"></i> สถานะการสมัคร</h4>
+                    <div class="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-100">
+                        <h4 class="text-blue-800 font-bold mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+                            <i class="fas fa-info-circle"></i> สถานะการสมัคร
+                        </h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-slate-700 text-sm font-bold mb-2">สถานะ</label>
-                                <select name="status" id="modal_status" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white" onchange="toggleReason()">
-                                    <option value="pending">รอตรวจสอบ</option>
-                                    <option value="approved">อนุมัติ (ตรวจสอบแล้ว)</option>
-                                    <option value="rejected">ปฏิเสธ / มีปัญหา</option>
+                                <select name="status" id="modal_status" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 bg-white transition-all font-medium" onchange="toggleReason()">
+                                    <option value="pending">⏳ รอตรวจสอบ</option>
+                                    <option value="approved">✅ อนุมัติ (ตรวจสอบแล้ว)</option>
+                                    <option value="rejected">❌ ปฏิเสธ / มีปัญหา</option>
                                 </select>
                             </div>
                             <div id="reason_div" class="hidden">
                                 <label class="block text-slate-700 text-sm font-bold mb-2">เหตุผล (กรณีปฏิเสธ)</label>
-                                <input type="text" name="reject_reason" id="modal_reason" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500">
+                                <input type="text" name="reject_reason" id="modal_reason" class="w-full px-4 py-3 border-2 border-red-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-red-500/20 focus:border-red-400 bg-white transition-all" placeholder="ระบุเหตุผล...">
                             </div>
                         </div>
                     </div>
 
                     <!-- Personal Info -->
-                    <h4 class="text-slate-800 font-bold mb-3 border-b pb-2">ข้อมูลส่วนตัว</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <h4 class="text-slate-800 font-bold mb-4 pb-3 border-b-2 border-slate-200 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-sm">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        ข้อมูลส่วนตัว
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">คำนำหน้า</label>
-                            <select name="prefix" id="modal_prefix" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">คำนำหน้า</label>
+                            <select name="prefix" id="modal_prefix" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 bg-white hover:border-slate-300 transition-all">
                                 <optgroup label="บุคคลทั่วไป">
                                     <option value="นาย">นาย</option>
                                     <option value="นาง">นาง</option>
@@ -418,67 +497,82 @@ foreach ($registrations as $reg) {
                             </select>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-slate-600 text-xs font-bold mb-1">ชื่อ-นามสกุล (ไม่รวมคำนำหน้า)</label>
-                            <input type="text" name="full_name" id="modal_full_name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm" placeholder="ชื่อ นามสกุล">
-                            <p class="text-xs text-slate-400 mt-1">* กรุณากรอกเฉพาะชื่อและนามสกุล ไม่ต้องใส่คำนำหน้า</p>
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">ชื่อ-นามสกุล (ไม่รวมคำนำหน้า)</label>
+                            <input type="text" name="full_name" id="modal_full_name" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 bg-white hover:border-slate-300 transition-all" placeholder="ชื่อ นามสกุล">
+                            <p class="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1"><i class="fas fa-info-circle"></i> กรุณากรอกเฉพาะชื่อและนามสกุล ไม่ต้องใส่คำนำหน้า</p>
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">เลขบัตรประชาชน</label>
-                            <input type="text" name="citizen_id" id="modal_citizen_id" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">เลขบัตรประชาชน</label>
+                            <input type="text" name="citizen_id" id="modal_citizen_id" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 bg-white hover:border-slate-300 transition-all">
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">วันเกิด</label>
-                            <input type="date" name="birth_date" id="modal_birth_date" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">วันเกิด</label>
+                            <input type="date" name="birth_date" id="modal_birth_date" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 bg-white hover:border-slate-300 transition-all">
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">อายุ</label>
-                            <input type="number" name="age" id="modal_age" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">อายุ</label>
+                            <input type="number" name="age" id="modal_age" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 bg-white hover:border-slate-300 transition-all">
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">เพศ</label>
-                            <select name="gender" id="modal_gender" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
-                                <option value="Male">ชาย</option>
-                                <option value="Female">หญิง</option>
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">เพศ</label>
+                            <select name="gender" id="modal_gender" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 bg-white hover:border-slate-300 transition-all">
+                                <option value="Male">👨 ชาย</option>
+                                <option value="Female">👩 หญิง</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Contact Info -->
-                    <h4 class="text-slate-800 font-bold mb-3 border-b pb-2 mt-6">ข้อมูลติดต่อ</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <h4 class="text-slate-800 font-bold mb-4 pb-3 border-b-2 border-slate-200 mt-8 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-sm">
+                            <i class="fas fa-address-book"></i>
+                        </span>
+                        ข้อมูลติดต่อ
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">เบอร์โทรศัพท์</label>
-                            <input type="text" name="phone" id="modal_phone" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">เบอร์โทรศัพท์</label>
+                            <input type="text" name="phone" id="modal_phone" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-400 bg-white hover:border-slate-300 transition-all">
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">อีเมล</label>
-                            <input type="email" name="email" id="modal_email" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">อีเมล</label>
+                            <input type="email" name="email" id="modal_email" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-400 bg-white hover:border-slate-300 transition-all">
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-slate-600 text-xs font-bold mb-1">ที่อยู่</label>
-                            <textarea name="address" id="modal_address" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"></textarea>
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">ที่อยู่</label>
+                            <textarea name="address" id="modal_address" rows="2" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-400 bg-white hover:border-slate-300 transition-all resize-none"></textarea>
                         </div>
                     </div>
 
                     <!-- Emergency Contact -->
-                    <h4 class="text-slate-800 font-bold mb-3 border-b pb-2 mt-6">ผู้ติดต่อฉุกเฉิน</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <h4 class="text-slate-800 font-bold mb-4 pb-3 border-b-2 border-slate-200 mt-8 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-rose-100 text-rose-600 rounded-lg flex items-center justify-center text-sm">
+                            <i class="fas fa-user-shield"></i>
+                        </span>
+                        ผู้ติดต่อฉุกเฉิน
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">ชื่อผู้ติดต่อ</label>
-                            <input type="text" name="emergency_contact_name" id="modal_emergency_contact_name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">ชื่อผู้ติดต่อ</label>
+                            <input type="text" name="emergency_contact_name" id="modal_emergency_contact_name" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-rose-500/10 focus:border-rose-400 bg-white hover:border-slate-300 transition-all">
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">เบอร์โทรผู้ติดต่อ</label>
-                            <input type="text" name="emergency_contact_phone" id="modal_emergency_contact_phone" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">เบอร์โทรผู้ติดต่อ</label>
+                            <input type="text" name="emergency_contact_phone" id="modal_emergency_contact_phone" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-rose-500/10 focus:border-rose-400 bg-white hover:border-slate-300 transition-all">
                         </div>
                     </div>
 
                     <!-- Race Info -->
-                    <h4 class="text-slate-800 font-bold mb-3 border-b pb-2 mt-6">ข้อมูลการสมัคร</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <h4 class="text-slate-800 font-bold mb-4 pb-3 border-b-2 border-slate-200 mt-8 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-sm">
+                            <i class="fas fa-running"></i>
+                        </span>
+                        ข้อมูลการสมัคร
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">ประเภทการวิ่ง</label>
-                            <select name="category" id="modal_category" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">ประเภทการวิ่ง</label>
+                            <select name="category" id="modal_category" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-400 bg-white hover:border-slate-300 transition-all">
                                 <optgroup label="Walk & Run 3.5km">
                                     <option value="Walk & Run 3.5km - ประถมศึกษา">ประถมศึกษา (30 บาท)</option>
                                     <option value="Walk & Run 3.5km - ม.ต้น">ม.ต้น (30 บาท)</option>
@@ -504,8 +598,8 @@ foreach ($registrations as $reg) {
                             </select>
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">ไซส์เสื้อ</label>
-                            <select name="shirt_size" id="modal_shirt_size" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">ไซส์เสื้อ</label>
+                            <select name="shirt_size" id="modal_shirt_size" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-400 bg-white hover:border-slate-300 transition-all">
                                 <optgroup label="Adult Sizes">
                                     <option value="XS">XS (34")</option>
                                     <option value="S">S (36")</option>
@@ -528,38 +622,42 @@ foreach ($registrations as $reg) {
                             </select>
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">การจัดส่ง</label>
-                            <select name="shipping_method" id="modal_shipping_method" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
-                                <option value="SELF">รับด้วยตนเอง</option>
-                                <option value="POST">จัดส่งไปรษณีย์ (+50 บาท)</option>
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">การจัดส่ง</label>
+                            <select name="shipping_method" id="modal_shipping_method" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-400 bg-white hover:border-slate-300 transition-all">
+                                <option value="SELF">🏃 รับด้วยตนเอง</option>
+                                <option value="POST">📦 จัดส่งไปรษณีย์ (+50 บาท)</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Payment Info -->
-                    <h4 class="text-slate-800 font-bold mb-3 border-b pb-2 mt-6">ข้อมูลการชำระเงิน</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <h4 class="text-slate-800 font-bold mb-4 pb-3 border-b-2 border-slate-200 mt-8 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-sm">
+                            <i class="fas fa-credit-card"></i>
+                        </span>
+                        ข้อมูลการชำระเงิน
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">ยอดเงิน</label>
-                            <input type="number" step="0.01" name="payment_amount" id="modal_payment_amount" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">ยอดเงิน (บาท)</label>
+                            <input type="number" step="0.01" name="payment_amount" id="modal_payment_amount" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-400 bg-white hover:border-slate-300 transition-all">
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">วันที่โอน</label>
-                            <input type="date" name="payment_date" id="modal_payment_date" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">วันที่โอน</label>
+                            <input type="date" name="payment_date" id="modal_payment_date" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-400 bg-white hover:border-slate-300 transition-all">
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold mb-1">เวลาโอน</label>
-                            <input type="time" name="payment_time" id="modal_payment_time" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">เวลาโอน</label>
+                            <input type="time" name="payment_time" id="modal_payment_time" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-400 bg-white hover:border-slate-300 transition-all">
                         </div>
-
                     </div>
 
-                    <div class="flex gap-3 mt-8 sticky bottom-0 bg-white pt-4 border-t">
-                        <button type="button" onclick="closeModal()" class="flex-1 px-4 py-3 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition">
-                            ยกเลิก
+                    <div class="flex gap-3 mt-8 sticky bottom-0 bg-white pt-4 border-t-2 border-slate-100">
+                        <button type="button" onclick="closeModal()" class="flex-1 px-6 py-3.5 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition-all flex items-center justify-center gap-2 border-2 border-slate-200">
+                            <i class="fas fa-times"></i> ยกเลิก
                         </button>
-                        <button type="submit" class="flex-1 px-4 py-3 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 hover:shadow-blue-300 transition transform hover:-translate-y-0.5">
-                            บันทึกข้อมูล
+                        <button type="submit" class="flex-1 px-6 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <i class="fas fa-save"></i> บันทึกข้อมูล
                         </button>
                     </div>
                 </form>

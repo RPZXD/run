@@ -140,13 +140,9 @@ if ($search) {
                 <p class="text-gray-500 mt-1">Shirt Orders (แยกจากการสมัครวิ่ง)</p>
             </div>
             <div class="flex gap-3">
-                <a href="shirt_shipping.php" class="group relative bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-500 hover:from-amber-500 hover:via-yellow-600 hover:to-orange-600 text-white px-5 py-2.5 rounded-xl transition-all duration-300 shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:-translate-y-0.5 font-medium flex items-center gap-2">
+                <a href="shipping.php" class="group relative bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-500 hover:from-amber-500 hover:via-yellow-600 hover:to-orange-600 text-white px-5 py-2.5 rounded-xl transition-all duration-300 shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:-translate-y-0.5 font-medium flex items-center gap-2">
                     <i class="fas fa-print group-hover:animate-pulse"></i> 
                     <span>พิมพ์ใบจัดส่ง</span>
-                </a>
-                <a href="dashboard.php" class="bg-slate-600 hover:bg-slate-700 text-white px-5 py-2.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-slate-500/30 hover:-translate-y-0.5 font-medium flex items-center gap-2">
-                    <i class="fas fa-arrow-left"></i> 
-                    <span>กลับ Dashboard</span>
                 </a>
             </div>
         </div>
