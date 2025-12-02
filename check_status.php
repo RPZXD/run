@@ -97,28 +97,54 @@ $totalResults = count($registrations) + count($shirtOrders);
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'fade-in-up': {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
                         }
+                    },
+                    screens: {
+                        'xs': '375px',
+                        'sm': '640px',
+                        'md': '768px',
+                        'lg': '1024px',
+                        'xl': '1280px',
+                        '2xl': '1536px',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="antialiased overflow-x-hidden text-gray-800 bg-light">
+<body class="antialiased overflow-x-hidden text-gray-800 bg-light selection:bg-primary/20 selection:text-primary">
 
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-6">
-        <div class="container mx-auto bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-white/50 px-6 py-3 flex justify-between items-center">
-            <a href="index.php" class="flex items-center gap-3 group">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-3 sm:py-4 px-4 sm:px-6">
+        <div class="container mx-auto bg-white/90 backdrop-blur-md rounded-2xl sm:rounded-full shadow-lg border border-white/50 px-4 sm:px-6 py-3 flex justify-between items-center">
+            <a href="index.php" class="flex items-center gap-2 sm:gap-3 group">
                 <div class="relative">
                     <div class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
-                    <img src="assets/images/logo01.JPG" alt="Logo" class="relative h-10 w-10 rounded-full border-2 border-white object-cover">
+                    <img src="assets/images/logo01.JPG" alt="Logo" class="relative h-8 w-8 sm:h-10 sm:w-10 rounded-full border-2 border-white object-cover">
                 </div>
-                <span class="font-bold text-xl tracking-wide text-secondary group-hover:text-primary transition">PHICHAI RUN <span class="text-primary">2026</span></span>
+                <span class="font-bold text-base sm:text-xl tracking-wide text-secondary group-hover:text-primary transition">PHICHAI RUN <span class="text-primary">2026</span></span>
             </a>
             
-            <a href="index.php" class="text-gray-600 hover:text-primary transition font-medium flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i> กลับหน้าหลัก
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="register.php" class="text-gray-600 hover:text-primary transition font-medium flex items-center gap-2 px-4 py-2 rounded-full hover:bg-primary/5">
+                    <i class="fas fa-running"></i> สมัครวิ่ง
+                </a>
+                <a href="order_shirt.php" class="text-gray-600 hover:text-yellow-600 transition font-medium flex items-center gap-2 px-4 py-2 rounded-full hover:bg-yellow-50">
+                    <i class="fas fa-tshirt"></i> สั่งเสื้อ
+                </a>
+                <a href="index.php" class="bg-primary hover:bg-red-600 text-white font-medium px-5 py-2 rounded-full transition flex items-center gap-2 shadow-lg shadow-primary/20">
+                    <i class="fas fa-home"></i> หน้าหลัก
+                </a>
+            </div>
+            
+            <!-- Mobile back button -->
+            <a href="index.php" class="md:hidden text-gray-600 hover:text-primary transition font-medium flex items-center gap-1 text-sm">
+                <i class="fas fa-arrow-left"></i> <span class="hidden xs:inline">กลับ</span>
             </a>
         </div>
     </nav>
@@ -132,25 +158,28 @@ $totalResults = count($registrations) + count($shirtOrders);
         </div>
 
         <div class="container mx-auto px-4 max-w-3xl relative z-10">
-            <div class="text-center mb-10 animate-fade-in-down">
-                <h1 class="text-4xl md:text-5xl font-bold text-rose-500 mb-4">ตรวจสอบสถานะ</h1>
-                <p class="text-lg text-white">ค้นหาจากเบอร์โทรศัพท์หรือชื่อของคุณ</p>
+            <div class="text-center mb-6 sm:mb-10 animate-fade-in-down">
+                <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-white/20 backdrop-blur-md rounded-2xl mb-4 border border-white/30">
+                    <i class="fas fa-search text-2xl sm:text-3xl text-white"></i>
+                </div>
+                <h1 class="text-3xl xs:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-4">ตรวจสอบสถานะ</h1>
+                <p class="text-base sm:text-lg text-white/80">ค้นหาจากเบอร์โทรศัพท์หรือชื่อของคุณ</p>
             </div>
 
-            <div class="glass-card rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up visible mb-10">
-                <div class="p-8 md:p-10">
+            <div class="glass-card rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up visible mb-6 sm:mb-10">
+                <div class="p-5 sm:p-8 md:p-10">
                     <form method="POST" class="relative">
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                                <i class="fas fa-search text-gray-400 group-focus-within:text-primary transition-colors text-xl"></i>
+                            <div class="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400 group-focus-within:text-primary transition-colors text-lg sm:text-xl"></i>
                             </div>
-                            <input type="text" name="query" class="w-full pl-14 pr-32 py-5 border-2 border-gray-100 rounded-2xl focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all bg-gray-50 focus:bg-white text-xl font-medium tracking-wide placeholder-gray-300" placeholder="เบอร์โทร หรือ ชื่อ-นามสกุล" required value="<?php echo htmlspecialchars($searchQuery); ?>">
-                            <button type="submit" class="absolute right-2 top-2 bottom-2 bg-primary hover:bg-red-600 text-white font-bold px-6 rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-primary/30 flex items-center gap-2">
+                            <input type="text" name="query" class="w-full pl-12 sm:pl-14 pr-20 sm:pr-32 py-4 sm:py-5 border-2 border-gray-100 rounded-xl sm:rounded-2xl focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all bg-gray-50 focus:bg-white text-base sm:text-xl font-medium tracking-wide placeholder-gray-300" placeholder="เบอร์โทร หรือ ชื่อ" required value="<?php echo htmlspecialchars($searchQuery); ?>">
+                            <button type="submit" class="absolute right-2 top-2 bottom-2 bg-primary hover:bg-red-600 text-white font-bold px-4 sm:px-6 rounded-lg sm:rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-primary/30 flex items-center gap-2">
                                 <i class="fas fa-search"></i> <span class="hidden sm:inline">ค้นหา</span>
                             </button>
                         </div>
-                        <p class="text-center text-gray-500 text-sm mt-4">
-                            <i class="fas fa-info-circle mr-1 "></i> ค้นหาได้ทั้งการสมัครวิ่งและการสั่งซื้อเสื้อ
+                        <p class="text-center text-white/60 text-xs sm:text-sm mt-3 sm:mt-4">
+                            <i class="fas fa-info-circle mr-1"></i> ค้นหาได้ทั้งการสมัครวิ่งและการสั่งซื้อเสื้อ
                         </p>
                     </form>
                 </div>
@@ -482,5 +511,73 @@ $totalResults = count($registrations) + count($shirtOrders);
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-gray-200 z-50 safe-area-bottom">
+        <div class="flex items-center justify-around py-2 px-2">
+            <a href="index.php" class="flex flex-col items-center gap-1 py-2 px-3 text-gray-500 hover:text-primary transition-colors group">
+                <i class="fas fa-home text-lg group-hover:scale-110 transition-transform"></i>
+                <span class="text-[10px] font-medium">หน้าแรก</span>
+            </a>
+            <a href="check_status.php" class="flex flex-col items-center gap-1 py-2 px-3 text-primary transition-colors group">
+                <div class="relative">
+                    <i class="fas fa-search text-lg group-hover:scale-110 transition-transform"></i>
+                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full"></span>
+                </div>
+                <span class="text-[10px] font-bold">เช็คสถานะ</span>
+            </a>
+            <a href="register.php" class="flex flex-col items-center -mt-6">
+                <div class="bg-gradient-to-r from-primary to-red-600 text-white p-4 rounded-full shadow-xl shadow-red-500/40 hover:shadow-red-500/60 hover:scale-110 transition-all duration-300">
+                    <i class="fas fa-running text-xl"></i>
+                </div>
+                <span class="text-[10px] font-bold text-primary mt-1">สมัครวิ่ง</span>
+            </a>
+            <a href="order_shirt.php" class="flex flex-col items-center gap-1 py-2 px-3 text-gray-500 hover:text-yellow-600 transition-colors group">
+                <div class="relative">
+                    <i class="fas fa-tshirt text-lg group-hover:scale-110 transition-transform"></i>
+                    <span class="absolute -top-1 -right-1 bg-yellow-500 text-white text-[8px] font-bold px-1 rounded-full">HOT</span>
+                </div>
+                <span class="text-[10px] font-medium">สั่งเสื้อ</span>
+            </a>
+            <!-- ติดต่อ -->
+            <a href="https://www.facebook.com/phichairun2026/" target="_blank" class="flex flex-col items-center gap-1 px-3 py-2 text-gray-500 hover:text-primary transition-colors">
+                <i class="fab fa-facebook text-lg"></i>
+                <span class="text-xs font-medium">ติดต่อ</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Floating Quick Access Buttons (Desktop) -->
+    <div class="hidden md:flex fixed bottom-8 right-8 flex-col gap-3 z-50">
+        <a href="index.php" class="group relative bg-white text-gray-600 p-4 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 border border-gray-100">
+            <i class="fas fa-home text-xl"></i>
+            <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-sm font-medium py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                กลับหน้าหลัก
+                <span class="absolute left-full top-1/2 -translate-y-1/2 border-8 border-transparent border-l-gray-900"></span>
+            </span>
+        </a>
+        <a href="order_shirt.php" class="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-white p-4 rounded-2xl shadow-xl shadow-yellow-500/30 hover:shadow-yellow-500/50 hover:scale-110 transition-all duration-300">
+            <i class="fas fa-tshirt text-xl"></i>
+            <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-sm font-medium py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                สั่งเสื้อที่ระลึก
+                <span class="absolute left-full top-1/2 -translate-y-1/2 border-8 border-transparent border-l-gray-900"></span>
+            </span>
+        </a>
+        <a href="register.php" class="group relative bg-gradient-to-r from-primary to-red-600 text-white p-4 rounded-2xl shadow-xl shadow-red-500/30 hover:shadow-red-500/50 hover:scale-110 transition-all duration-300">
+            <i class="fas fa-running text-xl"></i>
+            <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-sm font-medium py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                สมัครวิ่งทันที!
+                <span class="absolute left-full top-1/2 -translate-y-1/2 border-8 border-transparent border-l-gray-900"></span>
+            </span>
+        </a>
+    </div>
+
+    <!-- Add padding bottom for mobile to prevent content being hidden by bottom nav -->
+    <style>
+        @media (max-width: 767px) {
+            body { padding-bottom: 80px; }
+            .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 0); }
+        }
+    </style>
 </body>
 </html>

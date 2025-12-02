@@ -68,14 +68,36 @@ foreach ($category_counts as $row) {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'slide-up': {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        'fade-in-up': {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        'bounce-in': {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
                         }
+                    },
+                    screens: {
+                        'xs': '375px',
+                        'sm': '640px',
+                        'md': '768px',
+                        'lg': '1024px',
+                        'xl': '1280px',
+                        '2xl': '1536px',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="antialiased overflow-x-hidden text-gray-800 bg-light">
+<body class="antialiased overflow-x-hidden text-gray-800 bg-light selection:bg-primary/20 selection:text-primary">
 
     <!-- Navbar -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-6">
@@ -195,12 +217,12 @@ foreach ($category_counts as $row) {
                 <span class="font-medium tracking-wide text-sm md:text-base">วันเสาร์ที่ 14 กุมภาพันธ์ 2569</span>
             </div>
 
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight tracking-tight drop-shadow-2xl">
+            <h1 class="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight drop-shadow-2xl">
                 PHICHAI RUN <br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-red-400 to-accent">2026</span>
             </h1>
 
-            <p class="text-xl md:text-2xl text-gray-200 mb-6 max-w-3xl mx-auto font-light leading-relaxed">
+            <p class="text-base xs:text-lg sm:text-xl md:text-2xl text-gray-200 mb-4 sm:mb-6 max-w-3xl mx-auto font-light leading-relaxed px-4 sm:px-0">
                 เพื่อสมทบทุนจัดซื้อจอ LED, รถตัดหญ้า และพัฒนาการศึกษาโรงเรียนพิชัย <br class="hidden md:block">
                 <span class="text-accent font-medium">"ลูกพิชัย พอเพียง กล้าหาญ เสียสละ กตัญญู"</span>
             </p>
@@ -211,20 +233,25 @@ foreach ($category_counts as $row) {
                 </span>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="register.php" class="group relative px-8 py-4 bg-primary text-white rounded-full font-bold text-lg shadow-xl hover:shadow-red-600/40 transition-all hover:-translate-y-1 overflow-hidden">
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 sm:px-0">
+                <a href="register.php" class="group relative w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-primary text-white rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-red-600/40 transition-all hover:-translate-y-1 overflow-hidden">
                     <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                    <span class="relative flex items-center gap-2">
+                    <span class="relative flex items-center justify-center gap-2">
                         <i class="fas fa-running"></i> สมัครวิ่ง <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </span>
                 </a>
-                <a href="order_shirt.php" class="px-8 py-4 bg-yellow-500 text-white rounded-full font-bold text-lg hover:bg-yellow-600 transition-all hover:-translate-y-1 shadow-xl hover:shadow-yellow-500/40">
+                <a href="order_shirt.php" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-yellow-500 text-white rounded-full font-bold text-base sm:text-lg hover:bg-yellow-600 transition-all hover:-translate-y-1 shadow-xl hover:shadow-yellow-500/40 text-center">
                     <i class="fas fa-tshirt"></i> สั่งเสื้อ (ไม่วิ่ง)
                 </a>
-                <a href="#about" class="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 text-white rounded-full font-bold text-lg hover:bg-white/20 transition-all hover:-translate-y-1">
+                <a href="check_status.php" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-blue-600 text-white rounded-full font-bold text-base sm:text-lg hover:bg-blue-700 transition-all hover:-translate-y-1 shadow-xl hover:shadow-blue-600/40 text-center">
+                    <i class="fas fa-search"></i> ตรวจสอบสถานะ
+                </a>
+                <a href="#about" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white/10 backdrop-blur-md border border-white/30 text-white rounded-full font-bold text-base sm:text-lg hover:bg-white/20 transition-all hover:-translate-y-1 text-center mb-4">
                     รายละเอียดงาน
                 </a>
             </div>
+
+            
         </div>
 
         <!-- Scroll Indicator -->
@@ -247,22 +274,22 @@ foreach ($category_counts as $row) {
                     นับถอยหลังสู่วันงาน
                 </h3>
                 
-                <div id="countdown" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-                    <div class="bg-white/50 rounded-2xl p-4 border border-white/60 shadow-sm">
-                        <span id="days" class="block text-4xl md:text-6xl font-bold text-primary mb-1">00</span>
-                        <span class="text-sm font-medium text-gray-500 uppercase tracking-wider">วัน</span>
+                <div id="countdown" class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-8">
+                    <div class="bg-white/50 rounded-2xl p-3 sm:p-4 border border-white/60 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300">
+                        <span id="days" class="block text-3xl xs:text-4xl md:text-6xl font-bold text-primary mb-1">00</span>
+                        <span class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">วัน</span>
                     </div>
-                    <div class="bg-white/50 rounded-2xl p-4 border border-white/60 shadow-sm">
-                        <span id="hours" class="block text-4xl md:text-6xl font-bold text-primary mb-1">00</span>
-                        <span class="text-sm font-medium text-gray-500 uppercase tracking-wider">ชั่วโมง</span>
+                    <div class="bg-white/50 rounded-2xl p-3 sm:p-4 border border-white/60 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300">
+                        <span id="hours" class="block text-3xl xs:text-4xl md:text-6xl font-bold text-primary mb-1">00</span>
+                        <span class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">ชั่วโมง</span>
                     </div>
-                    <div class="bg-white/50 rounded-2xl p-4 border border-white/60 shadow-sm">
-                        <span id="minutes" class="block text-4xl md:text-6xl font-bold text-primary mb-1">00</span>
-                        <span class="text-sm font-medium text-gray-500 uppercase tracking-wider">นาที</span>
+                    <div class="bg-white/50 rounded-2xl p-3 sm:p-4 border border-white/60 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300">
+                        <span id="minutes" class="block text-3xl xs:text-4xl md:text-6xl font-bold text-primary mb-1">00</span>
+                        <span class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">นาที</span>
                     </div>
-                    <div class="bg-white/50 rounded-2xl p-4 border border-white/60 shadow-sm">
-                        <span id="seconds" class="block text-4xl md:text-6xl font-bold text-primary mb-1">00</span>
-                        <span class="text-sm font-medium text-gray-500 uppercase tracking-wider">วินาที</span>
+                    <div class="bg-white/50 rounded-2xl p-3 sm:p-4 border border-white/60 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300">
+                        <span id="seconds" class="block text-3xl xs:text-4xl md:text-6xl font-bold text-primary mb-1">00</span>
+                        <span class="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider">วินาที</span>
                     </div>
                 </div>
 
@@ -282,36 +309,36 @@ foreach ($category_counts as $row) {
                     <i class="fas fa-circle text-[8px] mr-1"></i> LIVE UPDATE
                 </span>
             </div>
-            <div class="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
-                <div class="group cursor-default">
-                    <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 group-hover:text-primary transition">ผู้สมัครทั้งหมด</p>
-                    <h3 class="text-4xl md:text-6xl font-bold text-secondary group-hover:scale-110 transition duration-300"><?php echo number_format($stats['total']); ?></h3>
-                    <p class="text-xs text-gray-400 mt-2">คน</p>
+            <div class="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-4 sm:gap-8 md:gap-16 text-center">
+                <div class="group cursor-default bg-white/50 md:bg-transparent p-3 md:p-0 rounded-2xl md:rounded-none">
+                    <p class="text-gray-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1 sm:mb-2 group-hover:text-primary transition">ผู้สมัครทั้งหมด</p>
+                    <h3 class="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-secondary group-hover:scale-110 transition duration-300"><?php echo number_format($stats['total']); ?></h3>
+                    <p class="text-[10px] sm:text-xs text-gray-400 mt-1 sm:mt-2">คน</p>
                 </div>
                 
                 <div class="w-px bg-gray-100 hidden md:block h-24"></div>
                 
-                <div class="group cursor-default">
-                    <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 group-hover:text-orange-500 transition">Walk & Run 3.5km</p>
-                    <h3 class="text-4xl md:text-6xl font-bold text-orange-500 group-hover:scale-110 transition duration-300"><?php echo number_format($stats['3.5km']); ?></h3>
-                    <p class="text-xs text-gray-400 mt-2">คน</p>
+                <div class="group cursor-default bg-orange-50 md:bg-transparent p-3 md:p-0 rounded-2xl md:rounded-none">
+                    <p class="text-gray-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1 sm:mb-2 group-hover:text-orange-500 transition">Walk & Run 3.5km</p>
+                    <h3 class="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-orange-500 group-hover:scale-110 transition duration-300"><?php echo number_format($stats['3.5km']); ?></h3>
+                    <p class="text-[10px] sm:text-xs text-gray-400 mt-1 sm:mt-2">คน</p>
                 </div>
                 
                 <div class="w-px bg-gray-100 hidden md:block h-24"></div>
                 
-                <div class="group cursor-default">
-                    <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 group-hover:text-blue-600 transition">Fun Run 5.5km</p>
-                    <h3 class="text-4xl md:text-6xl font-bold text-blue-600 group-hover:scale-110 transition duration-300"><?php echo number_format($stats['5.5km']); ?></h3>
-                    <p class="text-xs text-gray-400 mt-2">คน</p>
+                <div class="group cursor-default bg-blue-50 md:bg-transparent p-3 md:p-0 rounded-2xl md:rounded-none">
+                    <p class="text-gray-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1 sm:mb-2 group-hover:text-blue-600 transition">Fun Run 5.5km</p>
+                    <h3 class="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-blue-600 group-hover:scale-110 transition duration-300"><?php echo number_format($stats['5.5km']); ?></h3>
+                    <p class="text-[10px] sm:text-xs text-gray-400 mt-1 sm:mt-2">คน</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 relative overflow-hidden">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col lg:flex-row items-center gap-16">
+    <section id="about" class="py-12 sm:py-16 md:py-20 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-8 sm:gap-12 lg:gap-16">
                 <!-- Image Side -->
                 <div class="lg:w-1/2 relative group">
                     <div class="absolute -inset-4 bg-gradient-to-tr from-primary to-accent rounded-[2rem] blur-lg opacity-30 group-hover:opacity-50 transition duration-500"></div>
@@ -338,12 +365,12 @@ foreach ($category_counts as $row) {
 
                 <!-- Content Side -->
                 <div class="lg:w-1/2">
-                    <span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">About The Event</span>
-                    <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-6 leading-tight">
+                    <span class="text-primary font-bold tracking-wider uppercase text-xs sm:text-sm mb-2 block text-center lg:text-left">About The Event</span>
+                    <h2 class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-secondary mb-4 sm:mb-6 leading-tight text-center lg:text-left">
                         วิ่งเพื่อสุขภาพ <br>
                         <span class="text-primary relative inline-block">
                             ลูกผู้กล้าพระยาพิชัยดาบหัก
-                            <svg class="absolute w-full h-3 -bottom-1 left-0 text-accent opacity-50" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <svg class="absolute w-full h-2 sm:h-3 -bottom-1 left-0 text-accent opacity-50" viewBox="0 0 100 10" preserveAspectRatio="none">
                                 <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
                             </svg>
                         </span>
@@ -944,6 +971,73 @@ foreach ($category_counts as $row) {
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-gray-200 z-50 safe-area-bottom">
+        <div class="flex items-center justify-around py-2 px-2">
+            <a href="#home" class="flex flex-col items-center gap-1 py-2 px-3 text-gray-500 hover:text-primary transition-colors group">
+                <i class="fas fa-home text-lg group-hover:scale-110 transition-transform"></i>
+                <span class="text-[10px] font-medium">หน้าแรก</span>
+            </a>
+            <a href="check_status.php" class="flex flex-col items-center gap-1 py-2 px-3 text-gray-500 hover:text-blue-600 transition-colors group">
+                <div class="relative">
+                    <i class="fas fa-search text-lg group-hover:scale-110 transition-transform"></i>
+                </div>
+                <span class="text-[10px] font-medium">เช็คสถานะ</span>
+            </a>
+            <a href="register.php" class="flex flex-col items-center -mt-6">
+                <div class="bg-gradient-to-r from-primary to-red-600 text-white p-4 rounded-full shadow-xl shadow-red-500/40 hover:shadow-red-500/60 hover:scale-110 transition-all duration-300">
+                    <i class="fas fa-running text-xl"></i>
+                </div>
+                <span class="text-[10px] font-bold text-primary mt-1">สมัครวิ่ง</span>
+            </a>
+            <a href="order_shirt.php" class="flex flex-col items-center gap-1 py-2 px-3 text-gray-500 hover:text-yellow-600 transition-colors group">
+                <div class="relative">
+                    <i class="fas fa-tshirt text-lg group-hover:scale-110 transition-transform"></i>
+                    <span class="absolute -top-1 -right-1 bg-yellow-500 text-white text-[8px] font-bold px-1 rounded-full">HOT</span>
+                </div>
+                <span class="text-[10px] font-medium">สั่งเสื้อ</span>
+            </a>
+            <!-- ติดต่อ -->
+            <a href="https://www.facebook.com/phichairun2026/" target="_blank" class="flex flex-col items-center gap-1 px-3 py-2 text-gray-500 hover:text-primary transition-colors">
+                <i class="fab fa-facebook text-lg"></i>
+                <span class="text-xs font-medium">ติดต่อ</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Floating Quick Access Buttons (Desktop) -->
+    <div class="hidden md:flex fixed bottom-8 right-8 flex-col gap-3 z-50">
+        <a href="check_status.php" class="group relative bg-white text-blue-600 p-4 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 border border-blue-100">
+            <i class="fas fa-search text-xl"></i>
+            <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-sm font-medium py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                เช็คสถานะการสมัคร
+                <span class="absolute left-full top-1/2 -translate-y-1/2 border-8 border-transparent border-l-gray-900"></span>
+            </span>
+        </a>
+        <a href="order_shirt.php" class="group relative bg-gradient-to-r from-yellow-400 to-yellow-500 text-white p-4 rounded-2xl shadow-xl shadow-yellow-500/30 hover:shadow-yellow-500/50 hover:scale-110 transition-all duration-300">
+            <i class="fas fa-tshirt text-xl"></i>
+            <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-sm font-medium py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                สั่งเสื้อที่ระลึก
+                <span class="absolute left-full top-1/2 -translate-y-1/2 border-8 border-transparent border-l-gray-900"></span>
+            </span>
+        </a>
+        <a href="register.php" class="group relative bg-gradient-to-r from-primary to-red-600 text-white p-4 rounded-2xl shadow-xl shadow-red-500/30 hover:shadow-red-500/50 hover:scale-110 transition-all duration-300">
+            <i class="fas fa-running text-xl"></i>
+            <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-sm font-medium py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                สมัครวิ่งทันที!
+                <span class="absolute left-full top-1/2 -translate-y-1/2 border-8 border-transparent border-l-gray-900"></span>
+            </span>
+        </a>
+    </div>
+
+    <!-- Add padding bottom for mobile to prevent content being hidden by bottom nav -->
+    <style>
+        @media (max-width: 767px) {
+            body { padding-bottom: 80px; }
+            .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 0); }
+        }
+    </style>
 
     <script src="assets/js/script.js"></script>
 </body>

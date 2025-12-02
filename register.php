@@ -90,9 +90,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         light: '#F1FAEE',
                         dark: '#111827'
                     },
+                    screens: {
+                        'xs': '375px',
+                    },
                     animation: {
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'float': 'floating 3s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s infinite',
                     },
                     keyframes: {
                         floating: {
@@ -879,7 +883,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <!-- Footer -->
-    <footer id="contact" class="bg-dark text-white pt-20 pb-10 relative overflow-hidden mt-20">
+    <footer id="contact" class="bg-dark text-white pt-20 pb-24 md:pb-10 relative overflow-hidden mt-20">
         <div class="container mx-auto px-6 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                 <!-- Brand -->
@@ -957,6 +961,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-gray-200 z-50 safe-area-bottom">
+        <div class="flex justify-around items-center py-2">
+            <!-- หน้าหลัก -->
+            <a href="index.php" class="flex flex-col items-center gap-1 px-3 py-2 text-gray-500 hover:text-primary transition-colors">
+                <i class="fas fa-home text-lg"></i>
+                <span class="text-xs font-medium">หน้าหลัก</span>
+            </a>
+            <!-- เช็คสถานะ -->
+            <a href="check_status.php" class="flex flex-col items-center gap-1 px-3 py-2 text-gray-500 hover:text-primary transition-colors">
+                <i class="fas fa-search text-lg"></i>
+                <span class="text-xs font-medium">เช็คสถานะ</span>
+            </a>
+            <!-- สมัครวิ่ง (Active) -->
+            <a href="register.php" class="flex flex-col items-center gap-1 px-3 py-2 text-primary">
+                <div class="relative">
+                    <i class="fas fa-running text-lg"></i>
+                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full"></span>
+                </div>
+                <span class="text-xs font-bold">สมัครวิ่ง</span>
+            </a>
+            <!-- สั่งเสื้อ -->
+            <a href="order_shirt.php" class="flex flex-col items-center gap-1 px-3 py-2 text-gray-500 hover:text-yellow-500 transition-colors">
+                <i class="fas fa-tshirt text-lg"></i>
+                <span class="text-xs font-medium">สั่งเสื้อ</span>
+            </a>
+            <!-- ติดต่อ -->
+            <a href="https://www.facebook.com/phichairun2026/" target="_blank" class="flex flex-col items-center gap-1 px-3 py-2 text-gray-500 hover:text-primary transition-colors">
+                <i class="fab fa-facebook text-lg"></i>
+                <span class="text-xs font-medium">ติดต่อ</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Desktop Floating Action Buttons -->
+    <div class="hidden md:flex fixed right-6 bottom-6 flex-col gap-3 z-50">
+        <!-- หน้าหลัก -->
+        <a href="index.php" class="group relative w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-primary hover:shadow-xl hover:scale-110 transition-all duration-300 border border-gray-100">
+            <i class="fas fa-home text-lg"></i>
+            <span class="absolute right-full mr-3 px-3 py-1.5 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">หน้าหลัก</span>
+        </a>
+        <!-- เช็คสถานะ -->
+        <a href="check_status.php" class="group relative w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-green-500 hover:shadow-xl hover:scale-110 transition-all duration-300 border border-gray-100">
+            <i class="fas fa-search text-lg"></i>
+            <span class="absolute right-full mr-3 px-3 py-1.5 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">เช็คสถานะ</span>
+        </a>
+        <!-- สั่งเสื้อ -->
+        <a href="order_shirt.php" class="group relative w-12 h-12 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full shadow-lg flex items-center justify-center text-white hover:shadow-xl hover:scale-110 transition-all duration-300">
+            <i class="fas fa-tshirt text-lg"></i>
+            <span class="absolute right-full mr-3 px-3 py-1.5 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">สั่งเสื้อ</span>
+        </a>
+    </div>
+
+    <!-- Safe area for iPhone notch -->
+    <style>
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+    </style>
 
     <script>
         // Simple postal code lookup: tries zippopotam.us and handles failures gracefully.
