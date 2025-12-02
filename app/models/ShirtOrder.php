@@ -231,8 +231,8 @@ class ShirtOrder {
         $stmt->execute();
         $stats['total_shirts'] = $stmt->fetch(PDO::FETCH_ASSOC)['total_shirts'] ?? 0;
         
-        // Total revenue
-        $query = "SELECT SUM(payment_amount) as total_revenue FROM " . $this->table . " WHERE status != 'cancelled'";
+        // Total revenue (exclude pending and cancelled)
+        $query = "SELECT SUM(payment_amount) as total_revenue FROM " . $this->table . " WHERE status NOT IN ('pending', 'cancelled')";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $stats['total_revenue'] = $stmt->fetch(PDO::FETCH_ASSOC)['total_revenue'] ?? 0;
