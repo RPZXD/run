@@ -693,7 +693,7 @@ foreach ($category_counts as $row) {
                         <img src="assets/images/โล่.png" alt="โล่รางวัล" class="relative h-64 w-auto object-contain mx-auto transform group-hover:scale-110 transition duration-500">
                     </div>
                     <h3 class="text-2xl font-bold text-secondary mb-2">โล่รางวัลเกียรติยศ</h3>
-                    <p class="text-gray-500">สำหรับผู้ชนะอันดับ 1-5 ในแต่ละรุ่นอายุ </p>
+                    <p class="text-gray-500">สำหรับผู้ชนะอันดับ 1-3 เฉพาะ FUN RUN 5.5km </p>
                 </div>
             </div>
         </div>
