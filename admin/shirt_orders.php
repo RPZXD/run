@@ -140,6 +140,10 @@ if ($search) {
                 <p class="text-gray-500 mt-1">Shirt Orders (แยกจากการสมัครวิ่ง)</p>
             </div>
             <div class="flex gap-3">
+                <button onclick="exportToExcel()" class="group relative bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-5 py-2.5 rounded-xl transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-0.5 font-medium flex items-center gap-2">
+                    <i class="fas fa-file-excel group-hover:animate-pulse"></i> 
+                    <span>Export Excel</span>
+                </button>
                 <a href="shipping.php" class="group relative bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-500 hover:from-amber-500 hover:via-yellow-600 hover:to-orange-600 text-white px-5 py-2.5 rounded-xl transition-all duration-300 shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:-translate-y-0.5 font-medium flex items-center gap-2">
                     <i class="fas fa-print group-hover:animate-pulse"></i> 
                     <span>พิมพ์ใบจัดส่ง</span>
@@ -939,6 +943,28 @@ if ($search) {
         }
     });
     <?php endif; ?>
+
+    // Export to Excel with Thai language support
+    function exportToExcel() {
+        const statusFilter = new URLSearchParams(window.location.search).get('status') || '';
+        const url = 'export_excel.php?type=shirt_orders&status=' + statusFilter;
+        
+        const downloadLink = document.createElement("a");
+        downloadLink.href = url;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'กำลังดาวน์โหลดไฟล์ Excel...',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }
     </script>
 </body>
 </html>

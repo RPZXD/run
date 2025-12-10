@@ -1029,32 +1029,21 @@ foreach ($registrations as $reg) {
         }
 
         function exportTableToCSV(filename) {
-            const csv = [];
-            const rows = document.querySelectorAll("table tr");
+            // Use PHP export for proper Thai language support
+            const statusFilter = document.getElementById("statusFilter").value;
+            const url = 'export_excel.php?type=registrations&status=' + statusFilter;
             
-            for (let i = 0; i < rows.length; i++) {
-                const row = [], cols = rows[i].querySelectorAll("td, th");
-                
-                for (let j = 0; j < cols.length - 1; j++) { // Skip last column (Actions)
-                    let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, " ").replace(/(\s\s)/gm, " ");
-                    data = data.replace(/"/g, '""');
-                    row.push('"' + data + '"');
-                }
-                
-                csv.push(row.join(","));
-            }
-
-            const csvFile = new Blob([csv.join("\n")], {type: "text/csv"});
+            // Create a temporary link and click it
             const downloadLink = document.createElement("a");
-            downloadLink.download = filename;
-            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.href = url;
             downloadLink.style.display = "none";
             document.body.appendChild(downloadLink);
             downloadLink.click();
+            document.body.removeChild(downloadLink);
             
             Toast.fire({
                 icon: 'success',
-                title: 'ส่งออกข้อมูลเรียบร้อยแล้ว'
+                title: 'กำลังดาวน์โหลดไฟล์ Excel...'
             });
         }
     </script>
