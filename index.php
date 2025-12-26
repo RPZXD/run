@@ -471,6 +471,13 @@ foreach ($category_counts as $row) {
                                     <td class="py-3 text-center">1-5</td>
                                     <td class="py-3 text-center">-</td>
                                 </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 font-medium">บุคคลทั่วไป</td>
+                                    <td class="py-3 text-center">450</td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center"><i class="fas fa-check text-green-500"></i></td>
+                                    <td class="py-3 text-center">1-3</td>
+                                </tr>
                                 <tr>
                                     <td class="py-3 font-medium text-primary">VIP</td>
                                     <td class="py-3 text-center font-bold text-primary">1,200</td>

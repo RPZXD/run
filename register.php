@@ -209,7 +209,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h3 class="text-xl font-bold text-secondary border-b border-gray-200 pb-3 mb-6 flex items-center gap-2">
                             <i class="fas fa-user-circle text-primary"></i> ข้อมูลส่วนตัว
                         </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="mt-2">
+                            <label class="block text-gray-700 font-bold mb-2 text-sm">เลขบัตรประชาชน (13 หลัก)</label>
+                            <input type="text" name="citizen_id" required maxlength="13" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="xxxxxxxxxxxxx">
+                            <p id="cid_error" class="text-xs text-red-500 mt-1 hidden">เลขบัตรประชาชนไม่ถูกต้อง</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-2">
                             <div>
                                 <label class="block text-gray-700 font-bold mb-2 text-sm">คำนำหน้า</label>
                                 <select name="prefix" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white">
@@ -307,11 +312,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="mt-6">
-                            <label class="block text-gray-700 font-bold mb-2 text-sm">เลขบัตรประชาชน (13 หลัก)</label>
-                            <input type="text" name="citizen_id" required maxlength="13" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition bg-gray-50 focus:bg-white" placeholder="xxxxxxxxxxxxx">
-                            <p id="cid_error" class="text-xs text-red-500 mt-1 hidden">เลขบัตรประชาชนไม่ถูกต้อง</p>
-                        </div>
+                        
 
                         <div class="mt-8 flex justify-end">
                             <button type="button" class="next-btn bg-gradient-to-r from-primary to-red-600 hover:from-red-600 hover:to-secondary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1">
@@ -412,6 +413,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <div class="p-3 rounded-xl bg-white border border-orange-200 peer-checked:border-orange-500 peer-checked:bg-orange-100 peer-checked:text-orange-800 transition flex justify-between items-center">
                                             <span>ม.ปลาย/ปวช.</span>
                                             <span class="font-bold">30 บาท</span>
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer relative group">
+                                        <input type="radio" name="category" value="Walk & Run 3.5km - บุคคลทั่วไป" required class="peer sr-only">
+                                        <div class="p-3 rounded-xl bg-white border border-orange-200 peer-checked:border-orange-500 peer-checked:bg-orange-100 peer-checked:text-orange-800 transition flex justify-between items-center">
+                                            <span>บุคคลทั่วไป</span>
+                                            <span class="font-bold">450 บาท</span>
                                         </div>
                                     </label>
                                     <label class="cursor-pointer relative group">
@@ -1655,6 +1663,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         // Walk & Run 3.5km
                         if (val.includes('Walk & Run 3.5km')) {
                             if (val.includes('VIP')) raceFee = 1200;
+                            else if (val.includes('บุคคลทั่วไป')) raceFee = 450;
                             else raceFee = 30;
                         }
                         // Fun Run 5.5km นักเรียน

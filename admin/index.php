@@ -577,6 +577,7 @@ foreach ($registrations as $reg) {
                                     <option value="Walk & Run 3.5km - ประถมศึกษา">ประถมศึกษา (30 บาท)</option>
                                     <option value="Walk & Run 3.5km - ม.ต้น">ม.ต้น (30 บาท)</option>
                                     <option value="Walk & Run 3.5km - ม.ปลาย/ปวช.">ม.ปลาย/ปวช. (30 บาท)</option>
+                                    <option value="Walk & Run 3.5km - บุคคลทั่วไป">บุคคลทั่วไป (450 บาท)</option>
                                     <option value="Walk & Run 3.5km - VIP">VIP (1,200 บาท)</option>
                                 </optgroup>
                                 <optgroup label="Fun Run 5.5km นักเรียน">
@@ -845,6 +846,7 @@ foreach ($registrations as $reg) {
             const cat = data.category || '';
             
             if (cat.includes('VIP')) price = 1200;
+            else if (cat.includes('Walk & Run') && cat.includes('บุคคลทั่วไป')) price = 450;
             else if (cat.includes('Walk & Run')) price = 30;
             else if (cat.includes('Fun Run') && cat.includes('นักเรียน')) price = 300;
             else if (cat.includes('Fun Run') && cat.includes('บุคคลทั่วไป')) price = 450;
