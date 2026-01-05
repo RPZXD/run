@@ -3,8 +3,14 @@ require_once 'app/config/database.php';
 require_once 'app/models/Registration.php';
 require_once 'app/controllers/RegisterController.php';
 
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+// CSRF Token generation
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 // Check Deadline
 $deadline = '2026-02-05';
@@ -48,17 +54,37 @@ $message = '';
 $status = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $database = new Database();
-    $db = $database->connect();
-    
-    if ($db) {
-        $controller = new RegisterController($db);
-        $result = $controller->register();
-        $message = $result['message'];
-        $status = $result['status'];
-    } else {
-        $message = "ไม่สามารถเชื่อมต่อฐานข้อมูลได้";
+    // 1. CSRF Protection
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $message = "ขออภัย เกิดข้อผิดพลาดด้านความปลอดภัย (โทเคนไม่ถูกต้อง) กรุณารีเฟรชหน้าเว็บแล้วลองใหม่อีกครั้ง";
         $status = "error";
+    } 
+    // 2. Anti-Spam (Honeypot) - website_url should be empty
+    elseif (!empty($_POST['website_url'])) {
+        $message = "ระบบตรวจพบพฤติกรรมที่ไม่เหมาะสม";
+        $status = "error";
+    }
+    // 3. Rate Limiting - Prevent multiple submissions within 30 seconds
+    elseif (isset($_SESSION['reg_last_submit_time']) && (time() - $_SESSION['reg_last_submit_time'] < 30)) {
+        $message = "คุณกำลังส่งข้อมูลถี่เกินไป กรุณารอ 30 วินาทีก่อนทำรายการใหม่";
+        $status = "error";
+    }
+    else {
+        // Set last submit time to prevent rapid shooting
+        $_SESSION['reg_last_submit_time'] = time();
+
+        $database = new Database();
+        $db = $database->connect();
+        
+        if ($db) {
+            $controller = new RegisterController($db);
+            $result = $controller->register();
+            $message = $result['message'];
+            $status = $result['status'];
+        } else {
+            $message = "ไม่สามารถเชื่อมต่อฐานข้อมูลได้";
+            $status = "error";
+        }
     }
 }
 
@@ -187,6 +213,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 
                 <form id="regForm" action="register.php" method="POST" enctype="multipart/form-data" class="p-8 md:p-10">
+                    <!-- Security Tokens -->
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                    <div class="hidden" aria-hidden="true">
+                        <input type="text" name="website_url" value="">
+                    </div>
                     <!-- Progress / Steps indicator -->
                     <div class="mb-10">
                         <div class="w-full bg-gray-100 rounded-full h-3 overflow-hidden shadow-inner">
@@ -1371,8 +1402,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 });
             }
 
+            let isRegistering = false;
             if (form) {
                 form.addEventListener('submit', (ev) => {
+                    if (isRegistering) {
+                        ev.preventDefault();
+                        return false;
+                    }
+
                     // Normalize birth_date from BE to CE if needed (e.g. 2568 -> 2025)
                     const birthInput = document.querySelector('input[name="birth_date"]');
                     if (birthInput && birthInput.value) {
@@ -1397,17 +1434,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             Swal.fire({
                                 icon: 'warning',
                                 title: 'ข้อมูลไม่ครบถ้วน',
-                                text: 'กรุณาระบุคำนำหน้า',
+                                text: 'กรุณาระบุคำนำหน้าชื่อของคุณ',
                                 confirmButtonText: 'ตกลง',
                                 customClass: {
                                     popup: 'rounded-3xl shadow-xl border border-gray-100',
-                                    confirmButton: 'bg-gradient-to-r from-primary to-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1',
+                                    confirmButton: 'bg-gradient-to-r from-primary to-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg',
                                     title: 'text-2xl font-bold text-secondary font-sans',
                                     htmlContainer: 'text-gray-600 font-sans'
                                 },
                                 buttonsStyling: false
                             });
-                            return;
+                            return false;
                         }
 
                         // disable the select so it doesn't submit its literal "other" value
@@ -1487,6 +1524,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             r.disabled = true;
                         });
                     }
+
+                    // Change button state
+                    const actualSubmitBtn = document.querySelector('#regForm button[type="submit"]');
+                    if (actualSubmitBtn) {
+                        actualSubmitBtn.disabled = true;
+                        actualSubmitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+                        actualSubmitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> กำลังประมวลผล...';
+                    }
+
+                    isRegistering = true;
                 });
             
                 // Stepper logic
