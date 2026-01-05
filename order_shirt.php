@@ -3,8 +3,14 @@ require_once 'app/config/database.php';
 require_once 'app/models/ShirtOrder.php';
 require_once 'app/controllers/ShirtOrderController.php';
 
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+// CSRF Token generation
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 // Check Deadline
 $deadline = '2026-02-05';
@@ -49,18 +55,41 @@ $status = '';
 $orderNumber = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $database = new Database();
-    $db = $database->connect();
-    
-    if ($db) {
-        $controller = new ShirtOrderController($db);
-        $result = $controller->create();
-        $message = $result['message'];
-        $status = $result['status'];
-        $orderNumber = isset($result['order_number']) ? $result['order_number'] : '';
-    } else {
-        $message = "ไม่สามารถเชื่อมต่อฐานข้อมูลได้";
+    // 1. CSRF Protection
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $message = "ขออภัย เกิดข้อผิดพลาดด้านความปลอดภัย (โทเคนไม่ถูกต้อง) กรุณารีเฟรชหน้าเว็บแล้วลองใหม่อีกครั้ง";
         $status = "error";
+    } 
+    // 2. Anti-Spam (Honeypot) - website_url should be empty
+    elseif (!empty($_POST['website_url'])) {
+        $message = "ระบบตรวจพบพฤติกรรมที่ไม่เหมาะสม";
+        $status = "error";
+    }
+    // 3. Rate Limiting - Prevent multiple submissions within 30 seconds
+    elseif (isset($_SESSION['last_submit_time']) && (time() - $_SESSION['last_submit_time'] < 30)) {
+        $message = "คุณกำลังส่งข้อมูลถี่เกินไป กรุณารอ 30 วินาทีก่อนทำรายการใหม่";
+        $status = "error";
+    }
+    else {
+        // Set last submit time to prevent rapid shooting
+        $_SESSION['last_submit_time'] = time();
+
+        $database = new Database();
+        $db = $database->connect();
+        
+        if ($db) {
+            $controller = new ShirtOrderController($db);
+            $result = $controller->create();
+            $message = $result['message'];
+            $status = $result['status'];
+            $orderNumber = isset($result['order_number']) ? $result['order_number'] : '';
+            
+            // If error, maybe reset last_submit_time to allow retry (optional)
+            // But usually better to keep it locked to avoid brute force
+        } else {
+            $message = "ไม่สามารถเชื่อมต่อฐานข้อมูลได้";
+            $status = "error";
+        }
     }
 }
 
@@ -176,6 +205,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 
                 <form id="shirtOrderForm" action="order_shirt.php" method="POST" enctype="multipart/form-data" class="p-5 md:p-10">
+                    <!-- Security Tokens -->
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                    <div class="hidden" aria-hidden="true">
+                        <input type="text" name="website_url" value="">
+                    </div>
                     
                     <!-- Progress Bar -->
                     <div class="mb-10">
@@ -816,17 +850,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Compose full address before submit
         let isSubmitting = false;
-        form.addEventListener('submit', (e) => {
-            if (isSubmitting) return; // Already submitting, don't prevent
+        form.addEventListener('submit', function(e) {
+            if (isSubmitting) {
+                e.preventDefault();
+                return false;
+            }
             
-            e.preventDefault(); // Prevent immediate submit
+            // Validate last step fields (slip, date, time are required)
+            const slip = document.getElementById('payment_slip');
+            const pDate = document.getElementById('payment_date');
+            const pTime = document.getElementById('payment_time');
             
+            if (!slip.value || !pDate.value || !pTime.value) {
+                e.preventDefault();
+                showError('กรุณาแนบสลิปและระบุวันที่/เวลาโอนเงินให้ครบถ้วน');
+                return false;
+            }
+
             // Ensure address is built before submission
             buildFullAddress();
             
-            // Submit form
+            // Change button state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+                submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> กำลังประมวลผล...';
+            }
+            
             isSubmitting = true;
-            form.submit();
+            // Native submit will proceed
         });
 
         // Handle prefix "อื่นๆ" selection
