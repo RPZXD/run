@@ -899,6 +899,306 @@ foreach ($category_counts as $row) {
         </div>
     </section>
 
+    <!-- Sponsor Section -->
+    <?php
+    // Get sponsor images from sponsor folder
+    $sponsorImages = [];
+    $sponsorDir = __DIR__ . '/sponsor';
+    if (is_dir($sponsorDir)) {
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'JPG', 'JPEG', 'PNG', 'GIF', 'WEBP'];
+        $files = scandir($sponsorDir);
+        foreach ($files as $file) {
+            if ($file !== '.' && $file !== '..') {
+                $ext = pathinfo($file, PATHINFO_EXTENSION);
+                if (in_array($ext, $allowedExtensions)) {
+                    $sponsorImages[] = 'sponsor/' . $file;
+                }
+            }
+        }
+        // Sort alphabetically
+        sort($sponsorImages);
+    }
+    ?>
+    <?php if (!empty($sponsorImages)): ?>
+    <section id="sponsors" class="py-24 relative overflow-hidden">
+        <!-- Animated Gradient Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-amber-50/30"></div>
+        
+        <!-- Floating Decorative Elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse-slow"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/3 to-accent/3 rounded-full blur-3xl"></div>
+        </div>
+        
+        <!-- Subtle Pattern Overlay -->
+        <div class="absolute inset-0 opacity-[0.02]">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA2MCAwIEwgMCAwIDAgNjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <!-- Header with Premium Badge -->
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-amber-100 to-yellow-100 border border-amber-200/50 mb-6 shadow-sm">
+                    <i class="fas fa-star text-amber-500"></i>
+                    <span class="text-amber-700 font-semibold text-sm tracking-wide">PROUDLY SUPPORTED BY</span>
+                    <i class="fas fa-star text-amber-500"></i>
+                </div>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                    <span class="text-secondary">ผู้</span><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-red-500 to-accent">สนับสนุน</span>
+                </h2>
+                <p class="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
+                    ขอขอบคุณผู้สนับสนุนทุกท่านที่ร่วมสร้างสรรค์กิจกรรมดีๆ ให้กับชุมชน
+                </p>
+            </div>
+
+            <!-- Sponsor Slideshow Container -->
+            <div class="max-w-5xl mx-auto relative">
+                <!-- Decorative Corner Elements -->
+                <div class="absolute -top-4 -left-4 w-16 h-16 border-l-4 border-t-4 border-primary/30 rounded-tl-3xl"></div>
+                <div class="absolute -top-4 -right-4 w-16 h-16 border-r-4 border-t-4 border-accent/30 rounded-tr-3xl"></div>
+                <div class="absolute -bottom-4 -left-4 w-16 h-16 border-l-4 border-b-4 border-accent/30 rounded-bl-3xl"></div>
+                <div class="absolute -bottom-4 -right-4 w-16 h-16 border-r-4 border-b-4 border-primary/30 rounded-br-3xl"></div>
+                
+                <!-- Main Slideshow Card -->
+                <div class="relative group">
+                    <!-- Outer Glow on Hover -->
+                    <div class="absolute -inset-1 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                    
+                    <!-- Main Card -->
+                    <div class="relative bg-white rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-gray-100/80 overflow-hidden">
+                        <!-- Top Gradient Bar -->
+                        <div class="h-1.5 bg-gradient-to-r from-primary via-accent to-primary"></div>
+                        
+                        <!-- Slideshow Wrapper -->
+                        <div id="sponsor-slideshow" class="relative aspect-[16/9] md:aspect-[2/1] overflow-hidden bg-white">
+                            <?php foreach ($sponsorImages as $index => $image): ?>
+                            <div class="sponsor-slide absolute inset-0 flex items-center justify-center p-6 md:p-12 transition-all duration-700 ease-out <?php echo $index === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95'; ?>" data-index="<?php echo $index; ?>">
+                                <img src="<?php echo htmlspecialchars($image); ?>" 
+                                     alt="ผู้สนับสนุน <?php echo $index + 1; ?>" 
+                                     class="max-w-full max-h-full object-contain transition-transform duration-500 hover:scale-[1.02]">
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <!-- Navigation Arrows -->
+                        <?php if (count($sponsorImages) > 1): ?>
+                        <button id="sponsor-prev" class="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-11 h-11 md:w-14 md:h-14 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-100 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/30 hover:shadow-xl hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 z-10 group/btn">
+                            <i class="fas fa-chevron-left text-lg md:text-xl group-hover/btn:-translate-x-0.5 transition-transform"></i>
+                        </button>
+                        <button id="sponsor-next" class="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 w-11 h-11 md:w-14 md:h-14 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-100 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/30 hover:shadow-xl hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 z-10 group/btn">
+                            <i class="fas fa-chevron-right text-lg md:text-xl group-hover/btn:translate-x-0.5 transition-transform"></i>
+                        </button>
+                        <?php endif; ?>
+                        
+                        <!-- Bottom Gradient Bar -->
+                        <div class="h-1 bg-gradient-to-r from-accent via-primary to-accent"></div>
+                    </div>
+                </div>
+
+                <!-- Slide Navigation & Counter -->
+                <?php if (count($sponsorImages) > 1): ?>
+                <div class="flex flex-col items-center mt-10 gap-5">
+                    <!-- Custom Progress Bar -->
+                    <div class="relative w-full max-w-sm">
+                        <div class="h-1 bg-gray-200/80 rounded-full overflow-hidden backdrop-blur-sm">
+                            <div id="sponsor-progress" class="h-full rounded-full transition-all duration-500 ease-out bg-gradient-to-r from-primary via-red-500 to-accent" style="width: <?php echo (1 / count($sponsorImages)) * 100; ?>%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dots Navigation with Animation -->
+                    <div id="sponsor-dots" class="flex items-center gap-3 flex-wrap justify-center">
+                        <?php foreach ($sponsorImages as $index => $image): ?>
+                        <button class="sponsor-dot group relative w-3 h-3 rounded-full transition-all duration-300 focus:outline-none <?php echo $index === 0 ? 'bg-primary scale-125 shadow-lg shadow-primary/30' : 'bg-gray-300 hover:bg-gray-400'; ?>" data-index="<?php echo $index; ?>">
+                            <span class="absolute inset-0 rounded-full bg-primary/20 scale-0 group-hover:scale-[2] transition-transform duration-300"></span>
+                        </button>
+                        <?php endforeach; ?>
+                    </div>
+                    
+                    <!-- Elegant Counter -->
+                    <div class="flex items-center gap-3 text-sm">
+                        <span id="sponsor-current" class="text-2xl font-bold text-primary tabular-nums">1</span>
+                        <span class="text-gray-300 text-lg">/</span>
+                        <span class="text-gray-400 font-medium"><?php echo count($sponsorImages); ?></span>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- Thank You Message with Premium Design -->
+            <div class="mt-20 text-center">
+                <div class="relative inline-block">
+                    <!-- Sparkle Effects -->
+                    <div class="absolute -top-2 -left-2 text-amber-400 animate-pulse">
+                        <i class="fas fa-sparkles text-sm"></i>
+                    </div>
+                    <div class="absolute -top-1 -right-3 text-amber-400 animate-pulse" style="animation-delay: 0.5s;">
+                        <i class="fas fa-sparkles text-xs"></i>
+                    </div>
+                    <div class="absolute -bottom-1 left-1/4 text-amber-400 animate-pulse" style="animation-delay: 1s;">
+                        <i class="fas fa-sparkles text-xs"></i>
+                    </div>
+                    
+                    <div class="relative inline-flex items-center gap-4 px-10 py-5 bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-50 rounded-2xl border border-amber-200/50 shadow-lg shadow-amber-100/50">
+                        <div class="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-red-400 to-red-500 rounded-xl shadow-lg shadow-red-400/30">
+                            <i class="fas fa-heart text-white animate-pulse"></i>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-lg font-bold text-gray-800">ขอบคุณผู้สนับสนุนทุกท่าน</p>
+                            <p class="text-sm text-gray-500">Thank you for your generous support</p>
+                        </div>
+                        <div class="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl shadow-lg shadow-amber-400/30">
+                            <i class="fas fa-award text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsor Slideshow Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.sponsor-slide');
+        const dots = document.querySelectorAll('.sponsor-dot');
+        const prevBtn = document.getElementById('sponsor-prev');
+        const nextBtn = document.getElementById('sponsor-next');
+        const currentDisplay = document.getElementById('sponsor-current');
+        const progressBar = document.getElementById('sponsor-progress');
+        
+        if (slides.length === 0) return;
+        
+        let currentIndex = 0;
+        let intervalId = null;
+        const intervalTime = 4000; // 4 seconds per slide
+        
+        function updateSlide(newIndex, direction = 'next') {
+            const oldIndex = currentIndex;
+            currentIndex = newIndex;
+            
+            // Handle wrap-around
+            if (currentIndex < 0) currentIndex = slides.length - 1;
+            if (currentIndex >= slides.length) currentIndex = 0;
+            
+            // Animate slides
+            slides.forEach((slide, index) => {
+                slide.classList.remove('opacity-100', 'opacity-0', 'scale-100', 'scale-95');
+                
+                if (index === currentIndex) {
+                    slide.classList.add('opacity-100', 'scale-100');
+                } else {
+                    slide.classList.add('opacity-0', 'scale-95');
+                }
+            });
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                    dot.classList.add('bg-primary', 'scale-125', 'shadow-lg', 'shadow-primary/30');
+                } else {
+                    dot.classList.remove('bg-primary', 'scale-125', 'shadow-lg', 'shadow-primary/30');
+                    dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+                }
+            });
+            
+            // Update counter
+            if (currentDisplay) {
+                currentDisplay.textContent = currentIndex + 1;
+            }
+            
+            // Update progress bar
+            if (progressBar) {
+                const progress = ((currentIndex + 1) / slides.length) * 100;
+                progressBar.style.width = progress + '%';
+            }
+        }
+        
+        function nextSlide() {
+            updateSlide(currentIndex + 1, 'next');
+        }
+        
+        function prevSlide() {
+            updateSlide(currentIndex - 1, 'prev');
+        }
+        
+        function startAutoPlay() {
+            stopAutoPlay();
+            intervalId = setInterval(nextSlide, intervalTime);
+        }
+        
+        function stopAutoPlay() {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        }
+        
+        // Event listeners
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                startAutoPlay(); // Reset timer
+            });
+        }
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                startAutoPlay(); // Reset timer
+            });
+        }
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                const direction = index > currentIndex ? 'next' : 'prev';
+                updateSlide(index, direction);
+                startAutoPlay(); // Reset timer
+            });
+        });
+        
+        // Pause on hover
+        const slideshow = document.getElementById('sponsor-slideshow');
+        if (slideshow) {
+            slideshow.addEventListener('mouseenter', stopAutoPlay);
+            slideshow.addEventListener('mouseleave', startAutoPlay);
+        }
+        
+        // Touch/Swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        if (slideshow) {
+            slideshow.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            
+            slideshow.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+        }
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide(); // Swipe left = next
+                } else {
+                    prevSlide(); // Swipe right = prev
+                }
+                startAutoPlay();
+            }
+        }
+        
+        // Start autoplay
+        startAutoPlay();
+    });
+    </script>
+    <?php endif; ?>
+
     <!-- Footer -->
     <footer id="contact" class="bg-dark text-white pt-20 pb-10 relative overflow-hidden">
         <div class="container mx-auto px-6 relative z-10">
@@ -957,16 +1257,6 @@ foreach ($category_counts as $row) {
                             <a href="mailto:phichaischool@gmail.com" class="hover:text-white transition">phichaischool@gmail.com</a>
                         </li>
                     </ul>
-                </div>
-            </div>
-
-            <!-- Sponsors -->
-            <div class="border-t border-white/10 pt-8 pb-8">
-                <p class="text-center text-gray-500 text-sm mb-6">ผู้สนับสนุนหลัก</p>
-                <div class="flex flex-wrap justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition duration-500">
-                    <img src="assets/images/logo-2.jpeg" class="h-12 object-contain">
-                    <img src="assets/images/logo-3.jpeg" class="h-12 object-contain">
-                    <img src="assets/images/logo-4.jpeg" class="h-12 object-contain">
                 </div>
             </div>
 

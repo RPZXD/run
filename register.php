@@ -982,16 +982,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
-            <!-- Sponsors -->
-            <div class="border-t border-white/10 pt-8 pb-8">
-                <p class="text-center text-gray-500 text-sm mb-6">ผู้สนับสนุนหลัก</p>
-                <div class="flex flex-wrap justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition duration-500">
-                    <img src="assets/images/logo-2.jpeg" class="h-12 object-contain">
-                    <img src="assets/images/logo-3.jpeg" class="h-12 object-contain">
-                    <img src="assets/images/logo-4.jpeg" class="h-12 object-contain">
-                </div>
-            </div>
-
             <!-- Copyright -->
             <div class="border-t border-white/10 pt-8 text-center">
                 <p class="text-gray-600 text-sm">
