@@ -948,7 +948,7 @@ foreach ($category_counts as $row) {
                     <span class="text-secondary">ผู้</span><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-red-500 to-accent">สนับสนุน</span>
                 </h2>
                 <p class="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
-                    ขอขอบคุณผู้สนับสนุนทุกท่านที่ร่วมสร้างสรรค์กิจกรรมดีๆ ให้กับชุมชน
+                    ขอขอบคุณผู้สนับสนุนทุกท่านที่ร่วมสร้างสรรค์กิจกรรมดีๆ ให้กับเรา
                 </p>
             </div>
 
