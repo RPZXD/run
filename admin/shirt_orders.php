@@ -255,7 +255,7 @@ if ($search) {
                     <tbody class="divide-y divide-slate-100">
                         <?php if (count($allOrders) === 0): ?>
                         <tr>
-                            <td colspan="9" class="px-4 py-16 text-center">
+                            <td colspan="10" class="px-4 py-16 text-center">
                                 <div class="flex flex-col items-center justify-center">
                                     <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                                         <i class="fas fa-inbox text-4xl text-slate-300"></i>
