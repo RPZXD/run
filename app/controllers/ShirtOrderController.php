@@ -39,6 +39,7 @@ class ShirtOrderController {
             $this->shirtOrder->address = !empty($_POST['address']) ? $_POST['address'] : ($_POST['full_address'] ?? '');
             $this->shirtOrder->shirt_sizes = $_POST['shirt_sizes'];
             $this->shirtOrder->shirt_quantity = isset($_POST['shirt_quantity']) ? (int)$_POST['shirt_quantity'] : 1;
+            $this->shirtOrder->collar_type = isset($_POST['collar_type']) ? $_POST['collar_type'] : 'round';
             $this->shirtOrder->shipping_method = isset($_POST['shipping_method']) ? $_POST['shipping_method'] : 'SELF';
             $this->shirtOrder->payment_slip = $payment_slip;
             $this->shirtOrder->payment_amount = !empty($_POST['payment_amount']) ? $_POST['payment_amount'] : null;
@@ -67,11 +68,14 @@ class ShirtOrderController {
         $telegram_chat_id = '-5016102496';
         $discord_webhook_url = 'https://discordapp.com/api/webhooks/1443091303947698339/spMmqpe3TjyfSn5F-1-N7Qv5Ie9byt25Kh8-AB06NsDelEIbJ5JoJaIEUHD31oEIkZQ1';
 
+        $collarTypeText = ($this->shirtOrder->collar_type == 'polo') ? 'คอปก (+100 บาท/ตัว)' : 'คอกลม';
+        
         $message = "👕 *มีคำสั่งซื้อเสื้อใหม่! (New Shirt Order)* 👕\n";
         $message .= "--------------------------------\n";
         $message .= "📦 *เลขที่คำสั่งซื้อ:* " . $orderNumber . "\n";
         $message .= "👤 *ชื่อ-นามสกุล:* " . $this->shirtOrder->full_name . "\n";
         $message .= "👕 *ไซส์:* " . $this->shirtOrder->shirt_sizes . "\n";
+        $message .= "👔 *ประเภทคอ:* " . $collarTypeText . "\n";
         $message .= "🔢 *จำนวน:* " . $this->shirtOrder->shirt_quantity . " ตัว\n";
         $message .= "📞 *เบอร์โทร:* " . $this->shirtOrder->phone . "\n";
         $message .= "💰 *ยอดโอน:* " . ($this->shirtOrder->payment_amount ? number_format($this->shirtOrder->payment_amount, 2) : '0.00') . " บาท\n";

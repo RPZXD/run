@@ -435,6 +435,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
+                        <!-- Collar Type Selection -->
+                        <div class="mt-8 border-t border-gray-200 pt-6">
+                            <label class="block text-gray-700 font-bold mb-4 text-sm">ประเภทคอเสื้อ <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <label class="relative cursor-pointer">
+                                    <input type="radio" name="collar_type" value="round" class="peer hidden" checked>
+                                    <div class="p-4 border-2 border-gray-200 rounded-xl peer-checked:border-yellow-500 peer-checked:bg-yellow-50 transition">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                                                <i class="fas fa-circle text-2xl text-yellow-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-gray-800">คอกลม</p>
+                                                <p class="text-sm text-gray-500">ราคาปกติ</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="relative cursor-pointer">
+                                    <input type="radio" name="collar_type" value="polo" class="peer hidden">
+                                    <div class="p-4 border-2 border-gray-200 rounded-xl peer-checked:border-yellow-500 peer-checked:bg-yellow-50 transition">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                                                <i class="fas fa-tshirt text-2xl text-yellow-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-gray-800">คอปก (+100 บาท/ตัว)</p>
+                                                <p class="text-sm text-gray-500">เพิ่ม 100 บาทต่อตัว</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
                         <!-- Shipping Method -->
                         <div class="mt-8 border-t border-gray-200 pt-6">
                             <label class="block text-gray-700 font-bold mb-4 text-sm">วิธีการรับเสื้อ</label>
@@ -722,20 +757,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'K2XL': '2XL (เด็ก)'
             };
 
+            // Get collar type
+            const collarType = document.querySelector('input[name="collar_type"]:checked');
+            const isPoloCollar = collarType && collarType.value === 'polo';
+            const collarText = isPoloCollar ? 'คอปก' : 'คอกลม';
+            const pricePerShirt = isPoloCollar ? 350 : 250; // 250 + 100 for polo
+
             document.querySelectorAll('.shirt-qty-input').forEach(input => {
                 const qty = parseInt(input.value) || 0;
                 if (qty > 0) {
                     const size = input.getAttribute('data-size');
                     const displayName = sizeDisplayNames[size] || size;
-                    total += qty * 250;
+                    total += qty * pricePerShirt;
                     totalQty += qty;
-                    sizeString += `${displayName}: ${qty}, `;
-                    summaryHtml += `<div class="flex justify-between"><span>${displayName} x ${qty}</span><span>${(qty * 250).toLocaleString()} บาท</span></div>`;
+                    sizeString += `${displayName} (${collarText}): ${qty}, `;
+                    summaryHtml += `<div class="flex justify-between"><span>${displayName} (${collarText}) x ${qty}</span><span>${(qty * pricePerShirt).toLocaleString()} บาท</span></div>`;
                 }
             });
 
             if (sizeString.length > 0) {
                 sizeString = sizeString.slice(0, -2);
+            }
+
+            // Add collar type extra info to summary if polo
+            if (isPoloCollar && totalQty > 0) {
+                summaryHtml = `<div class="flex justify-between text-orange-600 font-medium mb-2"><span>ประเภทคอ: ${collarText}</span><span>+${(totalQty * 100).toLocaleString()} บาท</span></div>` + summaryHtml;
             }
 
             // Add shipping
@@ -762,6 +808,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
         document.querySelectorAll('input[name="shipping_method"]').forEach(radio => {
+            radio.addEventListener('change', calculateTotal);
+        });
+
+        document.querySelectorAll('input[name="collar_type"]').forEach(radio => {
             radio.addEventListener('change', calculateTotal);
         });
 

@@ -17,6 +17,7 @@ class Registration {
     public $category;
     public $shirt_size;
     public $shirt_quantity;
+    public $collar_type;
     public $shipping_method;
     public $payment_slip;
     public $payment_amount;
@@ -47,6 +48,7 @@ class Registration {
                       category = :category, 
                       shirt_size = :shirt_size,
                       shirt_quantity = :shirt_quantity,
+                      collar_type = :collar_type,
                       shipping_method = :shipping_method,
                       payment_slip = :payment_slip,
                       payment_amount = :payment_amount,
@@ -72,6 +74,7 @@ class Registration {
         $this->category = strip_tags($this->category); // Don't use htmlspecialchars for ENUM fields with & character
         $this->shirt_size = strip_tags($this->shirt_size); // ENUM field
         $this->shirt_quantity = $this->shirt_quantity ? (int)$this->shirt_quantity : 1;
+        $this->collar_type = strip_tags($this->collar_type ?? 'round'); // round or polo
         $this->shipping_method = strip_tags($this->shipping_method); // ENUM field
         $this->payment_slip = htmlspecialchars(strip_tags($this->payment_slip));
         $this->payment_amount = $this->payment_amount ? htmlspecialchars(strip_tags($this->payment_amount)) : null;
@@ -95,6 +98,7 @@ class Registration {
         $stmt->bindParam(':category', $this->category);
         $stmt->bindParam(':shirt_size', $this->shirt_size);
         $stmt->bindParam(':shirt_quantity', $this->shirt_quantity);
+        $stmt->bindParam(':collar_type', $this->collar_type);
         $stmt->bindParam(':shipping_method', $this->shipping_method);
         $stmt->bindParam(':payment_slip', $this->payment_slip);
         $stmt->bindParam(':payment_amount', $this->payment_amount);

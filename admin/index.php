@@ -308,6 +308,14 @@ foreach ($registrations as $reg) {
                                                     <i class="fas fa-tshirt text-indigo-400"></i> 
                                                     <span class="font-bold text-slate-700"><?php echo $row['shirt_size']; ?></span>
                                                 </span>
+                                                <?php 
+                                                $collarType = $row['collar_type'] ?? 'round';
+                                                $collarLabel = $collarType === 'polo' ? 'คอปก' : 'คอกลม';
+                                                $collarStyle = $collarType === 'polo' ? 'bg-orange-50 text-orange-600 border-orange-200' : 'bg-slate-50 text-slate-500 border-slate-200';
+                                                ?>
+                                                <span class="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-lg font-medium <?php echo $collarStyle; ?> border" title="ประเภทคอ">
+                                                    <?php echo $collarLabel; ?>
+                                                </span>
                                                 <?php if(($row['shipping_method'] ?? '') == 'POST'): ?>
                                                     <span class="inline-flex items-center gap-1 text-blue-600 bg-blue-50 px-2 py-1 rounded-lg border border-blue-200 font-medium" title="จัดส่งไปรษณีย์">
                                                         <i class="fas fa-truck text-[10px]"></i> ส่ง ปณ.
@@ -704,6 +712,10 @@ foreach ($registrations as $reg) {
                                 <span class="font-bold text-slate-800" id="slipShirtSize"></span>
                             </div>
                             <div class="flex justify-between">
+                                <span class="text-slate-500">ประเภทคอ</span>
+                                <span class="font-bold" id="slipCollarType"></span>
+                            </div>
+                            <div class="flex justify-between">
                                 <span class="text-slate-500">การจัดส่ง</span>
                                 <span class="font-bold text-slate-800" id="slipShipping"></span>
                             </div>
@@ -838,6 +850,17 @@ foreach ($registrations as $reg) {
             document.getElementById('slipCategory').textContent = data.category;
             document.getElementById('slipShirtSize').textContent = data.shirt_size;
             
+            // Collar Type
+            const collarType = data.collar_type || 'round';
+            const collarTypeEl = document.getElementById('slipCollarType');
+            if (collarType === 'polo') {
+                collarTypeEl.textContent = 'คอปก (+100 บาท)';
+                collarTypeEl.className = 'font-bold text-orange-600';
+            } else {
+                collarTypeEl.textContent = 'คอกลม';
+                collarTypeEl.className = 'font-bold text-slate-800';
+            }
+            
             const isShipping = data.shipping_method === 'POST';
             document.getElementById('slipShipping').textContent = isShipping ? 'จัดส่งไปรษณีย์ (+50)' : 'รับด้วยตนเอง';
 
@@ -854,6 +877,11 @@ foreach ($registrations as $reg) {
 
             // Update Base Price
             document.getElementById('slipBasePrice').textContent = price.toLocaleString() + ' ฿';
+
+            // Add collar type surcharge
+            if (collarType === 'polo') {
+                price += 100;
+            }
 
             if (isShipping) {
                 price += 50;

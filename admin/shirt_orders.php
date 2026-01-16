@@ -242,6 +242,7 @@ if ($search) {
                             <th class="px-5 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">เลขออเดอร์</th>
                             <th class="px-5 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">ผู้สั่ง</th>
                             <th class="px-5 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">ไซส์เสื้อ</th>
+                            <th class="px-5 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">ประเภทคอ</th>
                             <th class="px-5 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">จำนวน</th>
                             <th class="px-5 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">ยอดเงิน</th>
                             <th class="px-5 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">การจัดส่ง</th>
@@ -284,6 +285,17 @@ if ($search) {
                             </td>
                             <td class="px-5 py-4">
                                 <span class="text-sm font-medium text-slate-700 bg-slate-100 px-2 py-1 rounded"><?php echo htmlspecialchars($order['shirt_sizes']); ?></span>
+                            </td>
+                            <td class="px-5 py-4">
+                                <?php 
+                                $collarType = $order['collar_type'] ?? 'round';
+                                $collarLabel = $collarType === 'polo' ? 'คอปก' : 'คอกลม';
+                                $collarStyle = $collarType === 'polo' ? 'bg-orange-50 text-orange-700 border-orange-200' : 'bg-slate-50 text-slate-600 border-slate-200';
+                                ?>
+                                <span class="px-3 py-1.5 text-xs font-medium <?php echo $collarStyle; ?> rounded-full border inline-flex items-center gap-1">
+                                    <i class="fas fa-<?php echo $collarType === 'polo' ? 'tshirt' : 'circle'; ?>"></i>
+                                    <?php echo $collarLabel; ?>
+                                </span>
                             </td>
                             <td class="px-5 py-4">
                                 <span class="font-bold text-slate-800"><?php echo $order['shirt_quantity']; ?></span>
@@ -706,6 +718,10 @@ if ($search) {
                     <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
                         <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">ไซส์เสื้อ</p>
                         <p class="font-bold text-slate-800">${order.shirt_sizes}</p>
+                    </div>
+                    <div class="${order.collar_type === 'polo' ? 'bg-orange-50 border-orange-200' : 'bg-slate-50 border-slate-100'} rounded-xl p-4 border">
+                        <p class="text-xs ${order.collar_type === 'polo' ? 'text-orange-600' : 'text-slate-400'} uppercase tracking-wider mb-1">ประเภทคอ</p>
+                        <p class="font-bold ${order.collar_type === 'polo' ? 'text-orange-700' : 'text-slate-800'}">${order.collar_type === 'polo' ? '👔 คอปก (+100 บาท/ตัว)' : '⭕ คอกลม'}</p>
                     </div>
                     <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
                         <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">จำนวน</p>

@@ -12,6 +12,7 @@ class ShirtOrder {
     public $address;
     public $shirt_sizes;
     public $shirt_quantity;
+    public $collar_type;
     public $shipping_method;
     public $payment_amount;
     public $payment_slip;
@@ -63,6 +64,7 @@ class ShirtOrder {
                       address = :address, 
                       shirt_sizes = :shirt_sizes,
                       shirt_quantity = :shirt_quantity,
+                      collar_type = :collar_type,
                       shipping_method = :shipping_method,
                       payment_amount = :payment_amount,
                       payment_slip = :payment_slip,
@@ -81,6 +83,7 @@ class ShirtOrder {
         $this->address = htmlspecialchars(strip_tags($this->address ?? ''));
         $this->shirt_sizes = htmlspecialchars(strip_tags($this->shirt_sizes ?? ''));
         $this->shirt_quantity = (int)$this->shirt_quantity;
+        $this->collar_type = htmlspecialchars(strip_tags($this->collar_type ?? 'round'));
         $this->shipping_method = htmlspecialchars(strip_tags($this->shipping_method ?? 'SELF'));
         $this->payment_amount = $this->payment_amount ? htmlspecialchars(strip_tags($this->payment_amount)) : null;
         $this->payment_slip = $this->payment_slip ? htmlspecialchars(strip_tags($this->payment_slip)) : null;
@@ -98,6 +101,7 @@ class ShirtOrder {
         $stmt->bindParam(':address', $this->address);
         $stmt->bindParam(':shirt_sizes', $this->shirt_sizes);
         $stmt->bindParam(':shirt_quantity', $this->shirt_quantity);
+        $stmt->bindParam(':collar_type', $this->collar_type);
         $stmt->bindParam(':shipping_method', $this->shipping_method);
         $stmt->bindParam(':payment_amount', $this->payment_amount);
         $stmt->bindParam(':payment_slip', $this->payment_slip);

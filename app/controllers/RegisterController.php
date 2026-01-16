@@ -56,6 +56,7 @@ class RegisterController {
             $this->registration->category = $_POST['category'];
             $this->registration->shirt_size = $_POST['shirt_size'];
             $this->registration->shirt_quantity = isset($_POST['shirt_quantity']) ? (int)$_POST['shirt_quantity'] : 1;
+            $this->registration->collar_type = isset($_POST['collar_type']) ? $_POST['collar_type'] : 'round';
             $this->registration->shipping_method = isset($_POST['shipping_method']) ? $_POST['shipping_method'] : 'SELF';
             $this->registration->payment_slip = $payment_slip;
             $this->registration->payment_amount = !empty($_POST['payment_amount']) ? $_POST['payment_amount'] : null;
@@ -80,11 +81,14 @@ class RegisterController {
         $discord_webhook_url = 'https://discordapp.com/api/webhooks/1443091303947698339/spMmqpe3TjyfSn5F-1-N7Qv5Ie9byt25Kh8-AB06NsDelEIbJ5JoJaIEUHD31oEIkZQ1';
 
         // Prepare Message
+        $collarTypeText = ($this->registration->collar_type == 'polo') ? 'คอปก (+100 บาท)' : 'คอกลม';
+        
         $message = "🏃‍♂️ *มีผู้สมัครใหม่! (New Registration)* 🏃‍♀️\n";
         $message .= "--------------------------------\n";
         $message .= "👤 *ชื่อ-นามสกุล:* " . $this->registration->full_name . "\n";
         $message .= "🏅 *ประเภท:* " . $this->registration->category . "\n";
         $message .= "👕 *ไซส์เสื้อ:* " . $this->registration->shirt_size . "\n";
+        $message .= "👔 *ประเภทคอ:* " . $collarTypeText . "\n";
         $message .= "🔢 *จำนวนเสื้อ:* " . $this->registration->shirt_quantity . " ตัว\n";
         $message .= "📞 *เบอร์โทร:* " . $this->registration->phone . "\n";
         $message .= "💰 *ยอดโอน:* " . ($this->registration->payment_amount ? number_format($this->registration->payment_amount, 2) : '0.00') . " บาท\n";

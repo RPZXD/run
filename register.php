@@ -715,6 +715,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
+                            <!-- Collar Type Selection -->
+                            <div class="mt-8 border-t border-gray-200 pt-6">
+                                <h4 class="text-lg font-bold text-gray-800 mb-4">ประเภทคอเสื้อ</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <label class="cursor-pointer relative group">
+                                        <input type="radio" name="collar_type" value="round" checked class="peer sr-only">
+                                        <div class="p-4 rounded-xl bg-white border border-gray-300 peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 peer-checked:bg-primary peer-checked:text-white transition">
+                                                <i class="fas fa-circle"></i>
+                                            </div>
+                                            <div>
+                                                <span class="block font-bold">คอกลม</span>
+                                                <span class="text-xs text-gray-500">ราคาปกติ</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer relative group">
+                                        <input type="radio" name="collar_type" value="polo" class="peer sr-only">
+                                        <div class="p-4 rounded-xl bg-white border border-gray-300 peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 peer-checked:bg-primary peer-checked:text-white transition">
+                                                <i class="fas fa-tshirt"></i>
+                                            </div>
+                                            <div>
+                                                <span class="block font-bold">คอปก (+100 บาท)</span>
+                                                <span class="text-xs text-gray-500">เพิ่ม 100 บาท</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
                             <div class="mt-8 border-t border-gray-200 pt-6">
                                 <h4 class="text-lg font-bold text-gray-800 mb-4">การรับเสื้อ</h4>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1677,6 +1708,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     const category = document.querySelector('input[name="category"]:checked');
                     const shipping = document.querySelector('input[name="shipping_method"]:checked');
                     const shirtSize = document.querySelector('input[name="shirt_size"]:checked');
+                    const collarType = document.querySelector('input[name="collar_type"]:checked');
                     
                     // Update Summary Elements
                     const summaryCategory = document.getElementById('summary-category');
@@ -1685,6 +1717,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     const summaryShipping = document.getElementById('summary-shipping');
                     const summaryShirtRow = document.getElementById('summary-shirt-row');
                     const summaryShippingFeeRow = document.getElementById('summary-shipping-fee-row');
+                    
+                    // Check if collar type is polo (add 100 baht)
+                    const isPoloCollar = collarType && collarType.value === 'polo';
+                    const collarExtraFee = isPoloCollar ? 100 : 0;
                     
                     if (category) {
                         const val = category.value;
@@ -1722,11 +1758,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             raceFee = shirtCount * 250;
                         }
                         
-                        total = raceFee;
+                        // Add collar extra fee (100 baht for polo collar)
+                        total = raceFee + collarExtraFee;
                     }
                     
-                    // Update race fee display
-                    if (summaryRaceFee) summaryRaceFee.textContent = raceFee.toLocaleString();
+                    // Update race fee display (including collar extra)
+                    if (summaryRaceFee) {
+                        if (isPoloCollar) {
+                            summaryRaceFee.innerHTML = raceFee.toLocaleString() + ' <span class="text-xs text-orange-600">(+100 คอปก)</span>';
+                        } else {
+                            summaryRaceFee.textContent = raceFee.toLocaleString();
+                        }
+                    }
                     
                     // Update shirt size display
                     if (shirtSize && summaryShirt) {
@@ -1734,7 +1777,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             summaryShirt.textContent = 'ไม่รับเสื้อ';
                             if (summaryShirtRow) summaryShirtRow.style.display = 'none';
                         } else {
-                            summaryShirt.textContent = shirtSize.value;
+                            const collarText = isPoloCollar ? ' (คอปก)' : ' (คอกลม)';
+                            summaryShirt.textContent = shirtSize.value + collarText;
                             if (summaryShirtRow) summaryShirtRow.style.display = 'flex';
                         }
                     }
@@ -1806,6 +1850,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 // Add event listener for category change
                 document.querySelectorAll('input[name="category"]').forEach(radio => {
+                    radio.addEventListener('change', calculateTotal);
+                });
+                
+                // Add event listener for collar type change
+                document.querySelectorAll('input[name="collar_type"]').forEach(radio => {
                     radio.addEventListener('change', calculateTotal);
                 });
 
