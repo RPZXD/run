@@ -144,6 +144,7 @@ class Registration {
                       address = :address, 
                       category = :category, 
                       shirt_size = :shirt_size,
+                      collar_type = :collar_type,
                       shipping_method = :shipping_method,
                       payment_amount = :payment_amount,
                       payment_date = :payment_date,
@@ -168,6 +169,7 @@ class Registration {
         $address = htmlspecialchars(strip_tags($data['address']));
         $category = strip_tags($data['category']); // Don't use htmlspecialchars for ENUM fields with & character
         $shirt_size = strip_tags($data['shirt_size']); // ENUM field
+        $collar_type = !empty($data['collar_type']) ? strip_tags($data['collar_type']) : 'round';
         $shipping_method = strip_tags($data['shipping_method']); // ENUM field
         $payment_amount = !empty($data['payment_amount']) ? htmlspecialchars(strip_tags($data['payment_amount'])) : null;
         $payment_date = !empty($data['payment_date']) ? htmlspecialchars(strip_tags($data['payment_date'])) : null;
@@ -190,6 +192,7 @@ class Registration {
         $stmt->bindParam(':address', $address);
         $stmt->bindParam(':category', $category);
         $stmt->bindParam(':shirt_size', $shirt_size);
+        $stmt->bindParam(':collar_type', $collar_type);
         $stmt->bindParam(':shipping_method', $shipping_method);
         $stmt->bindParam(':payment_amount', $payment_amount);
         $stmt->bindParam(':payment_date', $payment_date);

@@ -37,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'address' => $_POST['address'],
                     'shirt_sizes' => $_POST['shirt_sizes'],
                     'shirt_quantity' => (int)$_POST['shirt_quantity'],
+                    'collar_type' => isset($_POST['collar_type']) ? $_POST['collar_type'] : 'round',
                     'shipping_method' => $_POST['shipping_method'],
                     'payment_amount' => $_POST['payment_amount'],
                     'status' => $_POST['status'],
@@ -487,6 +488,18 @@ if ($search) {
                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-all">
                     </div>
                     
+                    <!-- Collar Type -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-600 mb-2">
+                            <i class="fas fa-tshirt text-slate-400 mr-1"></i> ประเภทคอ
+                        </label>
+                        <select name="collar_type" id="editCollarType"
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-all cursor-pointer">
+                            <option value="round">⭕ คอกลม (ราคาปกติ)</option>
+                            <option value="polo">👔 คอปก (+100 บาท/ตัว)</option>
+                        </select>
+                    </div>
+                    
                     <!-- Payment Amount -->
                     <div>
                         <label class="block text-sm font-bold text-slate-600 mb-2">
@@ -794,6 +807,7 @@ if ($search) {
         document.getElementById('editAddress').value = order.address || '';
         document.getElementById('editShirtSizes').value = order.shirt_sizes || '';
         document.getElementById('editShirtQuantity').value = order.shirt_quantity || 1;
+        document.getElementById('editCollarType').value = order.collar_type || 'round';
         document.getElementById('editPaymentAmount').value = order.payment_amount || '';
         document.getElementById('editShippingMethod').value = order.shipping_method || 'SELF';
         document.getElementById('editStatus').value = order.status || 'pending';

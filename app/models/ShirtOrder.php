@@ -170,6 +170,7 @@ class ShirtOrder {
                       address = :address, 
                       shirt_sizes = :shirt_sizes,
                       shirt_quantity = :shirt_quantity,
+                      collar_type = :collar_type,
                       shipping_method = :shipping_method,
                       payment_amount = :payment_amount,
                       status = :status,
@@ -186,6 +187,8 @@ class ShirtOrder {
         $stmt->bindParam(':address', $data['address']);
         $stmt->bindParam(':shirt_sizes', $data['shirt_sizes']);
         $stmt->bindParam(':shirt_quantity', $data['shirt_quantity']);
+        $collarType = $data['collar_type'] ?? 'round';
+        $stmt->bindParam(':collar_type', $collarType);
         $stmt->bindParam(':shipping_method', $data['shipping_method']);
         $stmt->bindParam(':payment_amount', $data['payment_amount']);
         $stmt->bindParam(':status', $data['status']);

@@ -631,6 +631,13 @@ foreach ($registrations as $reg) {
                             </select>
                         </div>
                         <div>
+                            <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">ประเภทคอ</label>
+                            <select name="collar_type" id="modal_collar_type" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-400 bg-white hover:border-slate-300 transition-all">
+                                <option value="round">⭕ คอกลม (ราคาปกติ)</option>
+                                <option value="polo">👔 คอปก (+100 บาท)</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-slate-600 text-xs font-bold mb-2 uppercase tracking-wider">การจัดส่ง</label>
                             <select name="shipping_method" id="modal_shipping_method" class="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-400 bg-white hover:border-slate-300 transition-all">
                                 <option value="SELF">🏃 รับด้วยตนเอง</option>
@@ -982,6 +989,7 @@ foreach ($registrations as $reg) {
             // Race
             document.getElementById('modal_category').value = data.category;
             document.getElementById('modal_shirt_size').value = data.shirt_size;
+            document.getElementById('modal_collar_type').value = data.collar_type || 'round';
             document.getElementById('modal_shipping_method').value = data.shipping_method;
             
             // Payment
