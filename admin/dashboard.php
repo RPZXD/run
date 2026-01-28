@@ -31,6 +31,7 @@ $by_status = ['pending' => 0, 'approved' => 0, 'rejected' => 0];
 $reg_with_shirt = 0;
 $reg_without_shirt = 0;
 $stats_by_cat_gender = [];
+$reg_by_size_status = []; // [size => [pending => 0, approved => 0]]
 
 foreach ($registrations as $reg) {
     $status = $reg['status'] ?? 'pending';
@@ -76,9 +77,16 @@ foreach ($registrations as $reg) {
     // Size (only for registrations with shirt)
     if (!empty($size) && $size !== 'ไม่รับเสื้อ' && $size !== '-' && $size !== 'No Shirt' && $size !== 'ไม่ต้องการเสื้อ') {
         $reg_with_shirt++;
-        if (!isset($reg_by_size[$size]))
-            $reg_by_size[$size] = 0;
+        if (!isset($reg_by_size[$size])) $reg_by_size[$size] = 0;
         $reg_by_size[$size] += $qty;
+
+        // Count by status for status-based table
+        if (!isset($reg_by_size_status[$size])) $reg_by_size_status[$size] = ['pending' => 0, 'approved' => 0];
+        if ($status === 'approved') {
+            $reg_by_size_status[$size]['approved'] += $qty;
+        } elseif ($status === 'pending') {
+            $reg_by_size_status[$size]['pending'] += $qty;
+        }
     } else {
         $reg_without_shirt++;
     }
@@ -101,6 +109,7 @@ $shirt_order_income_approved = 0;
 $shirt_order_by_size = [];
 $shirt_order_total_shirts = 0;
 $shirt_order_by_status = ['pending' => 0, 'paid' => 0, 'shipped' => 0, 'completed' => 0, 'cancelled' => 0];
+$shirt_order_by_size_status = []; // [size => [pending => 0, approved => 0]]
 
 foreach ($shirtOrders as $order) {
     $status = $order['status'] ?? 'pending';
@@ -135,6 +144,14 @@ foreach ($shirtOrders as $order) {
                 if (!isset($shirt_order_by_size[$size]))
                     $shirt_order_by_size[$size] = 0;
                 $shirt_order_by_size[$size] += $count;
+
+                // Count by status for status-based table
+                if (!isset($shirt_order_by_size_status[$size])) $shirt_order_by_size_status[$size] = ['pending' => 0, 'approved' => 0];
+                if ($status === 'paid' || $status === 'shipped' || $status === 'completed') {
+                    $shirt_order_by_size_status[$size]['approved'] += $count;
+                } elseif ($status === 'pending') {
+                    $shirt_order_by_size_status[$size]['pending'] += $count;
+                }
             }
         }
     }
@@ -161,6 +178,21 @@ foreach ($all_sizes as $size) {
 }
 
 $total_shirts_all = $total_reg_shirts + $total_shirt_order_shirts;
+
+// Combined shirt sizes by status
+$combined_size_by_status = [];
+foreach ($all_sizes as $size) {
+    if ($size === 'No Shirt' || $size === 'ไม่รับเสื้อ' || $size === 'ไม่ต้องการเสื้อ' || $size === '-') continue;
+    
+    $pending = ($reg_by_size_status[$size]['pending'] ?? 0) + ($shirt_order_by_size_status[$size]['pending'] ?? 0);
+    $approved = ($reg_by_size_status[$size]['approved'] ?? 0) + ($shirt_order_by_size_status[$size]['approved'] ?? 0);
+    
+    $combined_size_by_status[$size] = [
+        'pending' => $pending,
+        'approved' => $approved,
+        'total' => $pending + $approved
+    ];
+}
 
 ?>
 <!DOCTYPE html>
@@ -617,6 +649,72 @@ $total_shirts_all = $total_reg_shirts + $total_shirt_order_shirts;
                                 <?php echo number_format($total_shirts_all); ?>
                             </td>
                             <td class="px-4 md:px-6 py-4 hidden md:table-cell"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3.1 Shirt Size Summary by Status -->
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 border border-white/50 mb-8 overflow-hidden animate-fade-in-up delay-300">
+            <div class="p-5 md:p-6 border-b border-slate-100/80 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-emerald-50/50 to-blue-50/50">
+                <div class="flex items-center gap-3">
+                    <div class="p-3 bg-gradient-to-br from-emerald-500 to-blue-600 text-white rounded-xl shadow-lg shadow-emerald-500/30">
+                        <i class="fas fa-list-check text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg md:text-xl text-slate-800">สรุปยอดเสื้อแยกตามสถานะ</h3>
+                        <p class="text-xs md:text-sm text-slate-500">ยอดรวมทั้งจากวิ่งและสั่งซื้อ แบ่งเป็นรอตรวจสอบและอนุมัติแล้ว</p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="exportTable('shirtStatusTable', 'csv')"
+                        class="px-3 py-1.5 bg-white border-2 border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700 transition-all flex items-center gap-2">
+                        <i class="fas fa-file-csv text-emerald-600"></i> CSV
+                    </button>
+                    <button onclick="exportTable('shirtStatusTable', 'xlsx')"
+                        class="px-3 py-1.5 bg-white border-2 border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700 transition-all flex items-center gap-2">
+                        <i class="fas fa-file-excel text-emerald-600"></i> Excel
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table id="shirtStatusTable" class="w-full text-sm text-left">
+                    <thead class="bg-gradient-to-r from-slate-50 to-slate-100/80 text-slate-500 font-bold uppercase text-[11px] tracking-wider">
+                        <tr>
+                            <th class="px-4 md:px-6 py-4">Size</th>
+                            <th class="px-4 md:px-6 py-4 text-center text-amber-600">รอตรวจสอบ</th>
+                            <th class="px-4 md:px-6 py-4 text-center text-emerald-600">อนุมัติแล้ว</th>
+                            <th class="px-4 md:px-6 py-4 text-center text-violet-600">รวมทั้งหมด</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100/80">
+                        <?php 
+                        $grand_pending = 0;
+                        $grand_approved = 0;
+                        $grand_total = 0;
+                        foreach ($combined_size_by_status as $size => $data): 
+                            $grand_pending += $data['pending'];
+                            $grand_approved += $data['approved'];
+                            $grand_total += $data['total'];
+                        ?>
+                        <tr class="hover:bg-slate-50/50 transition-all">
+                            <td class="px-4 md:px-6 py-4 font-bold text-slate-800"><?php echo $size; ?></td>
+                            <td class="px-4 md:px-6 py-4 text-center font-medium"><?php echo number_format($data['pending']); ?></td>
+                            <td class="px-4 md:px-6 py-4 text-center font-medium text-emerald-600"><?php echo number_format($data['approved']); ?></td>
+                            <td class="px-4 md:px-6 py-4 text-center">
+                                <span class="inline-block px-3 py-1 bg-violet-50 text-violet-700 rounded-lg font-bold border border-violet-100">
+                                    <?php echo number_format($data['total']); ?>
+                                </span>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                        <tr class="bg-gradient-to-r from-slate-50 to-slate-100 font-bold">
+                            <td class="px-4 md:px-6 py-4 text-slate-800">รวมทั้งสิ้น</td>
+                            <td class="px-4 md:px-6 py-4 text-center text-amber-700"><?php echo number_format($grand_pending); ?></td>
+                            <td class="px-4 md:px-6 py-4 text-center text-emerald-700"><?php echo number_format($grand_approved); ?></td>
+                            <td class="px-4 md:px-6 py-4 text-center text-violet-700 text-lg"><?php echo number_format($grand_total); ?></td>
                         </tr>
                     </tbody>
                 </table>
