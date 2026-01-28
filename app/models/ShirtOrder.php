@@ -1,5 +1,6 @@
 <?php
-class ShirtOrder {
+class ShirtOrder
+{
     private $conn;
     private $table = 'shirt_orders';
 
@@ -24,14 +25,16 @@ class ShirtOrder {
     public $tracking_number;
     public $notes;
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    private function generateOrderNumber() {
+    private function generateOrderNumber()
+    {
         // Format: SO-YYMMDD-XXXX (e.g., SO-251127-0001)
         $prefix = 'SO-' . date('ymd') . '-';
-        
+
         // Get the last order number for today
         $query = "SELECT order_number FROM " . $this->table . " 
                   WHERE order_number LIKE :prefix 
@@ -40,7 +43,7 @@ class ShirtOrder {
         $searchPrefix = $prefix . '%';
         $stmt->bindParam(':prefix', $searchPrefix);
         $stmt->execute();
-        
+
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $lastNum = intval(substr($row['order_number'], -4));
@@ -48,13 +51,14 @@ class ShirtOrder {
         } else {
             $newNum = '0001';
         }
-        
+
         return $prefix . $newNum;
     }
 
-    public function create() {
+    public function create()
+    {
         $this->order_number = $this->generateOrderNumber();
-        
+
         $query = "INSERT INTO " . $this->table . " 
                   SET order_number = :order_number,
                       full_name = :full_name, 
@@ -82,7 +86,7 @@ class ShirtOrder {
         $this->citizen_id = $this->citizen_id ? htmlspecialchars(strip_tags($this->citizen_id)) : null;
         $this->address = htmlspecialchars(strip_tags($this->address ?? ''));
         $this->shirt_sizes = htmlspecialchars(strip_tags($this->shirt_sizes ?? ''));
-        $this->shirt_quantity = (int)$this->shirt_quantity;
+        $this->shirt_quantity = (int) $this->shirt_quantity;
         $this->collar_type = htmlspecialchars(strip_tags($this->collar_type ?? 'round'));
         $this->shipping_method = htmlspecialchars(strip_tags($this->shipping_method ?? 'SELF'));
         $this->payment_amount = $this->payment_amount ? htmlspecialchars(strip_tags($this->payment_amount)) : null;
@@ -110,21 +114,23 @@ class ShirtOrder {
         $stmt->bindParam(':bank_ref', $this->bank_ref);
         $stmt->bindParam(':sender_name', $this->sender_name);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return $this->order_number;
         }
 
         return false;
     }
 
-    public function readAll() {
+    public function readAll()
+    {
         $query = "SELECT * FROM " . $this->table . " ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
 
-    public function getById($id) {
+    public function getById($id)
+    {
         $query = "SELECT * FROM " . $this->table . " WHERE id = :id LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
@@ -132,7 +138,8 @@ class ShirtOrder {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getByOrderNumber($orderNumber) {
+    public function getByOrderNumber($orderNumber)
+    {
         $query = "SELECT * FROM " . $this->table . " WHERE order_number = :order_number LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':order_number', $orderNumber);
@@ -140,14 +147,15 @@ class ShirtOrder {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updateStatus($id, $status, $tracking = null, $notes = null) {
+    public function updateStatus($id, $status, $tracking = null, $notes = null)
+    {
         $query = "UPDATE " . $this->table . " 
                   SET status = :status, 
                       tracking_number = :tracking,
                       notes = :notes
                   WHERE id = :id";
         $stmt = $this->conn->prepare($query);
-        
+
         $status = htmlspecialchars(strip_tags($status));
         $tracking = $tracking ? htmlspecialchars(strip_tags($tracking)) : null;
         $notes = $notes ? htmlspecialchars(strip_tags($notes)) : null;
@@ -161,7 +169,8 @@ class ShirtOrder {
         return $stmt->execute();
     }
 
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         $query = "UPDATE " . $this->table . " 
                   SET full_name = :full_name, 
                       phone = :phone,
@@ -199,14 +208,16 @@ class ShirtOrder {
         return $stmt->execute();
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $query = "DELETE FROM " . $this->table . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
 
-    public function checkByPhone($phone) {
+    public function checkByPhone($phone)
+    {
         $query = "SELECT * FROM " . $this->table . " 
                   WHERE REPLACE(REPLACE(REPLACE(phone,'-',''),' ',''),'+','') = :phone 
                   ORDER BY created_at DESC";
@@ -217,37 +228,57 @@ class ShirtOrder {
         return $stmt;
     }
 
-    public function getStats() {
+    public function getStats()
+    {
         $stats = [];
-        
+
         // Total orders
         $query = "SELECT COUNT(*) as total FROM " . $this->table;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $stats['total'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-        
+
         // By status
         $query = "SELECT status, COUNT(*) as count FROM " . $this->table . " GROUP BY status";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $stats['by_status'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        // Total shirts
-        $query = "SELECT SUM(shirt_quantity) as total_shirts FROM " . $this->table;
+
+        // Total shirts - Parse each order to exclude non-shirt items for consistency
+        $query = "SELECT shirt_sizes FROM " . $this->table;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        $stats['total_shirts'] = $stmt->fetch(PDO::FETCH_ASSOC)['total_shirts'] ?? 0;
-        
+        $total_shirts = 0;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $sizes_str = $row['shirt_sizes'] ?? '';
+            if (!empty($sizes_str)) {
+                $size_pairs = explode(',', $sizes_str);
+                foreach ($size_pairs as $pair) {
+                    $parts = explode(':', trim($pair));
+                    if (count($parts) == 2) {
+                        $size = trim($parts[0]);
+                        $count = (int) trim($parts[1]);
+                        // Filter out non-shirt items
+                        if (empty($size) || $size === 'No Shirt' || $size === 'ไม่รับเสื้อ' || $size === 'ไม่ต้องการเสื้อ' || $size === '-' || $size === 'ไม่รับ')
+                            continue;
+                        $total_shirts += $count;
+                    }
+                }
+            }
+        }
+        $stats['total_shirts'] = $total_shirts;
+
         // Total revenue (exclude pending and cancelled)
         $query = "SELECT SUM(payment_amount) as total_revenue FROM " . $this->table . " WHERE status NOT IN ('pending', 'cancelled')";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $stats['total_revenue'] = $stmt->fetch(PDO::FETCH_ASSOC)['total_revenue'] ?? 0;
-        
+
         return $stats;
     }
 
-    public function getShippingOrders() {
+    public function getShippingOrders()
+    {
         $query = "SELECT * FROM " . $this->table . " 
                   WHERE shipping_method = 'POST' AND status IN ('paid', 'shipped')
                   ORDER BY created_at DESC";

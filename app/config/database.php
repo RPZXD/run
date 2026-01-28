@@ -1,5 +1,6 @@
 <?php
-class Database {
+class Database
+{
     private $host = 'localhost';
     private $db_name = 'phichai_run_2026';
     // default/primary credentials (kept for backwards compatibility)
@@ -11,7 +12,8 @@ class Database {
      * Try to connect using multiple credential sets and return the first successful PDO connection.
      * This allows supporting both the old 'root' account and the provided production account.
      */
-    public function connect() {
+    public function connect()
+    {
         $this->conn = null;
 
         $credentialSets = [
@@ -22,7 +24,7 @@ class Database {
             // alternative credential provided
             [
                 'username' => 'root',
-                'password' => 'storage', // ใส่รหัสผ่าน Database ของคุณที่นี่
+                'password' => '', // ใส่รหัสผ่าน Database ของคุณที่นี่
             ],
         ];
 
