@@ -245,12 +245,13 @@ class ShirtOrder
         $stats['by_status'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Total shirts - Parse each order to exclude non-shirt items for consistency
-        $query = "SELECT shirt_sizes FROM " . $this->table;
+        $query = "SELECT shirt_sizes, collar_type FROM " . $this->table;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $total_shirts = 0;
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $sizes_str = $row['shirt_sizes'] ?? '';
+            $orderCollar = $row['collar_type'] ?? 'round';
             if (!empty($sizes_str)) {
                 $size_pairs = explode(',', $sizes_str);
                 foreach ($size_pairs as $pair) {
@@ -258,6 +259,13 @@ class ShirtOrder
                     if (count($parts) == 2) {
                         $size = trim($parts[0]);
                         $count = (int) trim($parts[1]);
+
+                        // Normalize
+                        if (!empty($size) && strpos($size, '(') === false && $size !== 'No Shirt' && $size !== '-') {
+                            $suffix = ($orderCollar === 'polo') ? ' (คอปก)' : ' (คอกลม)';
+                            $size .= $suffix;
+                        }
+
                         // Filter out non-shirt items
                         if (empty($size) || $size === 'No Shirt' || $size === 'ไม่รับเสื้อ' || $size === 'ไม่ต้องการเสื้อ' || $size === '-' || $size === 'ไม่รับ')
                             continue;
