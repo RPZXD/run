@@ -12,42 +12,39 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Check Deadline (ปิดระบบเวลา 18:00 น. วันที่ 5 ก.พ. 2569)
-$deadlineDateTime = '2026-02-05 18:00:00';
-$currentDateTime = date('Y-m-d H:i:s');
-
-if ($currentDateTime >= $deadlineDateTime) {
+// ปิดระบบรับสมัครแล้ว (ปิดถาวร)
+if (true) {
     ?>
-        <!DOCTYPE html>
-        <html lang="th">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>หมดเขตรับสมัคร - Phichai Run 2026</title>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-            <style> body { font-family: 'Kanit', sans-serif; background-color: #f3f4f6; } </style>
-        </head>
-        <body>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'หมดเขตรับสมัคร',
-                        text: 'ขออภัย ขณะนี้หมดเขตการรับสมัครแล้ว (สิ้นสุดวันที่ 5 ก.พ. 2569)',
-                        confirmButtonText: 'กลับหน้าหลัก',
-                        confirmButtonColor: '#E63946',
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    }).then((result) => {
-                        window.location.href = 'index.php';
+            <!DOCTYPE html>
+            <html lang="th">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>หมดเขตรับสมัคร - Phichai Run 2026</title>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+                <style> body { font-family: 'Kanit', sans-serif; background-color: #f3f4f6; } </style>
+            </head>
+            <body>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'หมดเขตรับสมัคร',
+                            text: 'ขออภัย ขณะนี้หมดเขตการรับสมัครแล้ว (สิ้นสุดวันที่ 5 ก.พ. 2569)',
+                            confirmButtonText: 'กลับหน้าหลัก',
+                            confirmButtonColor: '#E63946',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        }).then((result) => {
+                            window.location.href = 'index.php';
+                        });
                     });
-                });
-            </script>
-        </body>
-        </html>
-        <?php
-        exit;
+                </script>
+            </body>
+            </html>
+            <?php
+            exit;
 }
 
 $message = '';
@@ -180,27 +177,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container mx-auto px-4 max-w-3xl relative z-10">
             
             <?php if ($message): ?>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            Swal.fire({
-                                icon: '<?php echo $status === "success" ? "success" : "error"; ?>',
-                                title: '<?php echo $status === "success" ? "สำเร็จ!" : "ข้อผิดพลาด"; ?>',
-                                text: '<?php echo $message; ?>',
-                                confirmButtonText: 'ตกลง',
-                                customClass: {
-                                    popup: 'rounded-3xl shadow-xl border border-gray-100',
-                                    confirmButton: 'bg-gradient-to-r from-primary to-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1',
-                                    title: 'text-2xl font-bold text-secondary font-sans',
-                                    htmlContainer: 'text-gray-600 font-sans'
-                                },
-                                buttonsStyling: false
-                            }).then((result) => {
-                                <?php if ($status === 'success'): ?>
-                                        window.location.href = 'index.php';
-                                <?php endif; ?>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: '<?php echo $status === "success" ? "success" : "error"; ?>',
+                                    title: '<?php echo $status === "success" ? "สำเร็จ!" : "ข้อผิดพลาด"; ?>',
+                                    text: '<?php echo $message; ?>',
+                                    confirmButtonText: 'ตกลง',
+                                    customClass: {
+                                        popup: 'rounded-3xl shadow-xl border border-gray-100',
+                                        confirmButton: 'bg-gradient-to-r from-primary to-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-red-500/30 transition transform hover:-translate-y-1',
+                                        title: 'text-2xl font-bold text-secondary font-sans',
+                                        htmlContainer: 'text-gray-600 font-sans'
+                                    },
+                                    buttonsStyling: false
+                                }).then((result) => {
+                                    <?php if ($status === 'success'): ?>
+                                                window.location.href = 'index.php';
+                                    <?php endif; ?>
+                                });
                             });
-                        });
-                    </script>
+                        </script>
             <?php endif; ?>
 
             <div class="glass-card rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up visible">

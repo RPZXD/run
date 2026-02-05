@@ -12,11 +12,8 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Check Deadline (ปิดระบบเวลา 18:00 น. วันที่ 5 ก.พ. 2569)
-$deadlineDateTime = '2026-02-05 18:00:00';
-$currentDateTime = date('Y-m-d H:i:s');
-
-if ($currentDateTime >= $deadlineDateTime) {
+// ปิดระบบสั่งซื้อเสื้อแล้ว (ปิดถาวร)
+if (true) {
     ?>
     <!DOCTYPE html>
     <html lang="th">
